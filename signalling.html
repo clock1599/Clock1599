@@ -252,8 +252,13 @@ ul.plain-list ul, ol.plain-list ol {
   padding: 1rem;
   background: var(--bg-raised);
   border: 1px solid var(--line);
+  border-left: 4px solid var(--line);
   border-radius: 6px;
 }
+
+.signal-row.row-red { border-left-color: #4D0000; }
+.signal-row.row-green { border-left-color: #1F4D20; }
+.signal-row.row-yellow { border-left-color: #6B5C16; }
 
 .signal-row img {
   width: 100%;
@@ -265,9 +270,10 @@ ul.plain-list ul, ol.plain-list ol {
 
 .signal-row .extra-img {
   width: 100%;
-  height: 84px;
-  object-fit: cover;
+  height: 110px;
+  object-fit: contain;
   border-radius: 4px;
+  background: #000;
 }
 
 .signal-label {
@@ -289,7 +295,8 @@ ul.plain-list ul, ol.plain-list ol {
 
 @media (max-width: 600px) {
   .signal-row { grid-template-columns: 1fr; }
-  .signal-row img, .signal-row .extra-img { height: 140px; }
+  .signal-row img { height: 140px; }
+  .signal-row .extra-img { height: 160px; }
 }
 
 /* ---------- Diagram figures ---------- */
@@ -588,32 +595,31 @@ figure.diagram figcaption {
 
     <section class="block">
       <div class="signal-grid">
-        <div class="signal-row">
+        <div class="signal-row row-red">
           <img src="images/signal-red.png" alt="Red lamp signal">
           <div>
             <div class="signal-label red">Red — Danger</div>
-            <p>Do <strong>not</strong> proceed. Red can also be shown on semaphores.</p>
+            <p>Do <strong>not</strong> proceed. Red can also be shown on semaphores like this:</p>
           </div>
+          <img class="extra-img" src="images/semaphore-red.png" alt="Red semaphore signal in-game">
         </div>
-        <div class="signal-row">
+        <div class="signal-row row-green">
           <img src="images/signal-green.png" alt="Green lamp signal">
           <div>
             <div class="signal-label green">Green — Proceed</div>
-            <p>Clear to go. Green can also be shown in white, or on semaphores.</p>
+            <p>Clear to go. Green can also be shown in white. Green can also be shown on semaphores like this:</p>
           </div>
+          <img class="extra-img" src="images/semaphore-green.png" alt="Green semaphore signal in-game, shown in white">
         </div>
-        <div class="signal-row">
+        <div class="signal-row row-yellow">
           <img src="images/signal-yellow.png" alt="Yellow lamp signal">
           <div>
             <div class="signal-label yellow">Yellow — Caution</div>
-            <p>If possible, stop and check the map before proceeding.</p>
+            <p>If possible, stop and check the map before proceeding. Yellow can also be shown on semaphores like this:</p>
           </div>
+          <img class="extra-img" src="images/semaphore-yellow.png" alt="Yellow semaphore signal in-game">
         </div>
       </div>
-      <figure class="diagram" style="max-width: 360px;">
-        <img src="images/semaphore-yellow.png" alt="Yellow semaphore signal in-game">
-        <figcaption>Yellow shown on a semaphore signal, in-game</figcaption>
-      </figure>
     </section>
 
     <section class="block">
@@ -630,7 +636,6 @@ figure.diagram figcaption {
       <ul class="plain-list">
         <li>While on a mainline, your train has priority.</li>
         <li>When merging two mainlines on a Y interchange, the outer rails have priority.</li>
-        <li>When merging on a traffic triangle or circle, give way to trains merging from an entry placed counterclockwise from your train, or to trains already in the triangle/circle.</li>
       </ul>
     </section>
   </main>
