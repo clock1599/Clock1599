@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signalling — The New Brass Rail Transit</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="brand">
+      <img src="images/logo.png" alt="">
+      <span class="brand-text">NBRT<span style="color:var(--red);">A</span></span>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="regulations.html">Regulations</a>
+      <a href="signalling.html" class="active">Signalling</a>
+      <a href="track-sizing.html">Track Sizing</a>
+      <a href="train-sizing.html">Train Sizing</a>
+      <a href="newsletter.html">Newsletter</a>
+      <a href="credits.html">Credits</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="page-kicker">Regulations</div>
+    <h1 class="page-title">Standard Signalling</h1>
+    <div class="page-rule"></div>
+
+    <p class="page-intro">It's quite simple — follow it like regular traffic lights.</p>
+
+    <section class="block">
+      <div class="signal-grid">
+        <div class="signal-row">
+          <img src="images/signal-red.png" alt="Red lamp signal">
+          <div>
+            <div class="signal-label red">Red — Danger</div>
+            <p>Do <strong>not</strong> proceed. Red can also be shown on semaphores.</p>
+          </div>
+        </div>
+        <div class="signal-row">
+          <img src="images/signal-green.png" alt="Green lamp signal">
+          <div>
+            <div class="signal-label green">Green — Proceed</div>
+            <p>Clear to go. Green can also be shown in white, or on semaphores.</p>
+          </div>
+        </div>
+        <div class="signal-row">
+          <img src="images/signal-yellow.png" alt="Yellow lamp signal">
+          <div>
+            <div class="signal-label yellow">Yellow — Caution</div>
+            <p>If possible, stop and check the map before proceeding.</p>
+          </div>
+        </div>
+      </div>
+      <figure class="diagram" style="max-width: 360px;">
+        <img src="images/semaphore-yellow.png" alt="Yellow semaphore signal in-game">
+        <figcaption>Yellow shown on a semaphore signal, in-game</figcaption>
+      </figure>
+    </section>
+
+    <section class="block">
+      <h2 class="block-title">Signalling Logic &amp; Priority When Controlling a Train</h2>
+      <p>Follow Standard Signalling and don't abandon trains on tracks. Give way to construction vehicles, and expect delays.</p>
+
+      <h3 class="sub-title">Rules Around Automatic Trains</h3>
+      <ul class="plain-list">
+        <li>If able to stop without endangering others, give way to automatic trains.</li>
+        <li>Drive with the expanded minimap — it helps you see what's ahead and plan accordingly.</li>
+      </ul>
+
+      <h3 class="sub-title">Rules Around Other Conductors</h3>
+      <ul class="plain-list">
+        <li>While on a mainline, your train has priority.</li>
+        <li>When merging two mainlines on a Y interchange, the outer rails have priority.</li>
+        <li>When merging on a traffic triangle or circle, give way to trains merging from an entry placed counterclockwise from your train, or to trains already in the triangle/circle.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    The New Brass Rail Transit Authority &middot; Maintained by <span class="accent">Clock1599</span>
+  </footer>
+
+</body>
+</html>

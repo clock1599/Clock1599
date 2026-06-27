@@ -3,141 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clock1599</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap');
-
-  :root {
-    --red: #9F0000;
-    --blue: #00009F;
-    --bg: #9F9F9F;
-    --text: #E8E4DC;
-    --text-dim: #6B6660;
-    --line: #232020;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html, body {
-    min-height: 100%;
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', system-ui, sans-serif;
-    overflow-x: hidden;
-  }
-
-  body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-
-  main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 4rem 2rem;
-    gap: 2.5rem;
-  }
-
-  .title-wrap {
-    position: relative;
-  }
-
-  .rule {
-    width: 64px;
-    height: 3px;
-    background: var(--blue);
-    margin: 0 auto 1.5rem;
-  }
-
-  .title {
-    font-family: 'Space Mono', monospace;
-    font-weight: 700;
-    font-size: clamp(2.8rem, 11vw, 7rem);
-    line-height: 1;
-    letter-spacing: -0.01em;
-    color: var(--red);
-  }
-
-  .kicker {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.8rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--blue);
-    margin-top: 1.25rem;
-  }
-
-  .bio {
-    max-width: 620px;
-    text-align: left;
-    border-left: 2px solid var(--blue);
-    padding-left: 1.75rem;
-  }
-
-  .bio[contenteditable="false"] {
-    outline: none;
-    cursor: text;
-  }
-
-  .bio[contenteditable="false"]:focus {
-    outline: none;
-  }
-
-  .bio p {
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: var(--text);
-  }
-
-  .bio p + p {
-    margin-top: 1rem;
-  }
-
-  .bio strong {
-    color: var(--blue);
-    font-weight: 600;
-  }
-
-  .edit-hint {
-    margin-top: 0.9rem;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
-
-  @media (max-width: 480px) {
-    main { padding: 3rem 1.5rem; gap: 2rem; }
-    .bio { padding-left: 1.25rem; }
-  }
-
-  :focus-visible {
-    outline: 2px solid var(--blue);
-    outline-offset: 3px;
-  }
-</style>
+<title>The New Brass Rail Transit Authority</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <main>
-    <div class="title-wrap">
-      <div class="rule"></div>
-      <h1 class="title">CLOCK1599</h1>
-      <div class="kicker">My goofy ass vibecoded site</div>
+  <header class="site-header">
+    <div class="brand">
+      <img src="images/logo.png" alt="">
+      <span class="brand-text">NBRT<span class="accent">A</span></span>
     </div>
+    <nav class="main-nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="regulations.html">Regulations</a>
+      <a href="signalling.html">Signalling</a>
+      <a href="track-sizing.html">Track Sizing</a>
+      <a href="train-sizing.html">Train Sizing</a>
+      <a href="newsletter.html">Newsletter</a>
+      <a href="credits.html">Credits</a>
+    </nav>
+  </header>
 
-    <div class="bio" contenteditable="false" spellcheck="false">
-      <p><strong>a Claude generated bio</strong>, known across the yards as Clock1599, laid more track miles through the Kestrel Pass than any engineer of his generation. The nickname came from his pocket watch, stopped forever at 15:99 the night a storm took the original Kestrel Bridge — and from the unnerving precision with which he rebuilt it anyway, down to the minute he promised.</p>
-      <p>Crews said he never raised his voice and never missed a deadline. Three decades on, the line he rebuilt still runs on the schedule he wrote by hand.</p>
-    </div>
+  <main class="page" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; min-height: 70vh;">
+    <div class="rule" style="width:64px; height:3px; background:var(--blue); margin:0 auto 1.5rem;"></div>
+    <h1 class="title" style="font-family:'Space Mono', monospace; font-weight:700; font-size:clamp(2rem, 7vw, 4.6rem); line-height:1.1; letter-spacing:-0.01em; color:var(--red); max-width: 900px;">THE NEW BRASS RAIL TRANSIT AUTHORITY</h1>
+    <div class="kicker" style="font-family:'Space Mono', monospace; font-size:0.8rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--blue); margin-top:1.25rem;">By Clock1599</div>
+
+    <p style="margin-top: 3rem; max-width: 560px; color: var(--text-dim); font-size: 0.95rem;">
+      Clock1599 keeps the books for The New Brass Rail Transit Authority — chief of document maintenance, weekly newsletter writer, and commissioner of The Eastern Railway. Browse the network's rules and reports using the menu above.
+    </p>
   </main>
 
+  <footer class="site-footer">
+    The New Brass Rail Transit Authority &middot; Maintained by <span class="accent">Clock1599</span>
+  </footer>
 
 </body>
 </html>
