@@ -469,6 +469,65 @@ figure.diagram figcaption {
   color: var(--blue);
 }
 
+/* ---------- Countdown ---------- */
+
+.countdown-card {
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+  border-radius: 6px;
+  padding: 0.9rem 1rem 1.1rem;
+  text-align: center;
+  margin: 1.25rem 0 0.75rem;
+}
+
+.countdown-card .cd-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.countdown-units {
+  display: flex;
+  justify-content: center;
+  gap: 0.9rem;
+}
+
+.countdown-unit {
+  min-width: 0;
+}
+
+.countdown-unit .cd-value {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 1.7rem;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.countdown-unit .cd-unit {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-top: 0.1rem;
+}
+
+.countdown-card .cd-live {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #4CAF50;
+}
+
+@media (max-width: 480px) {
+  .countdown-units { gap: 0.5rem; }
+  .countdown-unit .cd-value { font-size: 1.3rem; }
+}
+
 .article-list {
   display: flex;
   flex-direction: column;
@@ -676,6 +735,29 @@ figure.diagram figcaption {
 
     <section class="block">
       <h2 class="block-title">Publish Schedule</h2>
+
+      <div class="countdown-card" id="countdownCard">
+        <div class="cd-label">Next issue in</div>
+        <div class="countdown-units" id="countdownUnits">
+          <div class="countdown-unit">
+            <div class="cd-value" id="cdDays">00</div>
+            <div class="cd-unit">Days</div>
+          </div>
+          <div class="countdown-unit">
+            <div class="cd-value" id="cdHours">00</div>
+            <div class="cd-unit">Hours</div>
+          </div>
+          <div class="countdown-unit">
+            <div class="cd-value" id="cdMinutes">00</div>
+            <div class="cd-unit">Min</div>
+          </div>
+          <div class="countdown-unit">
+            <div class="cd-value" id="cdSeconds">00</div>
+            <div class="cd-unit">Sec</div>
+          </div>
+        </div>
+      </div>
+
       <div class="schedule-grid">
         <div class="schedule-card">
           <div class="tz">GMT+0</div>
@@ -718,6 +800,93 @@ figure.diagram figcaption {
   <footer class="site-footer">
     The New Brass Rail Transit Authority &middot; Maintained by <span class="accent">Clock1599</span>
   </footer>
+  <script>
+    // Countdown to the next Friday 20:15 in Europe (CET/CEST), handled
+    // automatically via Europe/Berlin so DST switches don't break it.
+    (function () {
+      const dayEl = document.getElementById('cdDays');
+      const hourEl = document.getElementById('cdHours');
+      const minEl = document.getElementById('cdMinutes');
+      const secEl = document.getElementById('cdSeconds');
+      const labelEl = document.querySelector('#countdownCard .cd-label');
+      const unitsEl = document.getElementById('countdownUnits');
+
+      function pad(n) {
+        return String(n).padStart(2, '0');
+      }
+
+      // Read the current wall-clock time in the Europe/Berlin zone.
+      function getBerlinParts(date) {
+        const fmt = new Intl.DateTimeFormat('en-US', {
+          timeZone: 'Europe/Berlin',
+          weekday: 'short',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        });
+        const parts = {};
+        fmt.formatToParts(date).forEach(p => { parts[p.type] = p.value; });
+        // hour12:false can give "24" for midnight; normalize to 0.
+        let hour = parseInt(parts.hour, 10);
+        if (hour === 24) hour = 0;
+        return {
+          weekday: parts.weekday, // "Mon", "Tue", ...
+          hour: hour,
+          minute: parseInt(parts.minute, 10),
+          second: parseInt(parts.second, 10)
+        };
+      }
+
+      const weekdayIndex = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+
+      function msUntilNextPublish(now) {
+        const b = getBerlinParts(now);
+        const secondsSinceMidnight = b.hour * 3600 + b.minute * 60 + b.second;
+        const targetSeconds = 20 * 3600 + 15 * 60; // 20:15
+
+        let daysUntilFriday = (5 - weekdayIndex[b.weekday] + 7) % 7;
+        if (daysUntilFriday === 0 && secondsSinceMidnight >= targetSeconds) {
+          daysUntilFriday = 7; // today's slot has passed, go to next Friday
+        }
+
+        const diffSeconds = daysUntilFriday * 86400 + (targetSeconds - secondsSinceMidnight);
+        return diffSeconds * 1000;
+      }
+
+      function render() {
+        const now = new Date();
+        let remaining = msUntilNextPublish(now);
+
+        // Grace window: treat the ~30 min "may run late" window as live.
+        if (remaining <= 0 || remaining > 6.5 * 86400 * 1000) {
+          // Shouldn't normally happen, but guards against clock weirdness.
+          remaining = Math.max(remaining, 0);
+        }
+
+        const graceMs = 30 * 60 * 1000;
+        if (remaining <= 0) {
+          labelEl.textContent = 'Publishing now';
+          unitsEl.innerHTML = '<div class="cd-live">Issue is live (or imminent) &mdash; check the article list below</div>';
+          return;
+        }
+
+        const totalSeconds = Math.floor(remaining / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        dayEl.textContent = pad(days);
+        hourEl.textContent = pad(hours);
+        minEl.textContent = pad(minutes);
+        secEl.textContent = pad(seconds);
+      }
+
+      render();
+      setInterval(render, 1000);
+    })();
+  </script>
 
 </body>
 </html>
