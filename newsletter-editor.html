@@ -390,6 +390,91 @@ main.page {
   border-radius: 3px;
 }
 
+/* ---------- Activity logs modal ---------- */
+
+.logs-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.logs-modal {
+  width: 100%;
+  max-width: 560px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.logs-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--gold);
+}
+
+.logs-modal-close {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 0.25rem;
+}
+
+.logs-modal-close:hover { color: var(--text); }
+
+.logs-modal-body {
+  overflow-y: auto;
+  padding: 0.5rem 1.25rem 1.25rem;
+}
+
+.logs-empty {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.log-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.log-row:last-child { border-bottom: none; }
+
+.log-row .log-main {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text);
+}
+
+.log-row .log-main strong { color: var(--blue); }
+
+.log-row .log-time {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--text-dim);
+}
+
 /* Admin approval panel */
 
 .admin-panel {
@@ -716,6 +801,7 @@ h2.block-title {
           <span class="admin-tag" id="sessionAdminTag" style="display:none;">Admin</span>
         </div>
         <div class="session-actions">
+          <button type="button" class="btn" id="viewLogsBtn" style="display:none;">Activity Logs</button>
           <button type="button" class="btn" id="logoutBtn">Sign out</button>
         </div>
       </div>
@@ -843,6 +929,18 @@ h2.block-title {
     The New Brass Rail Transit Authority &middot; Maintained by <span class="accent">Clock1599</span>
   </footer>
 
+  <div id="logsModalOverlay" class="logs-modal-overlay" style="display:none;">
+    <div class="logs-modal">
+      <div class="logs-modal-header">
+        <span>Activity &mdash; last 7 days</span>
+        <button type="button" id="closeLogsBtn" class="logs-modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="logs-modal-body" id="logsModalBody">
+        <div class="logs-empty">Loading&hellip;</div>
+      </div>
+    </div>
+  </div>
+
   <script>
     (function () {
       const AUTH_ORIGIN = "https://auth.clock1599-official.workers.dev";
@@ -906,6 +1004,90 @@ h2.block-title {
         }
         currentUser = null;
         showLockArea();
+      });
+
+      // ---------- Activity logs (admin only) ----------
+
+      const viewLogsBtn = document.getElementById('viewLogsBtn');
+      const logsModalOverlay = document.getElementById('logsModalOverlay');
+      const closeLogsBtn = document.getElementById('closeLogsBtn');
+      const logsModalBody = document.getElementById('logsModalBody');
+
+      function escapeHtmlClient(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
+
+      function describeLog(entry) {
+        const who = '<strong>' + escapeHtmlClient(entry.username || 'unknown') + '</strong>';
+        switch (entry.type) {
+          case 'login': return who + ' signed in';
+          case 'logout': return who + ' signed out';
+          case 'access_requested': return who + ' requested access';
+          case 'user_approved': return who + ' approved ' + escapeHtmlClient(entry.details || '');
+          case 'user_denied': return who + ' denied ' + escapeHtmlClient(entry.details || '');
+          case 'draft_saved': return who + ' saved a draft' + (entry.details ? (': "' + escapeHtmlClient(entry.details) + '"') : '');
+          case 'published_now': return who + ' published "' + escapeHtmlClient(entry.details || '') + '" immediately';
+          case 'published_scheduled': return who + '\u2019s scheduled article "' + escapeHtmlClient(entry.details || '') + '" went live';
+          case 'publish_scheduled': return who + ' scheduled "' + escapeHtmlClient(entry.details || '') + '" for next Friday';
+          case 'scheduled_publish_cancelled': return who + ' cancelled a scheduled publish';
+          case 'publish_failed': return who + '\u2019s publish attempt failed';
+          default: return who + ' ' + escapeHtmlClient(entry.type);
+        }
+      }
+
+      function formatLogTimestamp(ts) {
+        try {
+          return new Date(ts).toLocaleString(undefined, {
+            month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+          });
+        } catch (e) {
+          return '';
+        }
+      }
+
+      async function openLogsModal() {
+        if (!currentUser || !currentUser.isAdmin) return;
+        logsModalOverlay.style.display = 'flex';
+        logsModalBody.innerHTML = '<div class="logs-empty">Loading&hellip;</div>';
+        try {
+          const res = await fetch(AUTH_ORIGIN + '/logs', { credentials: 'include' });
+          const data = await res.json();
+          renderLogsList(data.logs || []);
+        } catch (e) {
+          logsModalBody.innerHTML = '<div class="logs-empty">Could not load activity logs.</div>';
+        }
+      }
+
+      function renderLogsList(logs) {
+        if (!logs.length) {
+          logsModalBody.innerHTML = '<div class="logs-empty">No activity in the last 7 days.</div>';
+          return;
+        }
+        logsModalBody.innerHTML = '';
+        logs.forEach(function (entry) {
+          const row = document.createElement('div');
+          row.className = 'log-row';
+          const main = document.createElement('div');
+          main.className = 'log-main';
+          main.innerHTML = describeLog(entry);
+          const time = document.createElement('div');
+          time.className = 'log-time';
+          time.textContent = formatLogTimestamp(entry.timestamp);
+          row.appendChild(main);
+          row.appendChild(time);
+          logsModalBody.appendChild(row);
+        });
+      }
+
+      viewLogsBtn.addEventListener('click', openLogsModal);
+      closeLogsBtn.addEventListener('click', function () {
+        logsModalOverlay.style.display = 'none';
+      });
+      logsModalOverlay.addEventListener('click', function (e) {
+        if (e.target === logsModalOverlay) logsModalOverlay.style.display = 'none';
       });
 
       // ---------- Admin approval panel ----------
@@ -1129,6 +1311,7 @@ h2.block-title {
             adminPanel.style.display = 'block';
             loadPendingRequests();
             loadScheduledStatus();
+            document.getElementById('viewLogsBtn').style.display = 'inline-block';
           }
 
           applyExportPermissions(currentUser.isAdmin);
