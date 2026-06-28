@@ -607,6 +607,22 @@ main.page {
   border-top: 1px solid var(--line);
 }
 
+.scheduled-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border: 1px solid var(--gold);
+  background: var(--bg-raised);
+  border-radius: 6px;
+  padding: 0.7rem 1rem;
+  margin-top: 0.85rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--gold);
+}
+
 .form-status {
   font-family: 'Space Mono', monospace;
   font-size: 0.78rem;
@@ -803,15 +819,20 @@ h2.block-title {
           </div>
         </div>
         <div class="field-hint" style="margin-top:-0.75rem; margin-bottom:1.5rem;">
-          This new article is assumed to be the newest, so it links back to the previous one and forward only to the full article list. After uploading, also add a new entry at the top of the article list on newsletter.html.
+          This new article is assumed to be the newest, so it links back to the previous one and forward only to the full article list. Publishing pushes the file straight to the live site &mdash; you'll still need to add its entry to the article list on newsletter.html afterward.
         </div>
 
         <div class="form-actions">
-          <button type="button" class="btn primary" id="exportBtn">Export HTML file</button>
+          <button type="button" class="btn primary" id="publishNowBtn">Upload Now</button>
+          <button type="button" class="btn primary" id="publishScheduledBtn">Upload Next Friday (20:15 CEST)</button>
           <button type="button" class="btn" id="previewBtn">Preview in new tab</button>
         </div>
         <div class="form-status" id="formStatus"></div>
-        <div class="draft-sync-note" id="exportPermissionNote" style="display:none;">Only Clock1599 can export the final file. Keep editing &mdash; your changes still autosave to the shared draft.</div>
+        <div class="draft-sync-note" id="exportPermissionNote" style="display:none;">Only Clock1599 can publish the final file. Keep editing &mdash; your changes still autosave to the shared draft.</div>
+        <div class="scheduled-banner" id="scheduledBanner" style="display:none;">
+          <span id="scheduledBannerText"></span>
+          <button type="button" class="pr-btn deny" id="cancelScheduledBtn">Cancel</button>
+        </div>
         <div class="draft-sync-note" id="draftSyncNote"></div>
       </section>
     </div>
@@ -1040,18 +1061,23 @@ h2.block-title {
         });
       }
 
-      // ---------- Export permission gating (admin only) ----------
+      // ---------- Publish permission gating (admin only) ----------
 
       function applyExportPermissions(isAdmin) {
-        const exportBtnEl = document.getElementById('exportBtn');
+        const publishNowBtnEl = document.getElementById('publishNowBtn');
+        const publishScheduledBtnEl = document.getElementById('publishScheduledBtn');
         const permissionNote = document.getElementById('exportPermissionNote');
         if (isAdmin) {
-          exportBtnEl.disabled = false;
-          exportBtnEl.title = '';
+          publishNowBtnEl.disabled = false;
+          publishScheduledBtnEl.disabled = false;
+          publishNowBtnEl.title = '';
+          publishScheduledBtnEl.title = '';
           permissionNote.style.display = 'none';
         } else {
-          exportBtnEl.disabled = true;
-          exportBtnEl.title = 'Only Clock1599 can export the final file.';
+          publishNowBtnEl.disabled = true;
+          publishScheduledBtnEl.disabled = true;
+          publishNowBtnEl.title = 'Only Clock1599 can publish the final file.';
+          publishScheduledBtnEl.title = 'Only Clock1599 can publish the final file.';
           permissionNote.style.display = 'block';
         }
       }
@@ -1102,6 +1128,7 @@ h2.block-title {
           if (currentUser.isAdmin) {
             adminPanel.style.display = 'block';
             loadPendingRequests();
+            loadScheduledStatus();
           }
 
           applyExportPermissions(currentUser.isAdmin);
@@ -1757,29 +1784,104 @@ ${prevLink}
 `;
       }
 
-      const exportBtn = document.getElementById('exportBtn');
+      const publishNowBtn = document.getElementById('publishNowBtn');
+      const publishScheduledBtn = document.getElementById('publishScheduledBtn');
       const previewBtn = document.getElementById('previewBtn');
       const formStatus = document.getElementById('formStatus');
+      const scheduledBanner = document.getElementById('scheduledBanner');
+      const scheduledBannerText = document.getElementById('scheduledBannerText');
+      const cancelScheduledBtn = document.getElementById('cancelScheduledBtn');
 
-      exportBtn.addEventListener('click', function () {
+      function setPublishButtonsBusy(busy) {
+        publishNowBtn.disabled = busy || !currentUser || !currentUser.isAdmin;
+        publishScheduledBtn.disabled = busy || !currentUser || !currentUser.isAdmin;
+      }
+
+      async function loadScheduledStatus() {
+        try {
+          const res = await fetch(AUTH_ORIGIN + '/scheduled', { credentials: 'include' });
+          const data = await res.json();
+          renderScheduledBanner(data.scheduled);
+        } catch (e) {
+          // Leave the banner hidden if the check fails; the buttons still work.
+        }
+      }
+
+      function renderScheduledBanner(scheduled) {
+        if (!scheduled) {
+          scheduledBanner.style.display = 'none';
+          return;
+        }
+        const when = new Date(scheduled.scheduledFor).toLocaleString(undefined, {
+          weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+        scheduledBannerText.textContent = '"' + scheduled.filename + '" is scheduled to publish ' + when + '.';
+        scheduledBanner.style.display = 'flex';
+      }
+
+      cancelScheduledBtn.addEventListener('click', async function () {
+        try {
+          await fetch(AUTH_ORIGIN + '/cancel-scheduled', { method: 'POST', credentials: 'include' });
+        } catch (e) {
+          alert('Could not reach the server. Try again.');
+          return;
+        }
+        scheduledBanner.style.display = 'none';
+      });
+
+      async function doPublish(mode) {
         if (!currentUser || !currentUser.isAdmin) {
-          formStatus.textContent = 'Only Clock1599 can export the final file.';
+          formStatus.textContent = 'Only Clock1599 can publish the final file.';
           formStatus.classList.remove('ok');
           return;
         }
+
         const filename = document.getElementById('fFilename').value.trim() || 'newsletter-untitled.html';
         const html = buildArticleHtml();
-        const blob = new Blob([html], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        formStatus.textContent = 'Exported "' + filename + '". Upload it next to the other newsletter pages, then add it to the article list on newsletter.html.';
-        formStatus.classList.add('ok');
+
+        setPublishButtonsBusy(true);
+        formStatus.textContent = mode === 'now' ? 'Publishing\u2026' : 'Scheduling\u2026';
+        formStatus.classList.remove('ok');
+
+        try {
+          const res = await fetch(AUTH_ORIGIN + '/publish', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ mode, filename, html }),
+          });
+          const data = await res.json();
+
+          if (!res.ok || data.error) {
+            formStatus.textContent = 'Publish failed: ' + (data.message || data.error || 'unknown error');
+            formStatus.classList.remove('ok');
+            return;
+          }
+
+          if (mode === 'now') {
+            formStatus.textContent = '"' + filename + '" is live. Remember to add it to the article list on newsletter.html.';
+            formStatus.classList.add('ok');
+          } else {
+            formStatus.textContent = '"' + filename + '" is scheduled for next Friday at 20:15 CEST/CET.';
+            formStatus.classList.add('ok');
+            renderScheduledBanner(data.scheduled);
+          }
+        } catch (e) {
+          formStatus.textContent = 'Could not reach the publishing server. Check your connection and try again.';
+          formStatus.classList.remove('ok');
+        } finally {
+          setPublishButtonsBusy(false);
+        }
+      }
+
+      publishNowBtn.addEventListener('click', function () {
+        if (!confirm('Publish this article to the live site right now?')) return;
+        doPublish('now');
+      });
+
+      publishScheduledBtn.addEventListener('click', function () {
+        if (!confirm('Schedule this article to publish automatically next Friday at 20:15 CEST/CET?')) return;
+        doPublish('scheduled');
       });
 
       previewBtn.addEventListener('click', function () {
