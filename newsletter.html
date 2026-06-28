@@ -65,8 +65,8 @@ a { color: inherit; text-decoration: none; }
 }
 
 .brand img {
-  height: 28px;
-  width: 28px;
+  height: 52px;
+  width: 52px;
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -462,6 +462,11 @@ figure.diagram figcaption {
   margin-bottom: 0.4rem;
 }
 
+.schedule-card .tz strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
 .schedule-card .time {
   font-family: 'Space Mono', monospace;
   font-weight: 700;
@@ -764,19 +769,19 @@ figure.diagram figcaption {
 
       <div class="schedule-grid">
         <div class="schedule-card">
-          <div class="tz">GMT+0</div>
+          <div class="tz"><strong>GMT+0</strong></div>
           <div class="time">18:15 Fri</div>
         </div>
         <div class="schedule-card">
-          <div class="tz">CET / CEST</div>
+          <div class="tz">CET / <strong>CEST</strong></div>
           <div class="time">20:15 Fri</div>
         </div>
         <div class="schedule-card">
-          <div class="tz">PST / PDT</div>
+          <div class="tz">PST / <strong>PDT</strong></div>
           <div class="time">11:15 Fri</div>
         </div>
         <div class="schedule-card">
-          <div class="tz">NZST / NZDT</div>
+          <div class="tz"><strong>NZST</strong> / NZDT</div>
           <div class="time">06:15 Sat</div>
         </div>
       </div>
@@ -871,7 +876,7 @@ figure.diagram figcaption {
         const graceMs = 30 * 60 * 1000;
         if (remaining <= 0) {
           labelEl.textContent = 'Publishing now';
-          unitsEl.innerHTML = '<div class="cd-live">Issue is live (or imminent) &mdash; check the article list below</div>';
+          unitsEl.innerHTML = '<div class="cd-live">Article is live (or imminent) &mdash; check the article list below</div>';
           return;
         }
 
