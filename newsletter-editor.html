@@ -638,6 +638,20 @@ main.page {
   color: var(--blue);
 }
 
+.format-btn {
+  padding: 0.45em 0.7em;
+  min-width: 2em;
+  text-align: center;
+  text-transform: none;
+  font-size: 0.75rem;
+}
+
+.toolbar-divider {
+  width: 1px;
+  background: var(--line);
+  margin: 0.2em 0.3em;
+}
+
 .insert-panel {
   display: none;
   border: 1px solid var(--line);
@@ -834,6 +848,10 @@ h2.block-title {
           <label class="field-label" for="fBody">Body text</label>
 
           <div class="insert-toolbar">
+            <button type="button" class="insert-btn format-btn" id="boldBtn" title="Bold selected text"><strong>B</strong></button>
+            <button type="button" class="insert-btn format-btn" id="titleBtn" title="Make selected line a big section title (like &quot;News from the East&quot;)">T</button>
+            <button type="button" class="insert-btn format-btn" id="headingBtn" title="Make selected line a smaller heading">H</button>
+            <span class="toolbar-divider"></span>
             <button type="button" class="insert-btn" id="toggleQuotePanel">+ Citation / Quote</button>
             <button type="button" class="insert-btn" id="toggleAdPanel">+ Ad Banner</button>
             <button type="button" class="insert-btn" id="toggleTipPanel">+ Red Tip</button>
@@ -883,7 +901,7 @@ h2.block-title {
           </div>
 
           <textarea id="fBody" placeholder="Write the article here.&#10;&#10;Leave a blank line between paragraphs — each one becomes its own paragraph on the page."></textarea>
-          <div class="field-hint">Blank line = new paragraph. Use the buttons above to drop in a citation or ad at the cursor position &mdash; don't type those by hand.</div>
+          <div class="field-hint">Blank line = new paragraph. Select text and click <strong>B</strong> to bold it, <strong>T</strong> for a big section title (like "News from the East"), or <strong>H</strong> for a smaller heading. Use the other buttons to drop in a citation, ad, or tip at the cursor &mdash; don't type any of this by hand.</div>
         </div>
 
         <h2 class="block-title">Linking it into the site</h2>
@@ -1427,6 +1445,48 @@ h2.block-title {
       document.getElementById('cancelAdBtn').addEventListener('click', closePanels);
       document.getElementById('cancelTipBtn').addEventListener('click', closePanels);
 
+      // ---------- Bold / Heading formatting buttons ----------
+
+      function wrapSelection(textarea, before, after, placeholder) {
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const selected = textarea.value.slice(start, end);
+        const text = selected || placeholder;
+
+        const newValue =
+          textarea.value.slice(0, start) + before + text + after + textarea.value.slice(end);
+        textarea.value = newValue;
+
+        // Select just the inner text (without the markers) so the person can
+        // immediately type to replace a placeholder, or see what got wrapped.
+        const innerStart = start + before.length;
+        const innerEnd = innerStart + text.length;
+        textarea.focus();
+        textarea.setSelectionRange(innerStart, innerEnd);
+
+        scheduleDraftSave();
+      }
+
+      document.getElementById('boldBtn').addEventListener('click', function () {
+        wrapSelection(fBody, '**', '**', 'bold text');
+      });
+
+      document.getElementById('titleBtn').addEventListener('click', function () {
+        const start = fBody.selectionStart;
+        const end = fBody.selectionEnd;
+        const selected = fBody.value.slice(start, end).trim();
+        insertAtCursor(fBody, '# ' + (selected || 'News from the East'));
+        scheduleDraftSave();
+      });
+
+      document.getElementById('headingBtn').addEventListener('click', function () {
+        const start = fBody.selectionStart;
+        const end = fBody.selectionEnd;
+        const selected = fBody.value.slice(start, end).trim();
+        insertAtCursor(fBody, '## ' + (selected || 'Section heading'));
+        scheduleDraftSave();
+      });
+
       function insertAtCursor(textarea, text) {
         const start = textarea.selectionStart;
         const end = textarea.selectionEnd;
@@ -1519,6 +1579,13 @@ h2.block-title {
         });
       }
 
+      function renderBold(escapedText) {
+        // escapedText has already been through escapeHtml, so raw ** is safe
+        // to match as-is. Non-greedy so multiple **bold** spans in one
+        // paragraph each resolve independently.
+        return escapedText.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      }
+
       function paragraphsHtml(raw) {
         const blocks = raw.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
         return blocks
@@ -1528,7 +1595,7 @@ h2.block-title {
               const qText = quoteMatch[1].trim();
               const qCite = quoteMatch[2].trim();
               return '      <blockquote class="pull-quote">\n        '
-                + escapeHtml(qText)
+                + renderBold(escapeHtml(qText))
                 + '\n        <cite>— ' + escapeHtml(qCite) + '</cite>\n      </blockquote>';
             }
 
@@ -1548,10 +1615,22 @@ h2.block-title {
             if (tipMatch) {
               const tipText = tipMatch[1].trim();
               return '      <div class="callout">\n        <p>'
-                + renderInlineLinks(escapeHtml(tipText)) + '</p>\n      </div>';
+                + renderBold(renderInlineLinks(escapeHtml(tipText))) + '</p>\n      </div>';
             }
 
-            return '      <p>' + renderInlineLinks(escapeHtml(b).replace(/\n/g, '<br>')) + '</p>';
+            const titleMatch = b.match(/^#\s+(.+)$/);
+            if (titleMatch) {
+              const titleText = titleMatch[1].trim();
+              return '      <h2 class="block-title">' + renderBold(escapeHtml(titleText)) + '</h2>';
+            }
+
+            const headingMatch = b.match(/^##\s+(.+)$/);
+            if (headingMatch) {
+              const headingText = headingMatch[1].trim();
+              return '      <h3 class="sub-title">' + renderBold(escapeHtml(headingText)) + '</h3>';
+            }
+
+            return '      <p>' + renderBold(renderInlineLinks(escapeHtml(b).replace(/\n/g, '<br>'))) + '</p>';
           })
           .join('\n');
       }
@@ -1819,6 +1898,24 @@ p {
 }
 
 strong { color: var(--text); font-weight: 600; }
+
+h2.block-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line);
+}
+
+h3.sub-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--blue);
+  margin: 1.5rem 0 0.75rem;
+}
 
 .byline {
   font-family: 'Space Mono', monospace;
