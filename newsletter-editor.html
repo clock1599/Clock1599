@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Editor — The New Brass Rail Transit</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --red: #9F0000;
+  --blue: #00009F;
+  --gold: #B5A642;
+  --bg: #0A0A0A;
+  --bg-raised: #131110;
+  --text: #E8E4DC;
+  --text-dim: #6B6660;
+  --line: #232020;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* ---------- Site Header / Nav (kept consistent with rest of site) ---------- */
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 2rem;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(6px);
+  z-index: 50;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: 260px;
+}
+
+.brand-text {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  color: var(--gold);
+  line-height: 1.2;
+}
+
+@media (min-width: 900px) {
+  .brand-text { font-size: 1.15rem; }
+}
+
+nav.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+nav.main-nav a {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0.5em 0.8em;
+  border-radius: 2px;
+  transition: color 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
+}
+
+nav.main-nav a:hover {
+  color: var(--text);
+  background: var(--bg-raised);
+}
+
+@media (max-width: 760px) {
+  .site-header { flex-wrap: wrap; padding: 1rem 1.25rem; }
+  nav.main-nav { gap: 0.15rem; width: 100%; padding-top: 0.75rem; border-top: 1px solid var(--line); }
+  nav.main-nav a { font-size: 0.68rem; padding: 0.45em 0.65em; }
+}
+
+/* ---------- Page shell ---------- */
+
+main.page {
+  flex: 1;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 5rem;
+}
+
+.page-kicker {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.page-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 4.2vw, 2.2rem);
+  line-height: 1.15;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.page-rule {
+  width: 56px;
+  height: 3px;
+  background: var(--blue);
+  margin: 1.25rem auto 2.25rem;
+}
+
+.page-intro {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-dim);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* ---------- Lock screen ---------- */
+
+.lock-wrap {
+  max-width: 360px;
+  margin: 2rem auto 0;
+  text-align: center;
+}
+
+.lock-wrap input[type="password"] {
+  width: 100%;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.95rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 0.85rem;
+}
+
+.lock-wrap input[type="password"]:focus {
+  border-color: var(--blue);
+}
+
+.btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.btn.primary {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.btn.primary:hover {
+  background: var(--blue);
+  color: var(--text);
+}
+
+.lock-error {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--red);
+  margin-top: 0.75rem;
+  min-height: 1.2em;
+}
+
+.lock-note {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+  margin-top: 2rem;
+  line-height: 1.6;
+}
+
+/* ---------- Editor form ---------- */
+
+#editorArea { display: none; }
+
+.field-group {
+  margin-bottom: 1.5rem;
+}
+
+.field-label {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+
+.field-hint {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-top: 0.4rem;
+  line-height: 1.5;
+}
+
+.field-group input[type="text"],
+.field-group textarea {
+  width: 100%;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.95rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 0.7rem 0.9rem;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.field-group input[type="text"]:focus,
+.field-group textarea:focus {
+  border-color: var(--blue);
+}
+
+.field-group textarea {
+  min-height: 220px;
+  line-height: 1.6;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 560px) {
+  .field-row { grid-template-columns: 1fr; }
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.form-status {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-top: 1rem;
+}
+
+.form-status.ok { color: #4CAF50; }
+
+h2.block-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line);
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.site-footer .accent { color: var(--blue); }
+
+@media (max-width: 480px) {
+  main.page { padding: 2.5rem 1.25rem 4rem; }
+}
+
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-text">The New Brass Rail Transit Authority</span>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="newsletter.html">Newsletter</a>
+      <a href="credits.html">Credits</a>
+    </nav>
+  </header>
+
+  <main class="page">
+
+    <div id="lockArea">
+      <div class="page-kicker">Restricted</div>
+      <h1 class="page-title">Newsletter Editor</h1>
+      <div class="page-rule"></div>
+      <p class="page-intro">This area is for Clock1599 only. Enter the password to continue.</p>
+
+      <div class="lock-wrap">
+        <input type="password" id="pwInput" placeholder="Password" autocomplete="off">
+        <br>
+        <button type="button" class="btn primary" id="unlockBtn">Unlock</button>
+        <div class="lock-error" id="lockError"></div>
+        <div class="lock-note">
+          Note: this is a static site with no server, so this lock only deters casual clicking around &mdash; it isn't real access control. Don't put anything here you wouldn't want a determined visitor to see.
+        </div>
+      </div>
+    </div>
+
+    <div id="editorArea">
+      <div class="page-kicker">Clock1599 Only</div>
+      <h1 class="page-title">Newsletter Editor</h1>
+      <div class="page-rule"></div>
+      <p class="page-intro">Fill this in, then export. It builds a ready-to-upload HTML file styled to match the site &mdash; just drop it next to the other newsletter pages.</p>
+
+      <section>
+        <h2 class="block-title">Article details</h2>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label" for="fTitle">Title</label>
+            <input type="text" id="fTitle" placeholder="e.g. The Switch Yard Expansion">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="fDate">Date (as shown, e.g. June 26)</label>
+            <input type="text" id="fDate" placeholder="June 26">
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="fByline">Byline</label>
+          <input type="text" id="fByline" value="Clock1599">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="fBody">Body text</label>
+          <textarea id="fBody" placeholder="Write the article here.&#10;&#10;Leave a blank line between paragraphs &mdash; each one becomes its own paragraph on the page."></textarea>
+          <div class="field-hint">Blank line = new paragraph. No other formatting needed.</div>
+        </div>
+
+        <h2 class="block-title">Linking it into the site</h2>
+
+        <div class="field-group">
+          <label class="field-label" for="fFilename">Output filename</label>
+          <input type="text" id="fFilename" placeholder="newsletter-june26.html">
+          <div class="field-hint">This is the file you'll upload. Use the same naming pattern as existing issues.</div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label" for="fPrevLabel">"Previous article" link text</label>
+            <input type="text" id="fPrevLabel" placeholder="e.g. ← Clock1599 is a Real Person... — June 19">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="fPrevHref">"Previous article" filename</label>
+            <input type="text" id="fPrevHref" placeholder="newsletter-june19.html">
+          </div>
+        </div>
+        <div class="field-hint" style="margin-top:-0.75rem; margin-bottom:1.5rem;">
+          This new article is assumed to be the newest, so it links back to the previous one and forward only to the full article list. After uploading, also add a new entry at the top of the article list on newsletter.html.
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn primary" id="exportBtn">Export HTML file</button>
+          <button type="button" class="btn" id="previewBtn">Preview in new tab</button>
+          <button type="button" class="btn" id="lockAgainBtn">Lock again</button>
+        </div>
+        <div class="form-status" id="formStatus"></div>
+      </section>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    The New Brass Rail Transit Authority &middot; Maintained by <span class="accent">Clock1599</span>
+  </footer>
+
+  <script>
+    (function () {
+      const PASSWORD = "Clock1599LovesNBRTA";
+
+      const lockArea = document.getElementById('lockArea');
+      const editorArea = document.getElementById('editorArea');
+      const pwInput = document.getElementById('pwInput');
+      const unlockBtn = document.getElementById('unlockBtn');
+      const lockError = document.getElementById('lockError');
+      const lockAgainBtn = document.getElementById('lockAgainBtn');
+
+      function tryUnlock() {
+        if (pwInput.value === PASSWORD) {
+          lockArea.style.display = 'none';
+          editorArea.style.display = 'block';
+          lockError.textContent = '';
+        } else {
+          lockError.textContent = 'Wrong password.';
+        }
+      }
+
+      unlockBtn.addEventListener('click', tryUnlock);
+      pwInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') tryUnlock();
+      });
+
+      lockAgainBtn.addEventListener('click', function () {
+        editorArea.style.display = 'none';
+        lockArea.style.display = 'block';
+        pwInput.value = '';
+        lockError.textContent = '';
+      });
+
+      // ---------- Export logic ----------
+
+      function escapeHtml(str) {
+        return str
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
+
+      function paragraphsHtml(raw) {
+        const blocks = raw.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
+        return blocks
+          .map(b => '      <p>' + escapeHtml(b).replace(/\n/g, '<br>') + '</p>')
+          .join('\n');
+      }
+
+      function buildArticleHtml() {
+        const title = document.getElementById('fTitle').value.trim() || 'Untitled';
+        const date = document.getElementById('fDate').value.trim() || '';
+        const byline = document.getElementById('fByline').value.trim() || 'Clock1599';
+        const body = document.getElementById('fBody').value;
+        const prevLabel = document.getElementById('fPrevLabel').value.trim();
+        const prevHref = document.getElementById('fPrevHref').value.trim();
+
+        const kicker = 'NBRT Newsletter' + (date ? ' &middot; ' + escapeHtml(date) : '');
+
+        const prevLink = (prevHref && prevLabel)
+          ? '      <a href="' + escapeHtml(prevHref) + '">' + escapeHtml(prevLabel) + '</a>'
+          : '      <span></span>';
+
+        return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${escapeHtml(title)} — NBRT Newsletter</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --red: #9F0000;
+  --blue: #00009F;
+  --gold: #B5A642;
+  --bg: #0A0A0A;
+  --bg-raised: #131110;
+  --text: #E8E4DC;
+  --text-dim: #6B6660;
+  --line: #232020;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 2rem;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(6px);
+  z-index: 50;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: 260px;
+}
+
+.brand img {
+  height: 28px;
+  width: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  color: var(--gold);
+  line-height: 1.2;
+}
+
+@media (min-width: 900px) {
+  .brand-text { font-size: 1.15rem; }
+}
+
+nav.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  position: relative;
+}
+
+nav.main-nav a {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0.5em 0.8em;
+  border-radius: 2px;
+  transition: color 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
+}
+
+nav.main-nav a:hover {
+  color: var(--text);
+  background: var(--bg-raised);
+}
+
+nav.main-nav a.active {
+  color: var(--blue);
+}
+
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown > button {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0.5em 0.8em;
+  border-radius: 2px;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-weight: inherit;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.nav-dropdown > button:hover,
+.nav-dropdown.open > button {
+  color: var(--text);
+  background: var(--bg-raised);
+}
+
+.nav-dropdown > button.active {
+  color: var(--blue);
+}
+
+.nav-dropdown > button .caret {
+  font-size: 0.6rem;
+  transition: transform 0.15s ease;
+}
+
+.nav-dropdown.open > button .caret {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  min-width: 180px;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.4rem;
+  display: none;
+  flex-direction: column;
+  gap: 0.1rem;
+  z-index: 60;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.nav-dropdown.open .nav-dropdown-menu {
+  display: flex;
+}
+
+.nav-dropdown-menu a {
+  padding: 0.55em 0.7em;
+  border-radius: 4px;
+  font-size: 0.72rem;
+}
+
+.nav-dropdown-menu a:hover {
+  background: var(--line);
+  color: var(--text);
+}
+
+.nav-dropdown-menu a.active {
+  color: var(--blue);
+}
+
+@media (max-width: 760px) {
+  .site-header { flex-wrap: wrap; padding: 1rem 1.25rem; }
+  nav.main-nav { gap: 0.15rem; width: 100%; padding-top: 0.75rem; border-top: 1px solid var(--line); }
+  nav.main-nav a, .nav-dropdown > button { font-size: 0.68rem; padding: 0.45em 0.65em; }
+  .nav-dropdown-menu { position: static; box-shadow: none; margin-top: 0.2rem; margin-left: 0.5rem; border: none; background: transparent; padding: 0; }
+  .nav-dropdown.open .nav-dropdown-menu { display: flex; }
+}
+
+main.page {
+  flex: 1;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 5rem;
+}
+
+.page-kicker {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.page-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 4.2vw, 2.2rem);
+  line-height: 1.15;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.page-rule {
+  width: 56px;
+  height: 3px;
+  background: var(--blue);
+  margin: 1.25rem auto 2.25rem;
+}
+
+section.block {
+  margin-bottom: 3rem;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+strong { color: var(--text); font-weight: 600; }
+
+.byline {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  letter-spacing: 0.03em;
+  margin-bottom: 1.5rem;
+}
+
+.byline strong { color: var(--blue); }
+
+.article-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+}
+
+.article-nav a {
+  color: var(--blue);
+}
+
+.article-nav a:hover {
+  text-decoration: underline;
+}
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.site-footer .accent { color: var(--blue); }
+
+@media (max-width: 480px) {
+  main.page { padding: 2.5rem 1.25rem 4rem; }
+}
+
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-text">The New Brass Rail Transit Authority</span>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <div class="nav-dropdown" id="regDropdown">
+        <button type="button" onclick="document.getElementById('regDropdown').classList.toggle('open')">Regulations <span class="caret">&#9662;</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="regulations.html">Overview</a>
+          <a href="signalling.html">Signalling</a>
+          <a href="track-sizing.html">Track Sizing</a>
+          <a href="train-sizing.html">Train Sizing</a>
+        </div>
+      </div>
+      <a href="newsletter.html" class="active">Newsletter</a>
+      <a href="credits.html">Credits</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="page-kicker">${kicker}</div>
+    <h1 class="page-title" style="font-size: clamp(1.8rem, 5vw, 2.6rem);">${escapeHtml(title)}</h1>
+    <div class="page-rule"></div>
+
+    <div class="byline">Written by <strong>${escapeHtml(byline)}</strong></div>
+
+    <section class="block">
+${paragraphsHtml(body)}
+    </section>
+
+    <div class="article-nav">
+${prevLink}
+      <a href="newsletter.html">All articles</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    The New Brass Rail Transit Authority &middot; Maintained by <span class="accent">Clock1599</span>
+  </footer>
+
+</body>
+</html>
+`;
+      }
+
+      const exportBtn = document.getElementById('exportBtn');
+      const previewBtn = document.getElementById('previewBtn');
+      const formStatus = document.getElementById('formStatus');
+
+      exportBtn.addEventListener('click', function () {
+        const filename = document.getElementById('fFilename').value.trim() || 'newsletter-untitled.html';
+        const html = buildArticleHtml();
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        formStatus.textContent = 'Exported "' + filename + '". Upload it next to the other newsletter pages, then add it to the article list on newsletter.html.';
+        formStatus.classList.add('ok');
+      });
+
+      previewBtn.addEventListener('click', function () {
+        const html = buildArticleHtml();
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+        formStatus.textContent = 'Opened a preview in a new tab.';
+        formStatus.classList.remove('ok');
+      });
+    })();
+  </script>
+
+</body>
+</html>
