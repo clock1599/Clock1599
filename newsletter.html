@@ -700,8 +700,44 @@ figure.diagram figcaption {
 
 .site-footer .accent { color: var(--blue); }
 
-.site-footer .footer-dot {
-  color: var(--text-dim);
+/* ---------- Editor entry point (squared island, above footer) ---------- */
+
+.editor-entry-wrap {
+  width: 100%;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.editor-fab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  padding: 0.85em 1.2em;
+  border-radius: 6px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.editor-fab:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.editor-fab svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .editor-fab { font-size: 0.66rem; padding: 0.75em 1em; }
 }
 
 @media (max-width: 480px) {
@@ -804,11 +840,19 @@ figure.diagram figcaption {
         </a>
       </div>
     </section>
+
+    <div class="editor-entry-wrap">
+      <a href="newsletter-editor.html" class="editor-fab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+        Start Editing
+      </a>
+    </div>
   </main>
 
   <footer class="site-footer">
-    The New Brass Rail Transit Authority <a href="newsletter-editor.html" class="footer-dot">&middot;</a> Maintained by <span class="accent">Clock1599</span>
+    The New Brass Rail Transit Authority &middot; Maintained by <span class="accent">Clock1599</span>
   </footer>
+
   <script>
     // Countdown to the next Friday 20:15 in Europe (CET/CEST), handled
     // automatically via Europe/Berlin so DST switches don't break it.
