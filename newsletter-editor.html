@@ -262,6 +262,15 @@ main.page {
   color: var(--text);
 }
 
+.btn:disabled,
+.btn:disabled:hover {
+  cursor: not-allowed;
+  opacity: 0.4;
+  border-color: var(--line);
+  color: var(--text-dim);
+  background: var(--bg-raised);
+}
+
 /* ---------- GitHub auth states ---------- */
 
 .gh-btn {
@@ -802,6 +811,7 @@ h2.block-title {
           <button type="button" class="btn" id="previewBtn">Preview in new tab</button>
         </div>
         <div class="form-status" id="formStatus"></div>
+        <div class="draft-sync-note" id="exportPermissionNote" style="display:none;">Only Clock1599 can export the final file. Keep editing &mdash; your changes still autosave to the shared draft.</div>
         <div class="draft-sync-note" id="draftSyncNote"></div>
       </section>
     </div>
@@ -1030,6 +1040,22 @@ h2.block-title {
         });
       }
 
+      // ---------- Export permission gating (admin only) ----------
+
+      function applyExportPermissions(isAdmin) {
+        const exportBtnEl = document.getElementById('exportBtn');
+        const permissionNote = document.getElementById('exportPermissionNote');
+        if (isAdmin) {
+          exportBtnEl.disabled = false;
+          exportBtnEl.title = '';
+          permissionNote.style.display = 'none';
+        } else {
+          exportBtnEl.disabled = true;
+          exportBtnEl.title = 'Only Clock1599 can export the final file.';
+          permissionNote.style.display = 'block';
+        }
+      }
+
       // ---------- Session check on page load ----------
 
       async function checkSession() {
@@ -1077,6 +1103,8 @@ h2.block-title {
             adminPanel.style.display = 'block';
             loadPendingRequests();
           }
+
+          applyExportPermissions(currentUser.isAdmin);
 
           showEditorArea();
           wireDraftAutosave();
@@ -1734,6 +1762,11 @@ ${prevLink}
       const formStatus = document.getElementById('formStatus');
 
       exportBtn.addEventListener('click', function () {
+        if (!currentUser || !currentUser.isAdmin) {
+          formStatus.textContent = 'Only Clock1599 can export the final file.';
+          formStatus.classList.remove('ok');
+          return;
+        }
         const filename = document.getElementById('fFilename').value.trim() || 'newsletter-untitled.html';
         const html = buildArticleHtml();
         const blob = new Blob([html], { type: 'text/html' });
