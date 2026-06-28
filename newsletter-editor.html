@@ -1475,7 +1475,7 @@ h2.block-title {
         const start = fBody.selectionStart;
         const end = fBody.selectionEnd;
         const selected = fBody.value.slice(start, end).trim();
-        insertAtCursor(fBody, '# ' + (selected || 'News from the East'));
+        insertAtCursor(fBody, selected ? '# ' + selected : '# ');
         scheduleDraftSave();
       });
 
@@ -1483,7 +1483,7 @@ h2.block-title {
         const start = fBody.selectionStart;
         const end = fBody.selectionEnd;
         const selected = fBody.value.slice(start, end).trim();
-        insertAtCursor(fBody, '## ' + (selected || 'Section heading'));
+        insertAtCursor(fBody, selected ? '## ' + selected : '## ');
         scheduleDraftSave();
       });
 
