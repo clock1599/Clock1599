@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Editor — The New Brass Rail Transit</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --red: #9F0000;
+  --blue: #00009F;
+  --gold: #B5A642;
+  --bg: #0A0A0A;
+  --bg-raised: #131110;
+  --text: #E8E4DC;
+  --text-dim: #6B6660;
+  --line: #232020;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* ---------- Site Header / Nav (kept consistent with rest of site) ---------- */
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 2rem;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(6px);
+  z-index: 50;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: 260px;
+}
+
+.brand img {
+  height: 52px;
+  width: 52px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  color: var(--gold);
+  line-height: 1.2;
+}
+
+@media (min-width: 900px) {
+  .brand-text { font-size: 1.15rem; }
+}
+
+nav.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  position: relative;
+}
+
+nav.main-nav a {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0.5em 0.8em;
+  border-radius: 2px;
+  transition: color 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
+}
+
+nav.main-nav a:hover {
+  color: var(--text);
+  background: var(--bg-raised);
+}
+
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown > button {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0.5em 0.8em;
+  border-radius: 2px;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-weight: inherit;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.nav-dropdown > button:hover,
+.nav-dropdown.open > button {
+  color: var(--text);
+  background: var(--bg-raised);
+}
+
+.nav-dropdown > button .caret {
+  font-size: 0.6rem;
+  transition: transform 0.15s ease;
+}
+
+.nav-dropdown.open > button .caret {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  min-width: 180px;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.4rem;
+  display: none;
+  flex-direction: column;
+  gap: 0.1rem;
+  z-index: 60;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.nav-dropdown.open .nav-dropdown-menu {
+  display: flex;
+}
+
+.nav-dropdown-menu a {
+  padding: 0.55em 0.7em;
+  border-radius: 4px;
+  font-size: 0.72rem;
+}
+
+.nav-dropdown-menu a:hover {
+  background: var(--line);
+  color: var(--text);
+}
+
+@media (max-width: 760px) {
+  .site-header { flex-wrap: wrap; padding: 1rem 1.25rem; }
+  nav.main-nav { gap: 0.15rem; width: 100%; padding-top: 0.75rem; border-top: 1px solid var(--line); }
+  nav.main-nav a, .nav-dropdown > button { font-size: 0.68rem; padding: 0.45em 0.65em; }
+  .nav-dropdown-menu { position: static; box-shadow: none; margin-top: 0.2rem; margin-left: 0.5rem; border: none; background: transparent; padding: 0; }
+  .nav-dropdown.open .nav-dropdown-menu { display: flex; }
+}
+
+/* ---------- Page shell ---------- */
+
+main.page {
+  flex: 1;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 5rem;
+}
+
+.page-kicker {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.page-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 4.2vw, 2.2rem);
+  line-height: 1.15;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.page-rule {
+  width: 56px;
+  height: 3px;
+  background: var(--blue);
+  margin: 1.25rem auto 2.25rem;
+}
+
+.page-intro {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-dim);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* ---------- Lock screen ---------- */
+
+.btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.btn.primary {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.btn.primary:hover {
+  background: var(--blue);
+  color: var(--text);
+}
+
+.btn:disabled,
+.btn:disabled:hover {
+  cursor: not-allowed;
+  opacity: 0.4;
+  border-color: var(--line);
+  color: var(--text-dim);
+  background: var(--bg-raised);
+}
+
+/* ---------- GitHub auth states ---------- */
+
+.gh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  color: var(--bg);
+  background: var(--text);
+  border: 1px solid var(--text);
+  padding: 0.75rem 1.4rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.gh-btn:hover { opacity: 0.85; }
+
+.gh-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+.auth-status-box {
+  max-width: 420px;
+  margin: 2rem auto 0;
+  text-align: center;
+}
+
+.auth-spinner-note {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-top: 1rem;
+}
+
+.pending-box {
+  border: 1px solid var(--gold);
+  background: var(--bg-raised);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.pending-box .pb-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.pending-box p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+
+.error-box {
+  border: 1px solid var(--red);
+  background: var(--bg-raised);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin-top: 1.5rem;
+  text-align: left;
+  font-size: 0.88rem;
+  color: var(--text-dim);
+}
+
+/* Session bar shown once logged in */
+
+.session-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+  border-radius: 6px;
+  padding: 0.75rem 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.session-bar .session-who {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.session-bar .session-who img {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+}
+
+.session-bar .session-who strong {
+  color: var(--text);
+}
+
+.session-bar .session-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.admin-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 0.15em 0.5em;
+  border-radius: 3px;
+}
+
+/* Admin approval panel */
+
+.admin-panel {
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.admin-panel .ap-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.admin-panel .ap-empty {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.pending-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.pending-row:last-child { border-bottom: none; }
+
+.pending-row .pr-who {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+}
+
+.pending-row .pr-who img {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}
+
+.pending-row .pr-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pr-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.4em 0.8em;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+  color: var(--text-dim);
+}
+
+.pr-btn.approve {
+  border-color: #4CAF50;
+  color: #4CAF50;
+}
+.pr-btn.approve:hover { background: #4CAF50; color: var(--text); }
+
+.pr-btn.deny {
+  border-color: var(--red);
+  color: var(--red);
+}
+.pr-btn.deny:hover { background: var(--red); color: var(--text); }
+
+.draft-sync-note {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-top: 0.5rem;
+}
+
+.draft-sync-note.saving { color: var(--gold); }
+.draft-sync-note.saved { color: #4CAF50; }
+
+/* ---------- Editor form ---------- */
+
+#editorArea { display: none; }
+
+.field-group {
+  margin-bottom: 1.5rem;
+}
+
+.field-label {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+
+.field-hint {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-top: 0.4rem;
+  line-height: 1.5;
+}
+
+.field-group input[type="text"],
+.field-group textarea {
+  width: 100%;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.95rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 0.7rem 0.9rem;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.field-group input[type="text"]:focus,
+.field-group textarea:focus {
+  border-color: var(--blue);
+}
+
+.field-group textarea {
+  min-height: 220px;
+  line-height: 1.6;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.insert-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.insert-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  padding: 0.45em 0.8em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.insert-btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.insert-panel {
+  display: none;
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.insert-panel.open { display: block; }
+
+.insert-panel .field-group { margin-bottom: 0.85rem; }
+.insert-panel .field-group:last-child { margin-bottom: 0; }
+
+.insert-panel-actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.85rem;
+}
+
+.insert-btn.small {
+  padding: 0.4em 0.7em;
+  font-size: 0.65rem;
+}
+
+.insert-btn.primary {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.insert-btn.primary:hover {
+  background: var(--blue);
+  color: var(--text);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 560px) {
+  .field-row { grid-template-columns: 1fr; }
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.form-status {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-top: 1rem;
+}
+
+.form-status.ok { color: #4CAF50; }
+
+h2.block-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line);
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.site-footer .accent { color: var(--blue); }
+
+@media (max-width: 480px) {
+  main.page { padding: 2.5rem 1.25rem 4rem; }
+}
+
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="brand">
+      <img src="data:image/png;base64,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" alt="">
+      <span class="brand-text">The New Brass Rail Transit Authority</span>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <div class="nav-dropdown" id="regDropdownEditor">
+        <button type="button" onclick="document.getElementById('regDropdownEditor').classList.toggle('open')">Regulations <span class="caret">&#9662;</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="regulations.html">Overview</a>
+          <a href="signalling.html">Signalling</a>
+          <a href="track-sizing.html">Track Sizing</a>
+          <a href="train-sizing.html">Train Sizing</a>
+        </div>
+      </div>
+      <a href="newsletter.html">Newsletter</a>
+      <a href="credits.html">Credits</a>
+    </nav>
+  </header>
+
+  <main class="page">
+
+    <div id="lockArea">
+      <div class="page-kicker">Restricted</div>
+      <h1 class="page-title">Newsletter Editor</h1>
+      <div class="page-rule"></div>
+      <p class="page-intro">Sign in with GitHub to continue. New accounts need approval from Clock1599 before they can edit.</p>
+
+      <div class="auth-status-box" id="authStatusBox">
+        <button type="button" class="gh-btn" id="githubLoginBtn">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.02 1.93-.02 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+          Sign in with GitHub
+        </button>
+        <div class="auth-spinner-note" id="authSpinnerNote"></div>
+      </div>
+    </div>
+
+    <div id="editorArea">
+      <div class="page-kicker" id="editorKicker">Clock1599 Only</div>
+      <h1 class="page-title">Newsletter Editor</h1>
+      <div class="page-rule"></div>
+      <p class="page-intro">Fill this in &mdash; it autosaves as a shared draft, so anyone approved can pick up where you left off. Export when ready, then upload the file.</p>
+
+      <div class="session-bar">
+        <div class="session-who">
+          <img id="sessionAvatar" src="" alt="">
+          <span>Signed in as <strong id="sessionUsername"></strong></span>
+          <span class="admin-tag" id="sessionAdminTag" style="display:none;">Admin</span>
+        </div>
+        <div class="session-actions">
+          <button type="button" class="btn" id="logoutBtn">Sign out</button>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="adminPanel" style="display:none;">
+        <div class="ap-title">Pending access requests</div>
+        <div id="pendingList"><div class="ap-empty">Loading&hellip;</div></div>
+      </div>
+
+      <section>
+        <h2 class="block-title">Article details</h2>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label" for="fTitle">Title</label>
+            <input type="text" id="fTitle" placeholder="e.g. The Switch Yard Expansion">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="fDate">Date (as shown, e.g. June 26)</label>
+            <input type="text" id="fDate" placeholder="June 26">
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="fByline">Byline</label>
+          <input type="text" id="fByline" value="Clock1599">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="fBody">Body text</label>
+
+          <div class="insert-toolbar">
+            <button type="button" class="insert-btn" id="toggleQuotePanel">+ Citation / Quote</button>
+            <button type="button" class="insert-btn" id="toggleAdPanel">+ Ad Banner</button>
+            <button type="button" class="insert-btn" id="toggleTipPanel">+ Red Tip</button>
+          </div>
+
+          <div class="insert-panel" id="quotePanel">
+            <div class="field-group">
+              <label class="field-label" for="qText">Quote text</label>
+              <input type="text" id="qText" placeholder="e.g. The new spur will double capacity by autumn.">
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="qCite">Attribution (name, date)</label>
+              <input type="text" id="qCite" placeholder="e.g. TehGizmoNator, June 26th">
+            </div>
+            <div class="insert-panel-actions">
+              <button type="button" class="insert-btn small primary" id="insertQuoteBtn">Insert at cursor</button>
+              <button type="button" class="insert-btn small" id="cancelQuoteBtn">Cancel</button>
+            </div>
+          </div>
+
+          <div class="insert-panel" id="adPanel">
+            <div class="field-group">
+              <label class="field-label" for="adLabel">Ad label</label>
+              <input type="text" id="adLabel" value="Paid Promotion — Contact Clock1599 to Advertise">
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="adImage">Ad image</label>
+              <input type="file" id="adImage" accept="image/*">
+              <div class="field-hint">Image gets embedded directly in the exported file &mdash; no separate upload needed.</div>
+            </div>
+            <div class="insert-panel-actions">
+              <button type="button" class="insert-btn small primary" id="insertAdBtn">Insert at cursor</button>
+              <button type="button" class="insert-btn small" id="cancelAdBtn">Cancel</button>
+            </div>
+          </div>
+
+          <div class="insert-panel" id="tipPanel">
+            <div class="field-group">
+              <label class="field-label" for="tipText">Tip text</label>
+              <input type="text" id="tipText" placeholder="e.g. Request a station by contacting the commissioners listed in [Full Credits](credits.html).">
+              <div class="field-hint">Use [link text](url) for a link &mdash; it becomes a real, blue link on export. Plain text works fine too.</div>
+            </div>
+            <div class="insert-panel-actions">
+              <button type="button" class="insert-btn small primary" id="insertTipBtn">Insert at cursor</button>
+              <button type="button" class="insert-btn small" id="cancelTipBtn">Cancel</button>
+            </div>
+          </div>
+
+          <textarea id="fBody" placeholder="Write the article here.&#10;&#10;Leave a blank line between paragraphs — each one becomes its own paragraph on the page."></textarea>
+          <div class="field-hint">Blank line = new paragraph. Use the buttons above to drop in a citation or ad at the cursor position &mdash; don't type those by hand.</div>
+        </div>
+
+        <h2 class="block-title">Linking it into the site</h2>
+
+        <div class="field-group">
+          <label class="field-label" for="fFilename">Output filename</label>
+          <input type="text" id="fFilename" placeholder="newsletter-june26.html">
+          <div class="field-hint">Autofilled to the next Friday's issue &mdash; change it if you're writing a different one.</div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label" for="fPrevLabel">"Previous article" link text</label>
+            <input type="text" id="fPrevLabel" placeholder="e.g. ← Clock1599 is a Real Person... — June 19">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="fPrevHref">"Previous article" filename</label>
+            <input type="text" id="fPrevHref" placeholder="newsletter-june19.html">
+          </div>
+        </div>
+        <div class="field-hint" style="margin-top:-0.75rem; margin-bottom:1.5rem;">
+          This new article is assumed to be the newest, so it links back to the previous one and forward only to the full article list. After uploading, also add a new entry at the top of the article list on newsletter.html.
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn primary" id="exportBtn">Export HTML file</button>
+          <button type="button" class="btn" id="previewBtn">Preview in new tab</button>
+        </div>
+        <div class="form-status" id="formStatus"></div>
+        <div class="draft-sync-note" id="exportPermissionNote" style="display:none;">Only Clock1599 can export the final file. Keep editing &mdash; your changes still autosave to the shared draft.</div>
+        <div class="draft-sync-note" id="draftSyncNote"></div>
+      </section>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    The New Brass Rail Transit Authority &middot; Maintained by <span class="accent">Clock1599</span>
+  </footer>
+
+  <script>
+    (function () {
+      const AUTH_ORIGIN = "https://auth.clock1599-official.workers.dev";
+
+      const lockArea = document.getElementById('lockArea');
+      const editorArea = document.getElementById('editorArea');
+      const authSpinnerNote = document.getElementById('authSpinnerNote');
+      const githubLoginBtn = document.getElementById('githubLoginBtn');
+      const sessionAvatar = document.getElementById('sessionAvatar');
+      const sessionUsername = document.getElementById('sessionUsername');
+      const sessionAdminTag = document.getElementById('sessionAdminTag');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const adminPanel = document.getElementById('adminPanel');
+      const pendingList = document.getElementById('pendingList');
+      const draftSyncNote = document.getElementById('draftSyncNote');
+
+      let currentUser = null; // { username, avatarUrl, isAdmin }
+
+      function showLockArea() {
+        lockArea.style.display = 'block';
+        editorArea.style.display = 'none';
+      }
+
+      function showEditorArea() {
+        lockArea.style.display = 'none';
+        editorArea.style.display = 'block';
+      }
+
+      function showPendingMessage() {
+        let box = document.getElementById('pendingMessageBox');
+        if (!box) {
+          box = document.createElement('div');
+          box.id = 'pendingMessageBox';
+          box.className = 'pending-box';
+          box.innerHTML = '<div class="pb-title">Access request sent</div>'
+            + '<p>You signed in with GitHub, but this account hasn\'t been approved yet. Clock1599 needs to approve you before you can use the editor. Check back later, or ask them directly.</p>';
+          document.getElementById('authStatusBox').appendChild(box);
+        }
+      }
+
+      function showErrorMessage() {
+        let box = document.getElementById('errorMessageBox');
+        if (!box) {
+          box = document.createElement('div');
+          box.id = 'errorMessageBox';
+          box.className = 'error-box';
+          box.textContent = 'Something went wrong signing in with GitHub. Please try again.';
+          document.getElementById('authStatusBox').appendChild(box);
+        }
+      }
+
+      githubLoginBtn.addEventListener('click', function () {
+        window.location.href = AUTH_ORIGIN + '/login';
+      });
+
+      logoutBtn.addEventListener('click', async function () {
+        try {
+          await fetch(AUTH_ORIGIN + '/logout', { method: 'POST', credentials: 'include' });
+        } catch (e) {
+          // ignore network errors on logout, just reset the UI
+        }
+        currentUser = null;
+        showLockArea();
+      });
+
+      // ---------- Admin approval panel ----------
+
+      async function loadPendingRequests() {
+        if (!currentUser || !currentUser.isAdmin) return;
+        try {
+          const res = await fetch(AUTH_ORIGIN + '/pending', { credentials: 'include' });
+          const data = await res.json();
+          renderPendingList(data.pending || []);
+        } catch (e) {
+          pendingList.innerHTML = '<div class="ap-empty">Couldn\'t load pending requests.</div>';
+        }
+      }
+
+      function renderPendingList(pending) {
+        if (!pending.length) {
+          pendingList.innerHTML = '<div class="ap-empty">No pending requests right now.</div>';
+          return;
+        }
+        pendingList.innerHTML = '';
+        pending.forEach(function (p) {
+          const row = document.createElement('div');
+          row.className = 'pending-row';
+
+          const who = document.createElement('div');
+          who.className = 'pr-who';
+          const img = document.createElement('img');
+          img.src = p.avatarUrl || '';
+          img.alt = '';
+          const name = document.createElement('span');
+          name.textContent = p.username;
+          who.appendChild(img);
+          who.appendChild(name);
+
+          const actions = document.createElement('div');
+          actions.className = 'pr-actions';
+          const approveBtn = document.createElement('button');
+          approveBtn.type = 'button';
+          approveBtn.className = 'pr-btn approve';
+          approveBtn.textContent = 'Approve';
+          approveBtn.addEventListener('click', function () {
+            respondToRequest(p.username, 'approve');
+          });
+          const denyBtn = document.createElement('button');
+          denyBtn.type = 'button';
+          denyBtn.className = 'pr-btn deny';
+          denyBtn.textContent = 'Deny';
+          denyBtn.addEventListener('click', function () {
+            respondToRequest(p.username, 'deny');
+          });
+          actions.appendChild(approveBtn);
+          actions.appendChild(denyBtn);
+
+          row.appendChild(who);
+          row.appendChild(actions);
+          pendingList.appendChild(row);
+        });
+      }
+
+      async function respondToRequest(username, action) {
+        try {
+          await fetch(AUTH_ORIGIN + '/approve', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, action }),
+          });
+        } catch (e) {
+          alert('Could not reach the server. Try again.');
+          return;
+        }
+        loadPendingRequests();
+      }
+
+      // ---------- Shared draft sync ----------
+
+      let draftSaveTimer = null;
+      let suppressDraftEvents = false;
+      const DRAFT_FIELD_IDS = ['fTitle', 'fDate', 'fByline', 'fBody', 'fFilename', 'fPrevLabel', 'fPrevHref'];
+
+      function collectDraftFields() {
+        const out = {};
+        DRAFT_FIELD_IDS.forEach(function (id) {
+          const el = document.getElementById(id);
+          if (el) out[id] = el.value;
+        });
+        return out;
+      }
+
+      function applyDraftFields(fields) {
+        if (!fields) return;
+        suppressDraftEvents = true;
+        DRAFT_FIELD_IDS.forEach(function (id) {
+          const el = document.getElementById(id);
+          if (el && typeof fields[id] === 'string') el.value = fields[id];
+        });
+        suppressDraftEvents = false;
+      }
+
+      async function loadSharedDraft() {
+        try {
+          const res = await fetch(AUTH_ORIGIN + '/draft', { credentials: 'include' });
+          const data = await res.json();
+          if (data.draft) {
+            applyDraftFields(data.draft);
+            draftSyncNote.textContent = 'Loaded the shared draft' +
+              (data.draft.lastEditedBy ? ' (last edited by ' + data.draft.lastEditedBy + ')' : '') + '.';
+            draftSyncNote.className = 'draft-sync-note saved';
+          } else {
+            draftSyncNote.textContent = 'No shared draft yet \u2014 start writing, it autosaves.';
+            draftSyncNote.className = 'draft-sync-note';
+          }
+          // Autofill date/filename only after we know there wasn't a draft
+          // value already in those fields.
+          autofillNextFriday();
+        } catch (e) {
+          draftSyncNote.textContent = 'Could not load the shared draft. Your edits will still autosave once the connection is back.';
+          draftSyncNote.className = 'draft-sync-note';
+        }
+      }
+
+      async function saveSharedDraftNow() {
+        draftSyncNote.textContent = 'Saving\u2026';
+        draftSyncNote.className = 'draft-sync-note saving';
+        try {
+          await fetch(AUTH_ORIGIN + '/draft', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(collectDraftFields()),
+          });
+          draftSyncNote.textContent = 'Saved.';
+          draftSyncNote.className = 'draft-sync-note saved';
+        } catch (e) {
+          draftSyncNote.textContent = 'Could not save \u2014 check your connection.';
+          draftSyncNote.className = 'draft-sync-note';
+        }
+      }
+
+      function scheduleDraftSave() {
+        if (suppressDraftEvents) return;
+        clearTimeout(draftSaveTimer);
+        draftSyncNote.textContent = 'Unsaved changes\u2026';
+        draftSyncNote.className = 'draft-sync-note';
+        draftSaveTimer = setTimeout(saveSharedDraftNow, 1200);
+      }
+
+      function wireDraftAutosave() {
+        DRAFT_FIELD_IDS.forEach(function (id) {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener('input', scheduleDraftSave);
+        });
+      }
+
+      // ---------- Export permission gating (admin only) ----------
+
+      function applyExportPermissions(isAdmin) {
+        const exportBtnEl = document.getElementById('exportBtn');
+        const permissionNote = document.getElementById('exportPermissionNote');
+        if (isAdmin) {
+          exportBtnEl.disabled = false;
+          exportBtnEl.title = '';
+          permissionNote.style.display = 'none';
+        } else {
+          exportBtnEl.disabled = true;
+          exportBtnEl.title = 'Only Clock1599 can export the final file.';
+          permissionNote.style.display = 'block';
+        }
+      }
+
+      // ---------- Session check on page load ----------
+
+      async function checkSession() {
+        const params = new URLSearchParams(window.location.search);
+        const loginStatus = params.get('login');
+
+        if (loginStatus === 'pending') {
+          showPendingMessage();
+        }
+        if (loginStatus === 'error') {
+          showErrorMessage();
+        }
+        if (loginStatus) {
+          // Clean the query string so a refresh re-checks the real session
+          // instead of re-showing a stale pending/error message forever.
+          const cleanUrl = window.location.pathname;
+          window.history.replaceState({}, '', cleanUrl);
+        }
+
+        authSpinnerNote.textContent = 'Checking sign-in status\u2026';
+        try {
+          const res = await fetch(AUTH_ORIGIN + '/me', { credentials: 'include' });
+          const data = await res.json();
+          authSpinnerNote.textContent = '';
+
+          if (!data.loggedIn) {
+            showLockArea();
+            return;
+          }
+
+          currentUser = {
+            username: data.username,
+            avatarUrl: data.avatarUrl,
+            isAdmin: !!data.isAdmin,
+          };
+
+          sessionUsername.textContent = currentUser.username;
+          sessionAvatar.src = currentUser.avatarUrl || '';
+          sessionAdminTag.style.display = currentUser.isAdmin ? 'inline-block' : 'none';
+          document.getElementById('editorKicker').textContent = currentUser.isAdmin
+            ? 'Clock1599 (Admin)'
+            : 'Approved Contributor';
+
+          if (currentUser.isAdmin) {
+            adminPanel.style.display = 'block';
+            loadPendingRequests();
+          }
+
+          applyExportPermissions(currentUser.isAdmin);
+
+          showEditorArea();
+          wireDraftAutosave();
+          await loadSharedDraft();
+        } catch (e) {
+          authSpinnerNote.textContent = 'Could not reach the sign-in server. Check your connection and reload.';
+          showLockArea();
+        }
+      }
+
+      checkSession();
+
+      // ---------- Autofill next Friday's date / filename ----------
+
+      const MONTH_NAMES = ['January','February','March','April','May','June',
+        'July','August','September','October','November','December'];
+      const MONTH_SLUGS = MONTH_NAMES.map(m => m.toLowerCase());
+
+      function getBerlinDateParts(date) {
+        const fmt = new Intl.DateTimeFormat('en-US', {
+          timeZone: 'Europe/Berlin',
+          weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric',
+          hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+        });
+        const parts = {};
+        fmt.formatToParts(date).forEach(p => { parts[p.type] = p.value; });
+        let hour = parseInt(parts.hour, 10);
+        if (hour === 24) hour = 0;
+        return {
+          weekday: parts.weekday,
+          year: parseInt(parts.year, 10),
+          month: parseInt(parts.month, 10), // 1-12
+          day: parseInt(parts.day, 10),
+          hour: hour,
+          minute: parseInt(parts.minute, 10),
+          second: parseInt(parts.second, 10)
+        };
+      }
+
+      const WEEKDAY_INDEX = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+
+      function getNextFridayParts(now) {
+        const b = getBerlinDateParts(now);
+        const secondsSinceMidnight = b.hour * 3600 + b.minute * 60 + b.second;
+        const targetSeconds = 20 * 3600 + 15 * 60; // 20:15, matches the publish schedule
+
+        let daysUntilFriday = (5 - WEEKDAY_INDEX[b.weekday] + 7) % 7;
+        if (daysUntilFriday === 0 && secondsSinceMidnight >= targetSeconds) {
+          daysUntilFriday = 7;
+        }
+
+        // Step forward day-by-day in UTC-safe arithmetic, then re-read the
+        // Berlin calendar date of that instant (handles month/year rollover
+        // and DST without manual offset math).
+        const target = new Date(now.getTime() + daysUntilFriday * 86400 * 1000);
+        return getBerlinDateParts(target);
+      }
+
+      function autofillNextFriday() {
+        const parts = getNextFridayParts(new Date());
+        const monthName = MONTH_NAMES[parts.month - 1];
+        const monthSlug = MONTH_SLUGS[parts.month - 1];
+
+        const dateField = document.getElementById('fDate');
+        const filenameField = document.getElementById('fFilename');
+
+        if (!dateField.value.trim()) {
+          dateField.value = monthName + ' ' + parts.day;
+        }
+        if (!filenameField.value.trim()) {
+          filenameField.value = 'newsletter-' + monthSlug + parts.day + '.html';
+        }
+      }
+
+      // ---------- Citation / Ad insert panels ----------
+
+      window.__nbrtAds = {};
+      let __adCounter = 0;
+
+      const fBody = document.getElementById('fBody');
+      const quotePanel = document.getElementById('quotePanel');
+      const adPanel = document.getElementById('adPanel');
+      const tipPanel = document.getElementById('tipPanel');
+
+      function closePanels() {
+        quotePanel.classList.remove('open');
+        adPanel.classList.remove('open');
+        tipPanel.classList.remove('open');
+      }
+
+      document.getElementById('toggleQuotePanel').addEventListener('click', function () {
+        const wasOpen = quotePanel.classList.contains('open');
+        closePanels();
+        if (!wasOpen) quotePanel.classList.add('open');
+      });
+
+      document.getElementById('toggleAdPanel').addEventListener('click', function () {
+        const wasOpen = adPanel.classList.contains('open');
+        closePanels();
+        if (!wasOpen) adPanel.classList.add('open');
+      });
+
+      document.getElementById('toggleTipPanel').addEventListener('click', function () {
+        const wasOpen = tipPanel.classList.contains('open');
+        closePanels();
+        if (!wasOpen) tipPanel.classList.add('open');
+      });
+
+      document.getElementById('cancelQuoteBtn').addEventListener('click', closePanels);
+      document.getElementById('cancelAdBtn').addEventListener('click', closePanels);
+      document.getElementById('cancelTipBtn').addEventListener('click', closePanels);
+
+      function insertAtCursor(textarea, text) {
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const before = textarea.value.slice(0, start);
+        const after = textarea.value.slice(end);
+
+        // Make sure the insert sits on its own blank-line-separated block.
+        const needsLeadingBreak = before.length > 0 && !/\n\s*\n$/.test(before) ;
+        const leading = before.length === 0 ? '' : (needsLeadingBreak ? (before.endsWith('\n') ? '\n' : '\n\n') : '');
+        const trailing = after.length === 0 ? '' : (after.startsWith('\n') ? '\n' : '\n\n');
+
+        const insert = leading + text + trailing;
+        textarea.value = before + insert + after;
+
+        const cursorPos = (before + insert).length;
+        textarea.focus();
+        textarea.setSelectionRange(cursorPos, cursorPos);
+      }
+
+      document.getElementById('insertQuoteBtn').addEventListener('click', function () {
+        const qText = document.getElementById('qText').value.trim();
+        const qCite = document.getElementById('qCite').value.trim();
+        if (!qText || !qCite) {
+          alert('Fill in both the quote text and attribution first.');
+          return;
+        }
+        const placeholder = '[[QUOTE:' + qText.replace(/\]\]/g, '') + '||' + qCite.replace(/\]\]/g, '') + ']]';
+        insertAtCursor(fBody, placeholder);
+        document.getElementById('qText').value = '';
+        document.getElementById('qCite').value = '';
+        closePanels();
+      });
+
+      document.getElementById('insertAdBtn').addEventListener('click', function () {
+        const adLabel = document.getElementById('adLabel').value.trim() || 'Paid Promotion — Contact Clock1599 to Advertise';
+        const fileInput = document.getElementById('adImage');
+        const file = fileInput.files && fileInput.files[0];
+
+        if (!file) {
+          alert('Choose an image file first.');
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function () {
+          __adCounter += 1;
+          const adId = 'ad' + __adCounter;
+          window.__nbrtAds[adId] = reader.result;
+
+          const placeholder = '[[AD:' + adLabel.replace(/\]\]/g, '') + '||' + adId + ']]';
+          insertAtCursor(fBody, placeholder);
+
+          fileInput.value = '';
+          closePanels();
+        };
+        reader.onerror = function () {
+          alert('Could not read that image file. Try a different one.');
+        };
+        reader.readAsDataURL(file);
+      });
+
+      document.getElementById('insertTipBtn').addEventListener('click', function () {
+        const tipText = document.getElementById('tipText').value.trim();
+        if (!tipText) {
+          alert('Write the tip text first.');
+          return;
+        }
+        const placeholder = '[[TIP:' + tipText.replace(/\]\]/g, '') + ']]';
+        insertAtCursor(fBody, placeholder);
+        document.getElementById('tipText').value = '';
+        closePanels();
+      });
+
+      // ---------- Export logic ----------
+
+      function escapeHtml(str) {
+        return str
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
+
+      function renderInlineLinks(escapedText) {
+        // escapedText has already been through escapeHtml, so raw [ ] ( ) are
+        // safe to match as-is (escapeHtml doesn't touch them).
+        return escapedText.replace(/\[([^\[\]]+)\]\(([^()\s]+)\)/g, function (match, label, url) {
+          const safe = /^(https?:\/\/|\.{0,2}\/|[a-zA-Z0-9_-]+\.html)/.test(url);
+          if (!safe) return match; // leave untouched if it doesn't look like a normal link
+          return '<a href="' + url + '" style="color: var(--blue);">' + label + '</a>';
+        });
+      }
+
+      function paragraphsHtml(raw) {
+        const blocks = raw.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
+        return blocks
+          .map(function (b) {
+            const quoteMatch = b.match(/^\[\[QUOTE:([\s\S]*)\|\|([\s\S]*)\]\]$/);
+            if (quoteMatch) {
+              const qText = quoteMatch[1].trim();
+              const qCite = quoteMatch[2].trim();
+              return '      <blockquote class="pull-quote">\n        '
+                + escapeHtml(qText)
+                + '\n        <cite>— ' + escapeHtml(qCite) + '</cite>\n      </blockquote>';
+            }
+
+            const adMatch = b.match(/^\[\[AD:([\s\S]*)\|\|([\s\S]*)\]\]$/);
+            if (adMatch) {
+              const adLabel = adMatch[1].trim();
+              const adId = adMatch[2].trim();
+              const adData = window.__nbrtAds && window.__nbrtAds[adId];
+              if (!adData) {
+                return '      <!-- Ad image missing for id ' + escapeHtml(adId) + ' -->';
+              }
+              return '      <div class="ad-banner">\n        <div class="ad-label">'
+                + escapeHtml(adLabel) + '</div>\n        <img src="' + adData + '" alt="">\n      </div>';
+            }
+
+            const tipMatch = b.match(/^\[\[TIP:([\s\S]*)\]\]$/);
+            if (tipMatch) {
+              const tipText = tipMatch[1].trim();
+              return '      <div class="callout">\n        <p>'
+                + renderInlineLinks(escapeHtml(tipText)) + '</p>\n      </div>';
+            }
+
+            return '      <p>' + renderInlineLinks(escapeHtml(b).replace(/\n/g, '<br>')) + '</p>';
+          })
+          .join('\n');
+      }
+
+      // Reuse the same logo data already embedded in this page's own header,
+      // so the exported article's logo always matches without duplicating
+      // the (large) base64 string a second time in this file.
+      const NBRT_LOGO_SRC = document.querySelector('.site-header .brand img').src;
+
+      function buildArticleHtml() {
+        const title = document.getElementById('fTitle').value.trim() || 'Untitled';
+        const date = document.getElementById('fDate').value.trim() || '';
+        const byline = document.getElementById('fByline').value.trim() || 'Clock1599';
+        const body = document.getElementById('fBody').value;
+        const prevLabel = document.getElementById('fPrevLabel').value.trim();
+        const prevHref = document.getElementById('fPrevHref').value.trim();
+
+        const kicker = 'NBRT Newsletter' + (date ? ' &middot; ' + escapeHtml(date) : '');
+
+        const prevLink = (prevHref && prevLabel)
+          ? '      <a href="' + escapeHtml(prevHref) + '">' + escapeHtml(prevLabel) + '</a>'
+          : '      <span></span>';
+
+        return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${escapeHtml(title)} — NBRT Newsletter</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --red: #9F0000;
+  --blue: #00009F;
+  --gold: #B5A642;
+  --bg: #0A0A0A;
+  --bg-raised: #131110;
+  --text: #E8E4DC;
+  --text-dim: #6B6660;
+  --line: #232020;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 2rem;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(6px);
+  z-index: 50;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: 260px;
+}
+
+.brand img {
+  height: 52px;
+  width: 52px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  color: var(--gold);
+  line-height: 1.2;
+}
+
+@media (min-width: 900px) {
+  .brand-text { font-size: 1.15rem; }
+}
+
+nav.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  position: relative;
+}
+
+nav.main-nav a {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0.5em 0.8em;
+  border-radius: 2px;
+  transition: color 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
+}
+
+nav.main-nav a:hover {
+  color: var(--text);
+  background: var(--bg-raised);
+}
+
+nav.main-nav a.active {
+  color: var(--blue);
+}
+
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown > button {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0.5em 0.8em;
+  border-radius: 2px;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-weight: inherit;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.nav-dropdown > button:hover,
+.nav-dropdown.open > button {
+  color: var(--text);
+  background: var(--bg-raised);
+}
+
+.nav-dropdown > button.active {
+  color: var(--blue);
+}
+
+.nav-dropdown > button .caret {
+  font-size: 0.6rem;
+  transition: transform 0.15s ease;
+}
+
+.nav-dropdown.open > button .caret {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  min-width: 180px;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.4rem;
+  display: none;
+  flex-direction: column;
+  gap: 0.1rem;
+  z-index: 60;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.nav-dropdown.open .nav-dropdown-menu {
+  display: flex;
+}
+
+.nav-dropdown-menu a {
+  padding: 0.55em 0.7em;
+  border-radius: 4px;
+  font-size: 0.72rem;
+}
+
+.nav-dropdown-menu a:hover {
+  background: var(--line);
+  color: var(--text);
+}
+
+.nav-dropdown-menu a.active {
+  color: var(--blue);
+}
+
+@media (max-width: 760px) {
+  .site-header { flex-wrap: wrap; padding: 1rem 1.25rem; }
+  nav.main-nav { gap: 0.15rem; width: 100%; padding-top: 0.75rem; border-top: 1px solid var(--line); }
+  nav.main-nav a, .nav-dropdown > button { font-size: 0.68rem; padding: 0.45em 0.65em; }
+  .nav-dropdown-menu { position: static; box-shadow: none; margin-top: 0.2rem; margin-left: 0.5rem; border: none; background: transparent; padding: 0; }
+  .nav-dropdown.open .nav-dropdown-menu { display: flex; }
+}
+
+main.page {
+  flex: 1;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 5rem;
+}
+
+.page-kicker {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.page-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 4.2vw, 2.2rem);
+  line-height: 1.15;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.page-rule {
+  width: 56px;
+  height: 3px;
+  background: var(--blue);
+  margin: 1.25rem auto 2.25rem;
+}
+
+section.block {
+  margin-bottom: 3rem;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+strong { color: var(--text); font-weight: 600; }
+
+.byline {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  letter-spacing: 0.03em;
+  margin-bottom: 1.5rem;
+}
+
+.byline strong { color: var(--blue); }
+
+.callout {
+  border-left: 2px solid var(--red);
+  padding: 0.9rem 1.25rem;
+  background: var(--bg-raised);
+  border-radius: 0 4px 4px 0;
+  margin: 1.25rem 0;
+}
+
+.callout p:last-child { margin-bottom: 0; }
+
+.pull-quote {
+  border-left: 2px solid var(--blue);
+  padding-left: 1.25rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.pull-quote cite {
+  display: block;
+  margin-top: 0.4rem;
+  font-style: normal;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.ad-banner {
+  margin: 2rem 0;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.ad-banner img {
+  width: 100%;
+  display: block;
+}
+
+.ad-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+  padding: 0.75rem 1rem 0;
+}
+
+.article-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+}
+
+.article-nav a {
+  color: var(--blue);
+}
+
+.article-nav a:hover {
+  text-decoration: underline;
+}
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.site-footer .accent { color: var(--blue); }
+
+@media (max-width: 480px) {
+  main.page { padding: 2.5rem 1.25rem 4rem; }
+}
+
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="brand">
+      <img src="${NBRT_LOGO_SRC}" alt="">
+      <span class="brand-text">The New Brass Rail Transit Authority</span>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <div class="nav-dropdown" id="regDropdown">
+        <button type="button" onclick="document.getElementById('regDropdown').classList.toggle('open')">Regulations <span class="caret">&#9662;</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="regulations.html">Overview</a>
+          <a href="signalling.html">Signalling</a>
+          <a href="track-sizing.html">Track Sizing</a>
+          <a href="train-sizing.html">Train Sizing</a>
+        </div>
+      </div>
+      <a href="newsletter.html" class="active">Newsletter</a>
+      <a href="credits.html">Credits</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="page-kicker">${kicker}</div>
+    <h1 class="page-title" style="font-size: clamp(1.8rem, 5vw, 2.6rem);">${escapeHtml(title)}</h1>
+    <div class="page-rule"></div>
+
+    <div class="byline">Written by <strong>${escapeHtml(byline)}</strong></div>
+
+    <section class="block">
+${paragraphsHtml(body)}
+    </section>
+
+    <div class="article-nav">
+${prevLink}
+      <a href="newsletter.html">All articles</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    The New Brass Rail Transit Authority &middot; Maintained by <span class="accent">Clock1599</span>
+  </footer>
+
+</body>
+</html>
+`;
+      }
+
+      const exportBtn = document.getElementById('exportBtn');
+      const previewBtn = document.getElementById('previewBtn');
+      const formStatus = document.getElementById('formStatus');
+
+      exportBtn.addEventListener('click', function () {
+        if (!currentUser || !currentUser.isAdmin) {
+          formStatus.textContent = 'Only Clock1599 can export the final file.';
+          formStatus.classList.remove('ok');
+          return;
+        }
+        const filename = document.getElementById('fFilename').value.trim() || 'newsletter-untitled.html';
+        const html = buildArticleHtml();
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        formStatus.textContent = 'Exported "' + filename + '". Upload it next to the other newsletter pages, then add it to the article list on newsletter.html.';
+        formStatus.classList.add('ok');
+      });
+
+      previewBtn.addEventListener('click', function () {
+        const html = buildArticleHtml();
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+        formStatus.textContent = 'Opened a preview in a new tab.';
+        formStatus.classList.remove('ok');
+      });
+    })();
+  </script>
+
+</body>
+</html>
