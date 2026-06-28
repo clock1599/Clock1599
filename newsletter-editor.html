@@ -233,28 +233,6 @@ main.page {
 
 /* ---------- Lock screen ---------- */
 
-.lock-wrap {
-  max-width: 360px;
-  margin: 2rem auto 0;
-  text-align: center;
-}
-
-.lock-wrap input[type="password"] {
-  width: 100%;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.95rem;
-  background: var(--bg-raised);
-  border: 1px solid var(--line);
-  color: var(--text);
-  padding: 0.75rem 1rem;
-  border-radius: 6px;
-  margin-bottom: 0.85rem;
-}
-
-.lock-wrap input[type="password"]:focus {
-  border-color: var(--blue);
-}
-
 .btn {
   font-family: 'Space Mono', monospace;
   font-size: 0.75rem;
@@ -284,22 +262,212 @@ main.page {
   color: var(--text);
 }
 
-.lock-error {
+/* ---------- GitHub auth states ---------- */
+
+.gh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   font-family: 'Space Mono', monospace;
-  font-size: 0.78rem;
-  color: var(--red);
-  margin-top: 0.75rem;
-  min-height: 1.2em;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  color: var(--bg);
+  background: var(--text);
+  border: 1px solid var(--text);
+  padding: 0.75rem 1.4rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
 }
 
-.lock-note {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.04em;
-  color: var(--text-dim);
-  margin-top: 2rem;
-  line-height: 1.6;
+.gh-btn:hover { opacity: 0.85; }
+
+.gh-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+.auth-status-box {
+  max-width: 420px;
+  margin: 2rem auto 0;
+  text-align: center;
 }
+
+.auth-spinner-note {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-top: 1rem;
+}
+
+.pending-box {
+  border: 1px solid var(--gold);
+  background: var(--bg-raised);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.pending-box .pb-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.pending-box p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+
+.error-box {
+  border: 1px solid var(--red);
+  background: var(--bg-raised);
+  border-radius: 6px;
+  padding: 1rem 1.25rem;
+  margin-top: 1.5rem;
+  text-align: left;
+  font-size: 0.88rem;
+  color: var(--text-dim);
+}
+
+/* Session bar shown once logged in */
+
+.session-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+  border-radius: 6px;
+  padding: 0.75rem 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.session-bar .session-who {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.session-bar .session-who img {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+}
+
+.session-bar .session-who strong {
+  color: var(--text);
+}
+
+.session-bar .session-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.admin-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 0.15em 0.5em;
+  border-radius: 3px;
+}
+
+/* Admin approval panel */
+
+.admin-panel {
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.admin-panel .ap-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.admin-panel .ap-empty {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.pending-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.pending-row:last-child { border-bottom: none; }
+
+.pending-row .pr-who {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+}
+
+.pending-row .pr-who img {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}
+
+.pending-row .pr-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pr-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.4em 0.8em;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+  color: var(--text-dim);
+}
+
+.pr-btn.approve {
+  border-color: #4CAF50;
+  color: #4CAF50;
+}
+.pr-btn.approve:hover { background: #4CAF50; color: var(--text); }
+
+.pr-btn.deny {
+  border-color: var(--red);
+  color: var(--red);
+}
+.pr-btn.deny:hover { background: var(--red); color: var(--text); }
+
+.draft-sync-note {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-top: 0.5rem;
+}
+
+.draft-sync-note.saving { color: var(--gold); }
+.draft-sync-note.saved { color: #4CAF50; }
 
 /* ---------- Editor form ---------- */
 
@@ -499,24 +667,38 @@ h2.block-title {
       <div class="page-kicker">Restricted</div>
       <h1 class="page-title">Newsletter Editor</h1>
       <div class="page-rule"></div>
-      <p class="page-intro">This area is for Clock1599 only. Enter the password to continue.</p>
+      <p class="page-intro">Sign in with GitHub to continue. New accounts need approval from Clock1599 before they can edit.</p>
 
-      <div class="lock-wrap">
-        <input type="password" id="pwInput" placeholder="Password" autocomplete="off">
-        <br>
-        <button type="button" class="btn primary" id="unlockBtn">Unlock</button>
-        <div class="lock-error" id="lockError"></div>
-        <div class="lock-note">
-          Note: this is a static site with no server, so this lock only deters casual clicking around &mdash; it isn't real access control. Don't put anything here you wouldn't want a determined visitor to see.
-        </div>
+      <div class="auth-status-box" id="authStatusBox">
+        <button type="button" class="gh-btn" id="githubLoginBtn">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.02 1.93-.02 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+          Sign in with GitHub
+        </button>
+        <div class="auth-spinner-note" id="authSpinnerNote"></div>
       </div>
     </div>
 
     <div id="editorArea">
-      <div class="page-kicker">Clock1599 Only</div>
+      <div class="page-kicker" id="editorKicker">Clock1599 Only</div>
       <h1 class="page-title">Newsletter Editor</h1>
       <div class="page-rule"></div>
-      <p class="page-intro">Fill this in, then export. It builds a ready-to-upload HTML file styled to match the site &mdash; just drop it next to the other newsletter pages.</p>
+      <p class="page-intro">Fill this in &mdash; it autosaves as a shared draft, so anyone approved can pick up where you left off. Export when ready, then upload the file.</p>
+
+      <div class="session-bar">
+        <div class="session-who">
+          <img id="sessionAvatar" src="" alt="">
+          <span>Signed in as <strong id="sessionUsername"></strong></span>
+          <span class="admin-tag" id="sessionAdminTag" style="display:none;">Admin</span>
+        </div>
+        <div class="session-actions">
+          <button type="button" class="btn" id="logoutBtn">Sign out</button>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="adminPanel" style="display:none;">
+        <div class="ap-title">Pending access requests</div>
+        <div id="pendingList"><div class="ap-empty">Loading&hellip;</div></div>
+      </div>
 
       <section>
         <h2 class="block-title">Article details</h2>
@@ -618,9 +800,9 @@ h2.block-title {
         <div class="form-actions">
           <button type="button" class="btn primary" id="exportBtn">Export HTML file</button>
           <button type="button" class="btn" id="previewBtn">Preview in new tab</button>
-          <button type="button" class="btn" id="lockAgainBtn">Lock again</button>
         </div>
         <div class="form-status" id="formStatus"></div>
+        <div class="draft-sync-note" id="draftSyncNote"></div>
       </section>
     </div>
 
@@ -632,37 +814,280 @@ h2.block-title {
 
   <script>
     (function () {
-      const PASSWORD = "Clock1599LovesNBRTA";
+      const AUTH_ORIGIN = "https://auth.clock-official.workers.dev";
 
       const lockArea = document.getElementById('lockArea');
       const editorArea = document.getElementById('editorArea');
-      const pwInput = document.getElementById('pwInput');
-      const unlockBtn = document.getElementById('unlockBtn');
-      const lockError = document.getElementById('lockError');
-      const lockAgainBtn = document.getElementById('lockAgainBtn');
+      const authSpinnerNote = document.getElementById('authSpinnerNote');
+      const githubLoginBtn = document.getElementById('githubLoginBtn');
+      const sessionAvatar = document.getElementById('sessionAvatar');
+      const sessionUsername = document.getElementById('sessionUsername');
+      const sessionAdminTag = document.getElementById('sessionAdminTag');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const adminPanel = document.getElementById('adminPanel');
+      const pendingList = document.getElementById('pendingList');
+      const draftSyncNote = document.getElementById('draftSyncNote');
 
-      function tryUnlock() {
-        if (pwInput.value === PASSWORD) {
-          lockArea.style.display = 'none';
-          editorArea.style.display = 'block';
-          lockError.textContent = '';
-          autofillNextFriday();
-        } else {
-          lockError.textContent = 'Wrong password.';
+      let currentUser = null; // { username, avatarUrl, isAdmin }
+
+      function showLockArea() {
+        lockArea.style.display = 'block';
+        editorArea.style.display = 'none';
+      }
+
+      function showEditorArea() {
+        lockArea.style.display = 'none';
+        editorArea.style.display = 'block';
+      }
+
+      function showPendingMessage() {
+        let box = document.getElementById('pendingMessageBox');
+        if (!box) {
+          box = document.createElement('div');
+          box.id = 'pendingMessageBox';
+          box.className = 'pending-box';
+          box.innerHTML = '<div class="pb-title">Access request sent</div>'
+            + '<p>You signed in with GitHub, but this account hasn\'t been approved yet. Clock1599 needs to approve you before you can use the editor. Check back later, or ask them directly.</p>';
+          document.getElementById('authStatusBox').appendChild(box);
         }
       }
 
-      unlockBtn.addEventListener('click', tryUnlock);
-      pwInput.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') tryUnlock();
+      function showErrorMessage() {
+        let box = document.getElementById('errorMessageBox');
+        if (!box) {
+          box = document.createElement('div');
+          box.id = 'errorMessageBox';
+          box.className = 'error-box';
+          box.textContent = 'Something went wrong signing in with GitHub. Please try again.';
+          document.getElementById('authStatusBox').appendChild(box);
+        }
+      }
+
+      githubLoginBtn.addEventListener('click', function () {
+        window.location.href = AUTH_ORIGIN + '/login';
       });
 
-      lockAgainBtn.addEventListener('click', function () {
-        editorArea.style.display = 'none';
-        lockArea.style.display = 'block';
-        pwInput.value = '';
-        lockError.textContent = '';
+      logoutBtn.addEventListener('click', async function () {
+        try {
+          await fetch(AUTH_ORIGIN + '/logout', { method: 'POST', credentials: 'include' });
+        } catch (e) {
+          // ignore network errors on logout, just reset the UI
+        }
+        currentUser = null;
+        showLockArea();
       });
+
+      // ---------- Admin approval panel ----------
+
+      async function loadPendingRequests() {
+        if (!currentUser || !currentUser.isAdmin) return;
+        try {
+          const res = await fetch(AUTH_ORIGIN + '/pending', { credentials: 'include' });
+          const data = await res.json();
+          renderPendingList(data.pending || []);
+        } catch (e) {
+          pendingList.innerHTML = '<div class="ap-empty">Couldn\'t load pending requests.</div>';
+        }
+      }
+
+      function renderPendingList(pending) {
+        if (!pending.length) {
+          pendingList.innerHTML = '<div class="ap-empty">No pending requests right now.</div>';
+          return;
+        }
+        pendingList.innerHTML = '';
+        pending.forEach(function (p) {
+          const row = document.createElement('div');
+          row.className = 'pending-row';
+
+          const who = document.createElement('div');
+          who.className = 'pr-who';
+          const img = document.createElement('img');
+          img.src = p.avatarUrl || '';
+          img.alt = '';
+          const name = document.createElement('span');
+          name.textContent = p.username;
+          who.appendChild(img);
+          who.appendChild(name);
+
+          const actions = document.createElement('div');
+          actions.className = 'pr-actions';
+          const approveBtn = document.createElement('button');
+          approveBtn.type = 'button';
+          approveBtn.className = 'pr-btn approve';
+          approveBtn.textContent = 'Approve';
+          approveBtn.addEventListener('click', function () {
+            respondToRequest(p.username, 'approve');
+          });
+          const denyBtn = document.createElement('button');
+          denyBtn.type = 'button';
+          denyBtn.className = 'pr-btn deny';
+          denyBtn.textContent = 'Deny';
+          denyBtn.addEventListener('click', function () {
+            respondToRequest(p.username, 'deny');
+          });
+          actions.appendChild(approveBtn);
+          actions.appendChild(denyBtn);
+
+          row.appendChild(who);
+          row.appendChild(actions);
+          pendingList.appendChild(row);
+        });
+      }
+
+      async function respondToRequest(username, action) {
+        try {
+          await fetch(AUTH_ORIGIN + '/approve', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, action }),
+          });
+        } catch (e) {
+          alert('Could not reach the server. Try again.');
+          return;
+        }
+        loadPendingRequests();
+      }
+
+      // ---------- Shared draft sync ----------
+
+      let draftSaveTimer = null;
+      let suppressDraftEvents = false;
+      const DRAFT_FIELD_IDS = ['fTitle', 'fDate', 'fByline', 'fBody', 'fFilename', 'fPrevLabel', 'fPrevHref'];
+
+      function collectDraftFields() {
+        const out = {};
+        DRAFT_FIELD_IDS.forEach(function (id) {
+          const el = document.getElementById(id);
+          if (el) out[id] = el.value;
+        });
+        return out;
+      }
+
+      function applyDraftFields(fields) {
+        if (!fields) return;
+        suppressDraftEvents = true;
+        DRAFT_FIELD_IDS.forEach(function (id) {
+          const el = document.getElementById(id);
+          if (el && typeof fields[id] === 'string') el.value = fields[id];
+        });
+        suppressDraftEvents = false;
+      }
+
+      async function loadSharedDraft() {
+        try {
+          const res = await fetch(AUTH_ORIGIN + '/draft', { credentials: 'include' });
+          const data = await res.json();
+          if (data.draft) {
+            applyDraftFields(data.draft);
+            draftSyncNote.textContent = 'Loaded the shared draft' +
+              (data.draft.lastEditedBy ? ' (last edited by ' + data.draft.lastEditedBy + ')' : '') + '.';
+            draftSyncNote.className = 'draft-sync-note saved';
+          } else {
+            draftSyncNote.textContent = 'No shared draft yet \u2014 start writing, it autosaves.';
+            draftSyncNote.className = 'draft-sync-note';
+          }
+          // Autofill date/filename only after we know there wasn't a draft
+          // value already in those fields.
+          autofillNextFriday();
+        } catch (e) {
+          draftSyncNote.textContent = 'Could not load the shared draft. Your edits will still autosave once the connection is back.';
+          draftSyncNote.className = 'draft-sync-note';
+        }
+      }
+
+      async function saveSharedDraftNow() {
+        draftSyncNote.textContent = 'Saving\u2026';
+        draftSyncNote.className = 'draft-sync-note saving';
+        try {
+          await fetch(AUTH_ORIGIN + '/draft', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(collectDraftFields()),
+          });
+          draftSyncNote.textContent = 'Saved.';
+          draftSyncNote.className = 'draft-sync-note saved';
+        } catch (e) {
+          draftSyncNote.textContent = 'Could not save \u2014 check your connection.';
+          draftSyncNote.className = 'draft-sync-note';
+        }
+      }
+
+      function scheduleDraftSave() {
+        if (suppressDraftEvents) return;
+        clearTimeout(draftSaveTimer);
+        draftSyncNote.textContent = 'Unsaved changes\u2026';
+        draftSyncNote.className = 'draft-sync-note';
+        draftSaveTimer = setTimeout(saveSharedDraftNow, 1200);
+      }
+
+      function wireDraftAutosave() {
+        DRAFT_FIELD_IDS.forEach(function (id) {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener('input', scheduleDraftSave);
+        });
+      }
+
+      // ---------- Session check on page load ----------
+
+      async function checkSession() {
+        const params = new URLSearchParams(window.location.search);
+        const loginStatus = params.get('login');
+
+        if (loginStatus === 'pending') {
+          showPendingMessage();
+        }
+        if (loginStatus === 'error') {
+          showErrorMessage();
+        }
+        if (loginStatus) {
+          // Clean the query string so a refresh re-checks the real session
+          // instead of re-showing a stale pending/error message forever.
+          const cleanUrl = window.location.pathname;
+          window.history.replaceState({}, '', cleanUrl);
+        }
+
+        authSpinnerNote.textContent = 'Checking sign-in status\u2026';
+        try {
+          const res = await fetch(AUTH_ORIGIN + '/me', { credentials: 'include' });
+          const data = await res.json();
+          authSpinnerNote.textContent = '';
+
+          if (!data.loggedIn) {
+            showLockArea();
+            return;
+          }
+
+          currentUser = {
+            username: data.username,
+            avatarUrl: data.avatarUrl,
+            isAdmin: !!data.isAdmin,
+          };
+
+          sessionUsername.textContent = currentUser.username;
+          sessionAvatar.src = currentUser.avatarUrl || '';
+          sessionAdminTag.style.display = currentUser.isAdmin ? 'inline-block' : 'none';
+          document.getElementById('editorKicker').textContent = currentUser.isAdmin
+            ? 'Clock1599 (Admin)'
+            : 'Approved Contributor';
+
+          if (currentUser.isAdmin) {
+            adminPanel.style.display = 'block';
+            loadPendingRequests();
+          }
+
+          showEditorArea();
+          wireDraftAutosave();
+          await loadSharedDraft();
+        } catch (e) {
+          authSpinnerNote.textContent = 'Could not reach the sign-in server. Check your connection and reload.';
+          showLockArea();
+        }
+      }
+
+      checkSession();
 
       // ---------- Autofill next Friday's date / filename ----------
 
