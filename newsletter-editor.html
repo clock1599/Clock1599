@@ -643,6 +643,7 @@ h2.block-title {
         </div>
         <div class="session-actions">
           <button type="button" class="btn" id="openControlCenterFromEditorBtn">Control Center</button>
+          <button type="button" class="btn" id="logoutBtn">Sign out</button>
         </div>
       </div>
 
@@ -793,6 +794,15 @@ h2.block-title {
 
       document.getElementById('openControlCenterBtn').addEventListener('click', goToControlCenter);
       document.getElementById('openControlCenterFromEditorBtn').addEventListener('click', goToControlCenter);
+
+      document.getElementById('logoutBtn').addEventListener('click', async function () {
+        try {
+          await fetch(AUTH_ORIGIN + '/logout', { method: 'POST', credentials: 'include' });
+        } catch (e) {
+          // ignore network errors on logout, just reset the UI below
+        }
+        handleUserChange(null);
+      });
 
       function showLockArea() {
         lockArea.style.display = 'block';

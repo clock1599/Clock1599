@@ -224,6 +224,29 @@ main.dash {
   letter-spacing: 0.03em;
 }
 
+.dash-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.dash-logout-btn {
+  width: auto;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.72rem;
+  background: var(--bg-raised);
+  color: var(--text-dim);
+  border-color: var(--line);
+}
+.dash-logout-btn:hover {
+  opacity: 1;
+  border-color: var(--red);
+  color: var(--red);
+  background: var(--bg-raised);
+}
+
 /* ---------- Sign-in screen (shown in place of the dashboard when needed) ---------- */
 
 .gate-wrap {
@@ -535,8 +558,13 @@ main.dash {
 
     <div id="dashArea" class="dash-grid" style="display:none;">
       <div class="dash-main">
-        <div class="dash-title">Hello Clock1599!</div>
-        <div class="dash-subtitle">Control Center</div>
+        <div class="dash-header-row">
+          <div>
+            <div class="dash-title">Hello Clock1599!</div>
+            <div class="dash-subtitle">Control Center</div>
+          </div>
+          <button type="button" class="gh-btn dash-logout-btn" id="dashLogoutBtn">Sign out</button>
+        </div>
       </div>
 
       <div class="dash-sidebar">
@@ -600,6 +628,9 @@ main.dash {
       const gateSpinnerNote = document.getElementById('gateSpinnerNote');
       const githubLoginBtn = document.getElementById('githubLoginBtn');
       const dashArea = document.getElementById('dashArea');
+      const dashLogoutBtn = document.getElementById('dashLogoutBtn');
+
+      dashLogoutBtn.addEventListener('click', logout);
 
       const applicationsBtn = document.getElementById('applicationsBtn');
       const applicationsCount = document.getElementById('applicationsCount');
