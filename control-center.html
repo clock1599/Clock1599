@@ -193,11 +193,11 @@ main.dash {
 .dash-grid {
   display: grid;
   grid-template-columns: 4fr 1fr;
-  min-height: calc(100vh - 90px);
+  height: calc(100vh - 90px);
 }
 
 @media (max-width: 900px) {
-  .dash-grid { grid-template-columns: 1fr; }
+  .dash-grid { grid-template-columns: 1fr; height: auto; }
 }
 
 .dash-main {
@@ -286,6 +286,12 @@ main.dash {
   padding: 2.5rem 1.5rem;
   display: flex;
   flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .dash-sidebar { padding: 2rem 1.5rem; }
 }
 
 .sidebar-btn {
@@ -333,9 +339,23 @@ main.dash {
 
 .log-feed {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+.log-feed::-webkit-scrollbar {
+  width: 6px;
+}
+.log-feed::-webkit-scrollbar-track {
+  background: transparent;
+}
+.log-feed::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 3px;
 }
 
 .log-row {
