@@ -801,14 +801,21 @@ h2.block-title {
         editorArea.style.display = 'block';
       }
 
-      // The control center (control-center.js) owns sign-in, sign-out, the
-      // pending-approval message, and the admin panel. This page just reacts
-      // to whatever session state it reports.
+      // The control center (control-center.js) owns sign-in, sign-out, and
+      // session state. This page just reacts to whatever it reports.
       window.NBRTAControlCenter.onUserChange(function (user) {
         currentUser = user;
 
         if (!user) {
           authSpinnerNote.textContent = '';
+          showLockArea();
+          return;
+        }
+
+        if (!user.isEditor) {
+          // Signed in, but only a Visitor -- not yet given editor access.
+          authSpinnerNote.textContent = 'You\'re signed in as ' + user.username
+            + ', but you don\'t have editor access yet. Clock1599 can grant it from the Control Center.';
           showLockArea();
           return;
         }
