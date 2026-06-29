@@ -550,10 +550,30 @@ main.dash {
     The New Brass Rail Transit Authority &middot; Maintained by <span class="accent">Clock1599</span>
   </footer>
 
-  <script src="control-center.js"></script>
   <script>
     (function () {
-      const AUTH_ORIGIN = window.NBRTAControlCenter.AUTH_ORIGIN;
+      const AUTH_ORIGIN = "https://auth.clock1599-official.workers.dev";
+
+      let currentUser = null;
+
+      function currentPageFilename() {
+        return window.location.pathname.split('/').pop() || 'index.html';
+      }
+
+      function login() {
+        const returnTo = currentPageFilename();
+        window.location.href = AUTH_ORIGIN + '/login?return_to=' + encodeURIComponent(returnTo);
+      }
+
+      async function logout() {
+        try {
+          await fetch(AUTH_ORIGIN + '/logout', { method: 'POST', credentials: 'include' });
+        } catch (e) {
+          // ignore network errors on logout, just reset local state
+        }
+        currentUser = null;
+        renderForUser(null);
+      }
 
       const gateArea = document.getElementById('gateArea');
       const gateText = document.getElementById('gateText');
@@ -568,9 +588,7 @@ main.dash {
       const appsModalBody = document.getElementById('appsModalBody');
       const logFeed = document.getElementById('logFeed');
 
-      githubLoginBtn.addEventListener('click', function () {
-        window.NBRTAControlCenter.login();
-      });
+      githubLoginBtn.addEventListener('click', login);
 
       function escapeHtml(str) {
         return String(str)
@@ -732,7 +750,9 @@ main.dash {
 
       // ---------- Gate: only the admin gets past this page ----------
 
-      window.NBRTAControlCenter.onUserChange(function (user) {
+      function renderForUser(user) {
+        currentUser = user;
+
         if (!user) {
           gateArea.style.display = 'block';
           dashArea.style.display = 'none';
@@ -752,9 +772,7 @@ main.dash {
           switchBtn.type = 'button';
           switchBtn.className = 'gh-btn';
           switchBtn.textContent = 'Sign out';
-          switchBtn.addEventListener('click', function () {
-            window.NBRTAControlCenter.logout();
-          });
+          switchBtn.addEventListener('click', logout);
           gateSpinnerNote.appendChild(switchBtn);
           return;
         }
@@ -763,7 +781,34 @@ main.dash {
         dashArea.style.display = 'grid';
         loadApplications();
         loadLogFeed();
-      });
+      }
+
+      async function checkSession() {
+        gateSpinnerNote.textContent = 'Checking sign-in status\u2026';
+        try {
+          const res = await fetch(AUTH_ORIGIN + '/me', { credentials: 'include' });
+          const data = await res.json();
+          gateSpinnerNote.textContent = '';
+
+          if (!data.loggedIn) {
+            renderForUser(null);
+            return;
+          }
+
+          renderForUser({
+            username: data.username,
+            avatarUrl: data.avatarUrl,
+            role: data.role || 'visitor',
+            isAdmin: !!data.isAdmin,
+            isEditor: !!data.isEditor,
+          });
+        } catch (e) {
+          gateSpinnerNote.textContent = 'Could not reach the sign-in server. Check your connection and reload.';
+          renderForUser(null);
+        }
+      }
+
+      checkSession();
     })();
   </script>
 

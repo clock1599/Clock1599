@@ -768,7 +768,6 @@ h2.block-title {
     The New Brass Rail Transit Authority &middot; Maintained by <span class="accent">Clock1599</span>
   </footer>
 
-  <script src="control-center.js"></script>
   <script>
     (function () {
       const AUTH_ORIGIN = "https://auth.clock1599-official.workers.dev";
@@ -784,12 +783,16 @@ h2.block-title {
       let currentUser = null; // { username, avatarUrl, isAdmin }
       let editorInitialized = false;
 
-      document.getElementById('openControlCenterBtn').addEventListener('click', function () {
-        window.NBRTAControlCenter.open();
-      });
-      document.getElementById('openControlCenterFromEditorBtn').addEventListener('click', function () {
-        window.NBRTAControlCenter.open();
-      });
+      function currentPageFilename() {
+        return window.location.pathname.split('/').pop() || 'index.html';
+      }
+
+      function goToControlCenter() {
+        window.location.href = 'control-center.html';
+      }
+
+      document.getElementById('openControlCenterBtn').addEventListener('click', goToControlCenter);
+      document.getElementById('openControlCenterFromEditorBtn').addEventListener('click', goToControlCenter);
 
       function showLockArea() {
         lockArea.style.display = 'block';
@@ -801,9 +804,7 @@ h2.block-title {
         editorArea.style.display = 'block';
       }
 
-      // The control center (control-center.js) owns sign-in, sign-out, and
-      // session state. This page just reacts to whatever it reports.
-      window.NBRTAControlCenter.onUserChange(function (user) {
+      function handleUserChange(user) {
         currentUser = user;
 
         if (!user) {
@@ -838,7 +839,34 @@ h2.block-title {
         } else if (user.isAdmin) {
           loadScheduledStatus();
         }
-      });
+      }
+
+      async function checkSession() {
+        authSpinnerNote.textContent = 'Checking sign-in status\u2026';
+        try {
+          const res = await fetch(AUTH_ORIGIN + '/me', { credentials: 'include' });
+          const data = await res.json();
+          authSpinnerNote.textContent = '';
+
+          if (!data.loggedIn) {
+            handleUserChange(null);
+            return;
+          }
+
+          handleUserChange({
+            username: data.username,
+            avatarUrl: data.avatarUrl,
+            role: data.role || 'visitor',
+            isAdmin: !!data.isAdmin,
+            isEditor: !!data.isEditor,
+          });
+        } catch (e) {
+          authSpinnerNote.textContent = 'Could not reach the sign-in server. Check your connection and reload.';
+          handleUserChange(null);
+        }
+      }
+
+      checkSession();
 
       // ---------- Shared draft sync ----------
 
@@ -1654,8 +1682,6 @@ ${prevLink}
   <footer class="site-footer">
     The New Brass Rail Transit Authority &middot; Maintained by <span class="accent">Clock1599</span>
   </footer>
-
-  <script src="control-center.js"><` + `/script>
 </body>
 </html>
 `;
