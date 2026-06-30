@@ -190,6 +190,33 @@ main.dash {
   padding: 0;
 }
 
+.page-kicker {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.page-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 4.2vw, 2.2rem);
+  line-height: 1.15;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.page-rule {
+  width: 56px;
+  height: 3px;
+  background: var(--blue);
+  margin: 1.25rem auto 2.25rem;
+}
+
 .dash-grid {
   display: grid;
   grid-template-columns: 4fr 1fr;
@@ -232,21 +259,6 @@ main.dash {
   flex-wrap: wrap;
 }
 
-.dash-logout-btn {
-  width: auto;
-  padding: 0.55rem 1.1rem;
-  font-size: 0.72rem;
-  background: var(--bg-raised);
-  color: var(--text-dim);
-  border-color: var(--line);
-}
-.dash-logout-btn:hover {
-  opacity: 1;
-  border-color: var(--red);
-  color: var(--red);
-  background: var(--bg-raised);
-}
-
 /* ---------- Sign-in screen (shown in place of the dashboard when needed) ---------- */
 
 .gate-wrap {
@@ -256,23 +268,6 @@ main.dash {
   padding: 0 1.5rem;
 }
 
-.gate-kicker {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--blue);
-  margin-bottom: 0.75rem;
-}
-
-.gate-title {
-  font-family: 'Space Mono', monospace;
-  font-weight: 700;
-  font-size: 1.8rem;
-  color: var(--gold);
-  margin-bottom: 1rem;
-}
-
 .gate-text {
   font-size: 0.92rem;
   line-height: 1.7;
@@ -280,27 +275,49 @@ main.dash {
   margin-bottom: 2rem;
 }
 
-.gh-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.85rem;
-  color: var(--bg);
-  background: var(--text);
-  border: 1px solid var(--text);
-  padding: 0.85rem 1.6rem;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.gh-btn:hover { opacity: 0.85; }
-.gh-btn svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
-
 .gate-spinner-note {
   font-family: 'Space Mono', monospace;
   font-size: 0.78rem;
   color: var(--text-dim);
   margin-top: 1.25rem;
+}
+
+/* ---------- Shared buttons (same as the rest of the site) ---------- */
+
+.btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.btn.primary {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.btn.primary:hover {
+  background: var(--blue);
+  color: var(--text);
+}
+
+.btn.full-width {
+  display: block;
+  width: 100%;
+  text-align: center;
+  position: relative;
 }
 
 /* ---------- Sidebar (rightmost fifth) ---------- */
@@ -317,25 +334,7 @@ main.dash {
   .dash-sidebar { padding: 2rem 1.5rem; }
 }
 
-.sidebar-btn {
-  display: block;
-  width: 100%;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--gold);
-  background: var(--bg-raised);
-  border: 1px solid var(--gold);
-  padding: 0.8rem 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  text-align: center;
-  position: relative;
-}
-.sidebar-btn:hover { background: var(--gold); color: var(--bg); }
-
-.sidebar-btn .count-badge {
+.count-badge {
   position: absolute;
   top: -8px;
   right: -8px;
@@ -360,23 +359,27 @@ main.dash {
   margin: 1.5rem 0 0.75rem;
 }
 
-.log-feed {
+/* Activity feed reuses the same bordered, raised-background "island" look
+   as .schedule-card / .countdown-card elsewhere on the site. */
+.log-feed-card {
   flex: 1;
   min-height: 0;
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
   scrollbar-width: thin;
   scrollbar-color: var(--line) transparent;
 }
 
-.log-feed::-webkit-scrollbar {
+.log-feed-card::-webkit-scrollbar {
   width: 6px;
 }
-.log-feed::-webkit-scrollbar-track {
+.log-feed-card::-webkit-scrollbar-track {
   background: transparent;
 }
-.log-feed::-webkit-scrollbar-thumb {
+.log-feed-card::-webkit-scrollbar-thumb {
   background: var(--line);
   border-radius: 3px;
 }
@@ -409,7 +412,8 @@ main.dash {
   padding: 0.5rem 0;
 }
 
-/* ---------- Applications modal ---------- */
+/* ---------- Applications modal (same pattern as the logs modal used
+   elsewhere on the site, just for a different list) ---------- */
 
 .apps-overlay {
   position: fixed;
@@ -484,7 +488,9 @@ main.dash {
 
 .app-actions { display: flex; gap: 0.5rem; }
 
-.app-btn {
+/* Approve/deny buttons reuse the exact .pr-btn pattern from the newsletter
+   editor's "cancel scheduled publish" control, for visual consistency. */
+.pr-btn {
   font-family: 'Space Mono', monospace;
   font-size: 0.65rem;
   letter-spacing: 0.04em;
@@ -496,10 +502,10 @@ main.dash {
   background: var(--bg-raised);
   color: var(--text-dim);
 }
-.app-btn.approve { border-color: #4CAF50; color: #4CAF50; }
-.app-btn.approve:hover { background: #4CAF50; color: var(--text); }
-.app-btn.deny { border-color: var(--red); color: var(--red); }
-.app-btn.deny:hover { background: var(--red); color: var(--text); }
+.pr-btn.approve { border-color: #4CAF50; color: #4CAF50; }
+.pr-btn.approve:hover { background: #4CAF50; color: var(--text); }
+.pr-btn.deny { border-color: var(--red); color: var(--red); }
+.pr-btn.deny:hover { background: var(--red); color: var(--text); }
 
 /* ---------- Footer ---------- */
 
@@ -545,11 +551,12 @@ main.dash {
 
     <div id="gateArea">
       <div class="gate-wrap">
-        <div class="gate-kicker">Restricted</div>
-        <h1 class="gate-title">Control Center</h1>
+        <div class="page-kicker">Restricted</div>
+        <h1 class="page-title">Control Center</h1>
+        <div class="page-rule"></div>
         <p class="gate-text" id="gateText">Sign in with GitHub to continue. Only Clock1599 can access this page.</p>
-        <button type="button" class="gh-btn" id="githubLoginBtn">
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.02 1.93-.02 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+        <button type="button" class="btn primary" id="githubLoginBtn">
+          <svg viewBox="0 0 16 16" aria-hidden="true" style="width:14px; height:14px; vertical-align:-2px; margin-right:0.4em; fill:currentColor;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.02 1.93-.02 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
           Sign in with GitHub
         </button>
         <div class="gate-spinner-note" id="gateSpinnerNote"></div>
@@ -563,18 +570,18 @@ main.dash {
             <div class="dash-title">Hello Clock1599!</div>
             <div class="dash-subtitle">Control Center</div>
           </div>
-          <button type="button" class="gh-btn dash-logout-btn" id="dashLogoutBtn">Sign out</button>
+          <button type="button" class="btn" id="dashLogoutBtn">Sign out</button>
         </div>
       </div>
 
       <div class="dash-sidebar">
-        <button type="button" class="sidebar-btn" id="applicationsBtn">
+        <button type="button" class="btn primary full-width" id="applicationsBtn">
           Applications
           <span class="count-badge" id="applicationsCount" style="display:none;">0</span>
         </button>
 
         <div class="sidebar-section-title">Activity &mdash; last 7 days</div>
-        <div class="log-feed" id="logFeed">
+        <div class="log-feed-card" id="logFeed">
           <div class="sidebar-empty">Loading&hellip;</div>
         </div>
       </div>
@@ -687,14 +694,14 @@ main.dash {
           actions.className = 'app-actions';
           const approveBtn = document.createElement('button');
           approveBtn.type = 'button';
-          approveBtn.className = 'app-btn approve';
+          approveBtn.className = 'pr-btn approve';
           approveBtn.textContent = 'Make Editor';
           approveBtn.addEventListener('click', function () {
             setRole(p.username, 'editor');
           });
           const denyBtn = document.createElement('button');
           denyBtn.type = 'button';
-          denyBtn.className = 'app-btn deny';
+          denyBtn.className = 'pr-btn deny';
           denyBtn.textContent = 'Deny';
           denyBtn.addEventListener('click', function () {
             setRole(p.username, 'visitor');
@@ -821,7 +828,7 @@ main.dash {
           gateSpinnerNote.innerHTML = '';
           const switchBtn = document.createElement('button');
           switchBtn.type = 'button';
-          switchBtn.className = 'gh-btn';
+          switchBtn.className = 'btn';
           switchBtn.textContent = 'Sign out';
           switchBtn.addEventListener('click', logout);
           gateSpinnerNote.appendChild(switchBtn);
