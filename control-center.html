@@ -892,7 +892,7 @@ main.dash {
           if (data.version && data.version.number) {
             versionInput.value = data.version.number;
             const when = new Date(data.version.updatedAt).toLocaleString();
-            versionStatus.textContent = 'Current: v' + data.version.number +
+            versionStatus.textContent = 'Current: ' + data.version.number +
               ' (set by ' + data.version.updatedBy + ', ' + when + ')';
           } else {
             versionStatus.textContent = 'No version set yet.';
@@ -921,7 +921,7 @@ main.dash {
           if (!res.ok || data.error) {
             versionStatus.textContent = 'Could not save: ' + (data.error || 'unknown error');
           } else {
-            versionStatus.textContent = 'Saved v' + data.version.number + '.';
+            versionStatus.textContent = 'Saved ' + data.version.number + '.';
           }
         } catch (e) {
           versionStatus.textContent = 'Could not reach the server.';

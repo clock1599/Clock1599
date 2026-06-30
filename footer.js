@@ -3,7 +3,7 @@
 
   function render(versionText) {
     var versionHtml = versionText
-      ? ' <span class="footer-version">&middot; v' + versionText + '</span>'
+      ? ' <span class="footer-version">&middot; ' + versionText + '</span>'
       : '';
 
     var html =
@@ -23,7 +23,7 @@
       .then(function (res) { return res.ok ? res.json() : { version: null }; })
       .then(function (data) {
         var v = data && data.version && data.version.number;
-        render(null);
+        render(v || null);
       })
       .catch(function () {
         render(null);
