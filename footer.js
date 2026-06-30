@@ -23,7 +23,7 @@
       .then(function (res) { return res.ok ? res.json() : { version: null }; })
       .then(function (data) {
         var v = data && data.version && data.version.number;
-        render(v || null);
+        render(null);
       })
       .catch(function () {
         render(null);
