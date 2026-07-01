@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Redirecting…</title>
+</head>
+<body>
+<script>
+  // GitHub Pages serves this file for any path it doesn't recognize.
+  // This SPA only has one real file (index.html) and routes everything
+  // else via a URL hash (e.g. /#newsletter.html). But a few things still
+  // link to real page paths -- most importantly the auth worker's OAuth
+  // callback, which redirects the browser to a literal URL like
+  // ".../newsletter-editor.html?login=success" once GitHub sign-in
+  // finishes. That path doesn't exist as a file anymore, so GitHub Pages
+  // lands here. This script figures out which page was requested and
+  // sends the browser to the equivalent hash route instead -- keeping any
+  // query string (like ?login=success) intact as a real query string, so
+  // page scripts that read window.location.search still see it.
+  (function () {
+    var KNOWN_PAGES = [
+      "index.html", "credits.html", "regulations.html", "signalling.html",
+      "track-sizing.html", "train-sizing.html", "newsletter.html",
+      "newsletter-june5.html", "newsletter-june12.html",
+      "newsletter-june19.html", "control-center.html",
+      "newsletter-editor.html"
+    ];
+
+    var path = window.location.pathname;   // e.g. /Clock1599/newsletter-editor.html
+    var search = window.location.search;   // e.g. ?login=success
+    var base, file;
+
+    if (path.endsWith('/')) {
+      base = path;
+      file = 'index.html';
+    } else {
+      var idx = path.lastIndexOf('/');
+      base = path.slice(0, idx + 1);
+      var last = path.slice(idx + 1);
+      file = KNOWN_PAGES.indexOf(last) !== -1 ? last : 'index.html';
+    }
+
+    window.location.replace(base + search + '#' + file);
+  })();
+</script>
+</body>
+</html>
