@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The New Brass Rail Transit Authority</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* Layout shim: the original site relied on <body> being a flex column
+     with header/main/footer as direct children. In the SPA they're wrapped
+     in a single #app-root, so we replicate that flex behavior here. */
+  #app-root { display: flex; flex-direction: column; flex: 1; min-height: 100vh; width: 100%; }
+  .legacy-page-root { display: flex; flex-direction: column; flex: 1; width: 100%; }
+</style>
+</head>
+<body>
+
+  <div id="root"></div>
+
+  <!-- React + Babel (in-browser JSX transpile — no build step needed) -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
+
+  <!-- Bundled page content, extracted verbatim from the original static pages -->
+  <script src="pages-data.js"></script>
+
+  <!-- App shell: Header/Footer/router + generic legacy-page renderer -->
+  <script type="text/babel" src="app.js"></script>
+
+</body>
+</html>
