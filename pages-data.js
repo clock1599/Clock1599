@@ -3489,12 +3489,13 @@ window.PAGES["Guides.html"] = {
     <div class="page-rule"></div>
 
     <p class="page-intro">
-      Regulations will be improved in the following weeks. If you're not sure about a restriction, contact <strong>TehGizmoNator</strong> or <strong>Clock1599</strong>.
+      Guides are coming soon as a part of <strong>VirusTLNR</strong>'s project made possible by <strong>Clock1599</strong>'s coding.
+      For more info contact <strong>Clock1599</strong>.
     </p>
 
     <section class="block">
-      <h2 class="block-title">Gauge</h2>
-      <p>Serverwide tracks should be <strong>Standard Gauge</strong>, but Wide and Narrow Gauge are still permitted for smaller, coordinated projects.</p>
+      <h2 class="block-title">How this works</h2>
+      <p>Here you can find <strong>Builder made</strong> guides for things you may encounter during your time on the railway.</p>
     </section>
 
     <section class="block">
@@ -3506,19 +3507,11 @@ window.PAGES["Guides.html"] = {
     </section>
 
     <section class="block">
-      <h2 class="block-title">All Regulations</h2>
+      <h2 class="block-title">All Guides</h2>
       <ul class="plain-list">
-        <li><a href="Regulation_Signalling.html" style="color: var(--blue);">Signalling</a></li>
-        <li><a href="Regulation_Track-Sizing.html" style="color: var(--blue);">Track Sizing</a></li>
-        <li><a href="Regulation_Train-Sizing.html" style="color: var(--blue);">Train Sizing</a></li>
-        <li>Regarding Spawn</li>
+        <li><a href="Guide_Schedules.html" style="color: var(--blue);">Schedules</a></li>
+        <li><a href="Guide_Display-Boards.html" style="color: var(--blue);">Display Boards</a></li>
       </ul>
-    </section>
-
-    <section class="block">
-      <h2 class="block-title">Regarding Spawn</h2>
-      <p>No freight trains should stop at Spawn.</p>
-      <p class="dim">This section is soon to be expanded.</p>
     </section>
   </main>
 `,
