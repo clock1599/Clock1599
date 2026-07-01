@@ -74,24 +74,36 @@ function Header({ route }) {
   );
 }
 
-function Footer() {
+function Footer({ route }) {
   const [version, setVersion] = useState(null);
 
   useEffect(() => {
     const AUTH_ORIGIN = 'https://auth.clock1599-official.workers.dev';
     let cancelled = false;
-    fetch(AUTH_ORIGIN + '/version')
-      .then((res) => (res.ok ? res.json() : { version: null }))
-      .then((data) => {
-        if (cancelled) return;
-        const v = data && data.version && data.version.number;
-        setVersion(v || null);
-      })
-      .catch(() => {
-        if (!cancelled) setVersion(null);
-      });
-    return () => { cancelled = true; };
-  }, []);
+
+    function loadVersion() {
+      fetch(AUTH_ORIGIN + '/version')
+        .then((res) => (res.ok ? res.json() : { version: null }))
+        .then((data) => {
+          if (cancelled) return;
+          const v = data && data.version && data.version.number;
+          setVersion(v || null);
+        })
+        .catch(() => {
+          if (!cancelled) setVersion(null);
+        });
+    }
+
+    // Refetch whenever we navigate (e.g. leaving Control Center after a
+    // save) and instantly whenever Control Center's save succeeds, so the
+    // badge updates without needing a full page reload.
+    loadVersion();
+    window.addEventListener('nbrt:version-updated', loadVersion);
+    return () => {
+      cancelled = true;
+      window.removeEventListener('nbrt:version-updated', loadVersion);
+    };
+  }, [route]);
 
   return (
     <footer className="site-footer">
@@ -175,7 +187,7 @@ function App() {
     <div id="app-root" onClick={onRootClick}>
       <Header route={route} />
       {page ? <LegacyPage page={page} key={route} /> : null}
-      <Footer />
+      <Footer route={route} />
     </div>
   );
 }

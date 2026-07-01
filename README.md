@@ -46,3 +46,35 @@ The Editor and Control Center still call out to
 `https://auth.clock1599-official.workers.dev` for GitHub sign-in and the
 footer version number, exactly as the original site did — no auth logic was
 changed, only how the pages are mounted.
+
+## Making GitHub sign-in work (`404.html`)
+
+The auth worker finishes its OAuth flow with a real, full-page redirect to
+a literal URL — e.g. `https://clock1599.github.io/Clock1599/control-center.html?login=success`.
+That's how the original multi-page site worked, since that file used to
+exist. In the SPA it doesn't anymore — everything is routed through
+`index.html` via a `#hash`, so that URL 404s.
+
+`404.html` fixes this. GitHub Pages automatically serves it for any path
+it can't find, so when the browser lands on that dead link, `404.html`
+rewrites it into the SPA's format and redirects again:
+
+```
+/Clock1599/control-center.html?login=success
+        → /Clock1599/?login=success#control-center.html
+```
+
+The query string (`?login=success`) is kept as a real query string and the
+page name moves into the hash — so `index.html` loads normally, the
+router picks up `#control-center.html`, and the page's own script (which
+calls `/me` with `credentials: 'include'` on mount) picks up the new
+session cookie right away.
+
+**This means `404.html` must be uploaded to the repo alongside the other
+four files** — GitHub Pages only looks for it at the repo root. Without
+it, sign-in will complete on GitHub's side (the cookie gets set) but the
+browser will be stuck on a 404 page instead of bouncing back into the app.
+
+This also means any other deep link to an old filename (e.g. someone's old
+bookmark to `signalling.html`) now gets caught by the same file and
+redirected into the correct hash route.

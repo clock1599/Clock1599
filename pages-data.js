@@ -11,7 +11,7 @@ window.PAGES["index.html"] = {
 <main class="page" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; min-height: 70vh;">
     <div class="rule" style="width:64px; height:3px; background:var(--blue); margin:0 auto 1.5rem;"></div>
     <h1 class="title" style="font-family:'Space Mono', monospace; font-weight:700; font-size:clamp(2rem, 7vw, 4.6rem); line-height:1.1; letter-spacing:-0.01em; color:var(--gold); max-width: 900px;">THE NEW BRASS RAIL TRANSIT AUTHORITY</h1>
-    <div class="kicker" style="font-family:'Space Mono', monospace; font-size:0.8rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--blue); margin-top:1.25rem;">For Brassworks | By Clock1599</div>
+    <div class="kicker" style="font-family:'Space Mono', monospace; font-size:0.8rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--blue); margin-top:1.25rem;">By Clock1599</div>
 
     <p style="margin-top: 3rem; max-width: 560px; color: var(--text-dim); font-size: 0.95rem;">
       In lieu of Derp's absence, several railroads have come together to carry the BrassTransit name, giving us <strong style="color: var(--gold); font-weight: 700;">The New Brass Rail Transit Authority</strong>.
@@ -311,8 +311,8 @@ window.PAGES["newsletter.html"] = {
   title: "Newsletter \u2014 The New Brass Rail Transit",
   html: `
 <main class="page">
-    <div class="page-kicker">The official newsletter of The New Brass Rail Transit Authority</div>
-    <h1 class="page-title">The Newsletter</h1>
+    <div class="page-kicker">Reporting from the yards</div>
+    <h1 class="page-title">The NBRT Newsletter</h1>
     <div class="page-rule"></div>
 
     <p class="page-intro">
@@ -1678,6 +1678,7 @@ main.dash {
             versionStatus.textContent = 'Could not save: ' + (data.error || 'unknown error');
           } else {
             versionStatus.textContent = 'Saved ' + data.version.number + '.';
+            window.dispatchEvent(new Event('nbrt:version-updated'));
           }
         } catch (e) {
           versionStatus.textContent = 'Could not reach the server.';
