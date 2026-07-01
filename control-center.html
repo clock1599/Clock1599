@@ -572,6 +572,16 @@ main.dash {
           </div>
           <button type="button" class="btn" id="dashLogoutBtn">Sign out</button>
         </div>
+
+        <div class="sidebar-section-title" style="margin-top:1.5rem;">Site Version</div>
+        <div class="log-feed-card" style="padding:1rem;">
+          <div style="display:flex; gap:0.6rem; align-items:center;">
+            <input type="text" id="versionInput" placeholder="e.g. 1.4.2"
+              style="flex:1; background:var(--bg); border:1px solid var(--line); border-radius:4px; padding:0.5em 0.7em; color:var(--text); font-family:'Space Mono', monospace; font-size:0.85rem;">
+            <button type="button" class="btn primary" id="versionSaveBtn">Save</button>
+          </div>
+          <div class="sidebar-empty" id="versionStatus" style="margin-top:0.6rem;">Loading current version&hellip;</div>
+        </div>
       </div>
 
       <div class="dash-sidebar">
@@ -601,9 +611,8 @@ main.dash {
     </div>
   </div>
 
-  <footer class="site-footer">
-    The New Brass Rail Transit Authority &middot; Maintained by <span class="accent">Clock1599</span>
-  </footer>
+  <div id="site-footer"></div>
+  <script src="footer.js"></script>
 
   <script>
     (function () {
@@ -839,6 +848,7 @@ main.dash {
         dashArea.style.display = 'grid';
         loadApplications();
         loadLogFeed();
+        loadVersion();
       }
 
       async function checkSession() {
@@ -867,6 +877,60 @@ main.dash {
       }
 
       checkSession();
+
+      // ---------- Site version ----------
+
+      const versionInput = document.getElementById('versionInput');
+      const versionSaveBtn = document.getElementById('versionSaveBtn');
+      const versionStatus = document.getElementById('versionStatus');
+
+      async function loadVersion() {
+        versionStatus.textContent = 'Loading current version\u2026';
+        try {
+          const res = await fetch(AUTH_ORIGIN + '/version', { credentials: 'include' });
+          const data = await res.json();
+          if (data.version && data.version.number) {
+            versionInput.value = data.version.number;
+            const when = new Date(data.version.updatedAt).toLocaleString();
+            versionStatus.textContent = 'Current: ' + data.version.number +
+              ' (set by ' + data.version.updatedBy + ', ' + when + ')';
+          } else {
+            versionStatus.textContent = 'No version set yet.';
+          }
+        } catch (e) {
+          versionStatus.textContent = 'Could not load the current version.';
+        }
+      }
+
+      async function saveVersion() {
+        const number = versionInput.value.trim();
+        if (!number) {
+          versionStatus.textContent = 'Enter a version number first.';
+          return;
+        }
+        versionSaveBtn.disabled = true;
+        versionStatus.textContent = 'Saving\u2026';
+        try {
+          const res = await fetch(AUTH_ORIGIN + '/version', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ number }),
+          });
+          const data = await res.json();
+          if (!res.ok || data.error) {
+            versionStatus.textContent = 'Could not save: ' + (data.error || 'unknown error');
+          } else {
+            versionStatus.textContent = 'Saved ' + data.version.number + '.';
+          }
+        } catch (e) {
+          versionStatus.textContent = 'Could not reach the server.';
+        } finally {
+          versionSaveBtn.disabled = false;
+        }
+      }
+
+      versionSaveBtn.addEventListener('click', saveVersion);
     })();
   </script>
 
