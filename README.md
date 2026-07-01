@@ -19,9 +19,9 @@ routed instead of separate `.html` files.
 - `styles.css` — copied byte-for-byte from the original.
 
 ## How routing works
-Links like `href="signalling.html"` still work as written: a single click
+Links like `href="newsletter.html"` still work as written: a single click
 handler on the app root intercepts any in-page `<a>` whose `href` matches a
-known page and does a client-side hash navigation (`#signalling.html`)
+known page and does a client-side hash navigation (`#newsletter.html`)
 instead of a full reload — so both old-style links inside content and the
 nav bar work without edits. Two small script patches were applied so the
 Editor → Control Center handoff and Control Center's "which page am I on"
@@ -76,5 +76,5 @@ it, sign-in will complete on GitHub's side (the cookie gets set) but the
 browser will be stuck on a 404 page instead of bouncing back into the app.
 
 This also means any other deep link to an old filename (e.g. someone's old
-bookmark to `signalling.html`) now gets caught by the same file and
+bookmark to an old page name) now gets caught by the same file and
 redirected into the correct hash route.

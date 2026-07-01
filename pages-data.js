@@ -121,9 +121,9 @@ window.PAGES["regulations.html"] = {
     <section class="block">
       <h2 class="block-title">All Regulations</h2>
       <ul class="plain-list">
-        <li><a href="signalling.html" style="color: var(--blue);">Signalling</a></li>
-        <li><a href="track-sizing.html" style="color: var(--blue);">Track Sizing</a></li>
-        <li><a href="train-sizing.html" style="color: var(--blue);">Train Sizing</a></li>
+        <li><a href="Regulation_Signalling.html" style="color: var(--blue);">Signalling</a></li>
+        <li><a href="Regulation_Track-Sizing.html" style="color: var(--blue);">Track Sizing</a></li>
+        <li><a href="Regulation_Train-Sizing.html" style="color: var(--blue);">Train Sizing</a></li>
         <li>Regarding Spawn</li>
       </ul>
     </section>
@@ -141,7 +141,7 @@ window.PAGES["regulations.html"] = {
   scripts: []
 };
 
-window.PAGES["signalling.html"] = {
+window.PAGES["Regulation_Signalling.html"] = {
   title: "Signalling \u2014 The New Brass Rail Transit",
   html: `
 <main class="page">
@@ -235,7 +235,7 @@ window.PAGES["signalling.html"] = {
   scripts: []
 };
 
-window.PAGES["track-sizing.html"] = {
+window.PAGES["Regulation_Track-Sizing.html"] = {
   title: "Track Sizing \u2014 The New Brass Rail Transit",
   html: `
 <main class="page">
@@ -265,7 +265,7 @@ window.PAGES["track-sizing.html"] = {
   scripts: []
 };
 
-window.PAGES["train-sizing.html"] = {
+window.PAGES["Regulation_Train-Sizing.html"] = {
   title: "Train Sizing \u2014 The New Brass Rail Transit",
   html: `
 <main class="page">
@@ -3323,9 +3323,17 @@ h3.sub-title {
         <button type="button" onclick="document.getElementById('regDropdown').classList.toggle('open')">Regulations <span class="caret">&#9662;</span></button>
         <div class="nav-dropdown-menu">
           <a href="regulations.html">Overview</a>
-          <a href="signalling.html">Signalling</a>
-          <a href="track-sizing.html">Track Sizing</a>
-          <a href="train-sizing.html">Train Sizing</a>
+          <a href="Regulation_Signalling.html">Signalling</a>
+          <a href="Regulation_Track-Sizing.html">Track Sizing</a>
+          <a href="Regulation_Train-Sizing.html">Train Sizing</a>
+        </div>
+      </div>
+      <div class="nav-dropdown" id="guidesDropdown">
+        <button type="button" onclick="document.getElementById('guidesDropdown').classList.toggle('open')">Guides <span class="caret">&#9662;</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="Guides.html">Overview</a>
+          <a href="Guide_Schedules.html">Schedules</a>
+          <a href="Guide_Display-Boards.html">Display Boards</a>
         </div>
       </div>
       <a href="newsletter.html" class="active">Newsletter</a>
@@ -3470,4 +3478,92 @@ h3.sub-title {
 
 `
   ]
+};
+
+window.PAGES["Guides.html"] = {
+  title: "Regulations \u2014 The New Brass Rail Transit",
+  html: `
+<main class="page">
+    <div class="page-kicker">Start here</div>
+    <h1 class="page-title">Railway Regulations</h1>
+    <div class="page-rule"></div>
+
+    <p class="page-intro">
+      Regulations will be improved in the following weeks. If you're not sure about a restriction, contact <strong>TehGizmoNator</strong> or <strong>Clock1599</strong>.
+    </p>
+
+    <section class="block">
+      <h2 class="block-title">Gauge</h2>
+      <p>Serverwide tracks should be <strong>Standard Gauge</strong>, but Wide and Narrow Gauge are still permitted for smaller, coordinated projects.</p>
+    </section>
+
+    <section class="block">
+      <h2 class="block-title">Have Manners</h2>
+      <p>Please do not steal or leave trains lying around — leaving your train on a track is the railway equivalent of leaving your toys in the middle of the floor. A messy track means no one else can enjoy trains.</p>
+      <div class="callout">
+        <p><strong>If your train blocks a mainline, it will be confiscated and disassembled.</strong></p>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2 class="block-title">All Regulations</h2>
+      <ul class="plain-list">
+        <li><a href="Regulation_Signalling.html" style="color: var(--blue);">Signalling</a></li>
+        <li><a href="Regulation_Track-Sizing.html" style="color: var(--blue);">Track Sizing</a></li>
+        <li><a href="Regulation_Train-Sizing.html" style="color: var(--blue);">Train Sizing</a></li>
+        <li>Regarding Spawn</li>
+      </ul>
+    </section>
+
+    <section class="block">
+      <h2 class="block-title">Regarding Spawn</h2>
+      <p>No freight trains should stop at Spawn.</p>
+      <p class="dim">This section is soon to be expanded.</p>
+    </section>
+  </main>
+`,
+  css: `
+
+`,
+  scripts: []
+};
+
+window.PAGES["Guide_Schedules.html"] = {
+  title: "Schedules \u2014 Guides \u2014 The New Brass Rail Transit Authority",
+  html: `
+<main class="page">
+    <div class="page-kicker">Guides</div>
+    <h1 class="page-title">Schedules</h1>
+    <div class="page-rule"></div>
+
+    <p class="page-intro">
+      This guide is coming soon. Check back later for details.
+    </p>
+</main>
+
+`,
+  css: `
+
+`,
+  scripts: []
+};
+
+window.PAGES["Guide_Display-Boards.html"] = {
+  title: "Display Boards \u2014 Guides \u2014 The New Brass Rail Transit Authority",
+  html: `
+<main class="page">
+    <div class="page-kicker">Guides</div>
+    <h1 class="page-title">Display Boards</h1>
+    <div class="page-rule"></div>
+
+    <p class="page-intro">
+      This guide is coming soon. Check back later for details.
+    </p>
+</main>
+
+`,
+  css: `
+
+`,
+  scripts: []
 };
