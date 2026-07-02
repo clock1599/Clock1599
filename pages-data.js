@@ -4456,6 +4456,1634 @@ h2.block-title {
   checkSession();
 })();
 
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --red: #9F0000;
+  --blue: #00009F;
+  --gold: #B5A642;
+  --bg: #0A0A0A;
+  --bg-raised: #131110;
+  --text: #E8E4DC;
+  --text-dim: #6B6660;
+  --line: #232020;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* ---------- Site Header / Nav (kept consistent with rest of site) ---------- */
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 2rem;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(6px);
+  z-index: 50;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: 260px;
+}
+
+.brand img {
+  height: 52px;
+  width: 52px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  color: var(--gold);
+  line-height: 1.2;
+}
+
+@media (min-width: 900px) {
+  .brand-text { font-size: 1.15rem; }
+}
+
+nav.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  position: relative;
+}
+
+nav.main-nav a {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0.5em 0.8em;
+  border-radius: 2px;
+  transition: color 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
+}
+
+nav.main-nav a:hover {
+  color: var(--text);
+  background: var(--bg-raised);
+}
+
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown > button {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0.5em 0.8em;
+  border-radius: 2px;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-weight: inherit;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.nav-dropdown > button:hover,
+.nav-dropdown.open > button {
+  color: var(--text);
+  background: var(--bg-raised);
+}
+
+.nav-dropdown > button .caret {
+  font-size: 0.6rem;
+  transition: transform 0.15s ease;
+}
+
+.nav-dropdown.open > button .caret {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  min-width: 180px;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.4rem;
+  display: none;
+  flex-direction: column;
+  gap: 0.1rem;
+  z-index: 60;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.nav-dropdown.open .nav-dropdown-menu {
+  display: flex;
+}
+
+.nav-dropdown-menu a {
+  padding: 0.55em 0.7em;
+  border-radius: 4px;
+  font-size: 0.72rem;
+}
+
+.nav-dropdown-menu a:hover {
+  background: var(--line);
+  color: var(--text);
+}
+
+@media (max-width: 760px) {
+  .site-header { flex-wrap: wrap; padding: 1rem 1.25rem; }
+  nav.main-nav { gap: 0.15rem; width: 100%; padding-top: 0.75rem; border-top: 1px solid var(--line); }
+  nav.main-nav a, .nav-dropdown > button { font-size: 0.68rem; padding: 0.45em 0.65em; }
+  .nav-dropdown-menu { position: static; box-shadow: none; margin-top: 0.2rem; margin-left: 0.5rem; border: none; background: transparent; padding: 0; }
+  .nav-dropdown.open .nav-dropdown-menu { display: flex; }
+}
+
+/* ---------- Page shell ---------- */
+
+main.page {
+  flex: 1;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 5rem;
+}
+
+.page-kicker {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.page-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 4.2vw, 2.2rem);
+  line-height: 1.15;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.page-rule {
+  width: 56px;
+  height: 3px;
+  background: var(--blue);
+  margin: 1.25rem auto 2.25rem;
+}
+
+.page-intro {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-dim);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* ---------- Lock screen ---------- */
+
+.btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.btn.primary {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.btn.primary:hover {
+  background: var(--blue);
+  color: var(--text);
+}
+
+.btn:disabled,
+.btn:disabled:hover {
+  cursor: not-allowed;
+  opacity: 0.4;
+  border-color: var(--line);
+  color: var(--text-dim);
+  background: var(--bg-raised);
+}
+
+/* ---------- GitHub auth states ---------- */
+
+.gh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  color: var(--bg);
+  background: var(--text);
+  border: 1px solid var(--text);
+  padding: 0.75rem 1.4rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.gh-btn:hover { opacity: 0.85; }
+
+.gh-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+.auth-status-box {
+  max-width: 420px;
+  margin: 2rem auto 0;
+  text-align: center;
+}
+
+.auth-spinner-note {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-top: 1rem;
+}
+
+/* Session bar shown once logged in */
+
+.session-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+  border-radius: 6px;
+  padding: 0.75rem 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.session-bar .session-who {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.session-bar .session-who img {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+}
+
+.session-bar .session-who strong {
+  color: var(--text);
+}
+
+.session-bar .session-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.admin-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 0.15em 0.5em;
+  border-radius: 3px;
+}
+
+/* Scheduled-publish cancel button reuses .pr-btn styling */
+
+.pr-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.4em 0.8em;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+  color: var(--text-dim);
+}
+
+.pr-btn.approve {
+  border-color: #4CAF50;
+  color: #4CAF50;
+}
+.pr-btn.approve:hover { background: #4CAF50; color: var(--text); }
+
+.pr-btn.deny {
+  border-color: var(--red);
+  color: var(--red);
+}
+.pr-btn.deny:hover { background: var(--red); color: var(--text); }
+
+.draft-sync-note {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-top: 0.5rem;
+}
+
+.draft-sync-note.saving { color: var(--gold); }
+.draft-sync-note.saved { color: #4CAF50; }
+
+/* ---------- Editor form ---------- */
+
+#editorArea { display: none; }
+
+.field-group {
+  margin-bottom: 1.5rem;
+}
+
+.field-label {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+
+.field-hint {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-top: 0.4rem;
+  line-height: 1.5;
+}
+
+.field-group input[type="text"],
+.field-group textarea {
+  width: 100%;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.95rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 0.7rem 0.9rem;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.field-group input[type="text"]:focus,
+.field-group textarea:focus {
+  border-color: var(--blue);
+}
+
+.field-group textarea {
+  min-height: 220px;
+  line-height: 1.6;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.insert-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.insert-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  padding: 0.45em 0.8em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.insert-btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.format-btn {
+  padding: 0.45em 0.7em;
+  min-width: 2em;
+  text-align: center;
+  text-transform: none;
+  font-size: 0.75rem;
+}
+
+.toolbar-divider {
+  width: 1px;
+  background: var(--line);
+  margin: 0.2em 0.3em;
+}
+
+.insert-panel {
+  display: none;
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.insert-panel.open { display: block; }
+
+.insert-panel .field-group { margin-bottom: 0.85rem; }
+.insert-panel .field-group:last-child { margin-bottom: 0; }
+
+.insert-panel-actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.85rem;
+}
+
+.insert-btn.small {
+  padding: 0.4em 0.7em;
+  font-size: 0.65rem;
+}
+
+.insert-btn.primary {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.insert-btn.primary:hover {
+  background: var(--blue);
+  color: var(--text);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 560px) {
+  .field-row { grid-template-columns: 1fr; }
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.scheduled-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border: 1px solid var(--gold);
+  background: var(--bg-raised);
+  border-radius: 6px;
+  padding: 0.7rem 1rem;
+  margin-top: 0.85rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--gold);
+}
+
+.form-status {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-top: 1rem;
+}
+
+.form-status.ok { color: #4CAF50; }
+
+h2.block-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line);
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.site-footer .accent { color: var(--blue); }
+
+@media (max-width: 480px) {
+  main.page { padding: 2.5rem 1.25rem 4rem; }
+}
+`,
+  scripts: [
+    `
+    (function () {
+      const AUTH_ORIGIN = "https://auth.clock1599-official.workers.dev";
+
+      const lockArea = document.getElementById('lockArea');
+      const editorArea = document.getElementById('editorArea');
+      const authSpinnerNote = document.getElementById('authSpinnerNote');
+      const sessionAvatar = document.getElementById('sessionAvatar');
+      const sessionUsername = document.getElementById('sessionUsername');
+      const sessionAdminTag = document.getElementById('sessionAdminTag');
+      const draftSyncNote = document.getElementById('draftSyncNote');
+
+      let currentUser = null; // { username, avatarUrl, isAdmin }
+      let editorInitialized = false;
+
+      function goToControlCenter() {
+        window.location.hash = 'control-center.html';
+      }
+
+      document.getElementById('openControlCenterBtn').addEventListener('click', goToControlCenter);
+      document.getElementById('openControlCenterFromEditorBtn').addEventListener('click', goToControlCenter);
+
+      document.getElementById('logoutBtn').addEventListener('click', async function () {
+        try {
+          await fetch(AUTH_ORIGIN + '/logout', { method: 'POST', credentials: 'include' });
+        } catch (e) {
+          // ignore network errors on logout, just reset the UI below
+        }
+        handleUserChange(null);
+      });
+
+      function showLockArea() {
+        lockArea.style.display = 'block';
+        editorArea.style.display = 'none';
+      }
+
+      function showEditorArea() {
+        lockArea.style.display = 'none';
+        editorArea.style.display = 'block';
+      }
+
+      function handleUserChange(user) {
+        currentUser = user;
+
+        if (!user) {
+          authSpinnerNote.textContent = '';
+          showLockArea();
+          return;
+        }
+
+        if (!user.isEditor) {
+          // Signed in, but only a Visitor -- not yet given editor access.
+          authSpinnerNote.textContent = 'You\\'re signed in as ' + user.username
+            + ', but you don\\'t have editor access yet. Clock1599 can grant it from the Control Center.';
+          showLockArea();
+          return;
+        }
+
+        sessionUsername.textContent = user.username;
+        sessionAvatar.src = user.avatarUrl || '';
+        sessionAdminTag.style.display = user.isAdmin ? 'inline-block' : 'none';
+        document.getElementById('editorKicker').textContent = user.isAdmin
+          ? 'Clock1599 (Admin)'
+          : 'Approved Contributor';
+
+        applyExportPermissions(user.isAdmin);
+        showEditorArea();
+
+        if (!editorInitialized) {
+          editorInitialized = true;
+          wireDraftAutosave();
+          loadSharedDraft();
+          if (user.isAdmin) loadScheduledStatus();
+        } else if (user.isAdmin) {
+          loadScheduledStatus();
+        }
+      }
+
+      async function checkSession() {
+        authSpinnerNote.textContent = 'Checking sign-in status\\u2026';
+        try {
+          const res = await fetch(AUTH_ORIGIN + '/me', { credentials: 'include' });
+          const data = await res.json();
+          authSpinnerNote.textContent = '';
+
+          if (!data.loggedIn) {
+            handleUserChange(null);
+            return;
+          }
+
+          handleUserChange({
+            username: data.username,
+            avatarUrl: data.avatarUrl,
+            role: data.role || 'visitor',
+            isAdmin: !!data.isAdmin,
+            isEditor: !!data.isEditor,
+          });
+        } catch (e) {
+          authSpinnerNote.textContent = 'Could not reach the sign-in server. Check your connection and reload.';
+          handleUserChange(null);
+        }
+      }
+
+      checkSession();
+
+      // ---------- Shared draft sync ----------
+
+      let draftSaveTimer = null;
+      let suppressDraftEvents = false;
+      const DRAFT_FIELD_IDS = ['fTitle', 'fDate', 'fByline', 'fBody', 'fFilename', 'fPrevLabel', 'fPrevHref'];
+
+      function collectDraftFields() {
+        const out = {};
+        DRAFT_FIELD_IDS.forEach(function (id) {
+          const el = document.getElementById(id);
+          if (el) out[id] = el.value;
+        });
+        return out;
+      }
+
+      function applyDraftFields(fields) {
+        if (!fields) return;
+        suppressDraftEvents = true;
+        DRAFT_FIELD_IDS.forEach(function (id) {
+          const el = document.getElementById(id);
+          if (el && typeof fields[id] === 'string') el.value = fields[id];
+        });
+        suppressDraftEvents = false;
+      }
+
+      async function loadSharedDraft() {
+        try {
+          const res = await fetch(AUTH_ORIGIN + '/draft', { credentials: 'include' });
+          const data = await res.json();
+          if (data.draft) {
+            applyDraftFields(data.draft);
+            draftSyncNote.textContent = 'Loaded the shared draft' +
+              (data.draft.lastEditedBy ? ' (last edited by ' + data.draft.lastEditedBy + ')' : '') + '.';
+            draftSyncNote.className = 'draft-sync-note saved';
+          } else {
+            draftSyncNote.textContent = 'No shared draft yet \\u2014 start writing, it autosaves.';
+            draftSyncNote.className = 'draft-sync-note';
+          }
+          // Autofill date/filename only after we know there wasn't a draft
+          // value already in those fields.
+          autofillNextFriday();
+        } catch (e) {
+          draftSyncNote.textContent = 'Could not load the shared draft. Your edits will still autosave once the connection is back.';
+          draftSyncNote.className = 'draft-sync-note';
+        }
+      }
+
+      async function saveSharedDraftNow() {
+        draftSyncNote.textContent = 'Saving\\u2026';
+        draftSyncNote.className = 'draft-sync-note saving';
+        try {
+          await fetch(AUTH_ORIGIN + '/draft', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(collectDraftFields()),
+          });
+          draftSyncNote.textContent = 'Saved.';
+          draftSyncNote.className = 'draft-sync-note saved';
+        } catch (e) {
+          draftSyncNote.textContent = 'Could not save \\u2014 check your connection.';
+          draftSyncNote.className = 'draft-sync-note';
+        }
+      }
+
+      function scheduleDraftSave() {
+        if (suppressDraftEvents) return;
+        clearTimeout(draftSaveTimer);
+        draftSyncNote.textContent = 'Unsaved changes\\u2026';
+        draftSyncNote.className = 'draft-sync-note';
+        draftSaveTimer = setTimeout(saveSharedDraftNow, 1200);
+      }
+
+      function wireDraftAutosave() {
+        DRAFT_FIELD_IDS.forEach(function (id) {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener('input', scheduleDraftSave);
+        });
+      }
+
+      // ---------- Publish permission gating (admin only) ----------
+
+      function applyExportPermissions(isAdmin) {
+        const publishNowBtnEl = document.getElementById('publishNowBtn');
+        const publishScheduledBtnEl = document.getElementById('publishScheduledBtn');
+        const permissionNote = document.getElementById('exportPermissionNote');
+        if (isAdmin) {
+          publishNowBtnEl.disabled = false;
+          publishScheduledBtnEl.disabled = false;
+          publishNowBtnEl.title = '';
+          publishScheduledBtnEl.title = '';
+          permissionNote.style.display = 'none';
+        } else {
+          publishNowBtnEl.disabled = true;
+          publishScheduledBtnEl.disabled = true;
+          publishNowBtnEl.title = 'Only Clock1599 can publish the final file.';
+          publishScheduledBtnEl.title = 'Only Clock1599 can publish the final file.';
+          permissionNote.style.display = 'block';
+        }
+      }
+
+      // ---------- Autofill next Friday's date / filename ----------
+
+      const MONTH_NAMES = ['January','February','March','April','May','June',
+        'July','August','September','October','November','December'];
+      const MONTH_SLUGS = MONTH_NAMES.map(m => m.toLowerCase());
+
+      function getBerlinDateParts(date) {
+        const fmt = new Intl.DateTimeFormat('en-US', {
+          timeZone: 'Europe/Berlin',
+          weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric',
+          hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+        });
+        const parts = {};
+        fmt.formatToParts(date).forEach(p => { parts[p.type] = p.value; });
+        let hour = parseInt(parts.hour, 10);
+        if (hour === 24) hour = 0;
+        return {
+          weekday: parts.weekday,
+          year: parseInt(parts.year, 10),
+          month: parseInt(parts.month, 10), // 1-12
+          day: parseInt(parts.day, 10),
+          hour: hour,
+          minute: parseInt(parts.minute, 10),
+          second: parseInt(parts.second, 10)
+        };
+      }
+
+      const WEEKDAY_INDEX = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+
+      function getNextFridayParts(now) {
+        const b = getBerlinDateParts(now);
+        const secondsSinceMidnight = b.hour * 3600 + b.minute * 60 + b.second;
+        const targetSeconds = 20 * 3600 + 15 * 60; // 20:15, matches the publish schedule
+
+        let daysUntilFriday = (5 - WEEKDAY_INDEX[b.weekday] + 7) % 7;
+        if (daysUntilFriday === 0 && secondsSinceMidnight >= targetSeconds) {
+          daysUntilFriday = 7;
+        }
+
+        // Step forward day-by-day in UTC-safe arithmetic, then re-read the
+        // Berlin calendar date of that instant (handles month/year rollover
+        // and DST without manual offset math).
+        const target = new Date(now.getTime() + daysUntilFriday * 86400 * 1000);
+        return getBerlinDateParts(target);
+      }
+
+      function autofillNextFriday() {
+        const parts = getNextFridayParts(new Date());
+        const monthName = MONTH_NAMES[parts.month - 1];
+        const monthSlug = MONTH_SLUGS[parts.month - 1];
+
+        const dateField = document.getElementById('fDate');
+        const filenameField = document.getElementById('fFilename');
+
+        if (!dateField.value.trim()) {
+          dateField.value = monthName + ' ' + parts.day;
+        }
+        if (!filenameField.value.trim()) {
+          filenameField.value = 'newsletter-' + monthSlug + parts.day + '.html';
+        }
+      }
+
+      // ---------- Citation / Ad insert panels ----------
+
+      window.__nbrtAds = {};
+      let __adCounter = 0;
+
+      const fBody = document.getElementById('fBody');
+      const quotePanel = document.getElementById('quotePanel');
+      const adPanel = document.getElementById('adPanel');
+      const tipPanel = document.getElementById('tipPanel');
+
+      function closePanels() {
+        quotePanel.classList.remove('open');
+        adPanel.classList.remove('open');
+        tipPanel.classList.remove('open');
+      }
+
+      document.getElementById('toggleQuotePanel').addEventListener('click', function () {
+        const wasOpen = quotePanel.classList.contains('open');
+        closePanels();
+        if (!wasOpen) quotePanel.classList.add('open');
+      });
+
+      document.getElementById('toggleAdPanel').addEventListener('click', function () {
+        const wasOpen = adPanel.classList.contains('open');
+        closePanels();
+        if (!wasOpen) adPanel.classList.add('open');
+      });
+
+      document.getElementById('toggleTipPanel').addEventListener('click', function () {
+        const wasOpen = tipPanel.classList.contains('open');
+        closePanels();
+        if (!wasOpen) tipPanel.classList.add('open');
+      });
+
+      document.getElementById('cancelQuoteBtn').addEventListener('click', closePanels);
+      document.getElementById('cancelAdBtn').addEventListener('click', closePanels);
+      document.getElementById('cancelTipBtn').addEventListener('click', closePanels);
+
+      // ---------- Bold / Heading formatting buttons ----------
+
+      function wrapSelection(textarea, before, after, placeholder) {
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const selected = textarea.value.slice(start, end);
+        const text = selected || placeholder;
+
+        const newValue =
+          textarea.value.slice(0, start) + before + text + after + textarea.value.slice(end);
+        textarea.value = newValue;
+
+        // Select just the inner text (without the markers) so the person can
+        // immediately type to replace a placeholder, or see what got wrapped.
+        const innerStart = start + before.length;
+        const innerEnd = innerStart + text.length;
+        textarea.focus();
+        textarea.setSelectionRange(innerStart, innerEnd);
+
+        scheduleDraftSave();
+      }
+
+      document.getElementById('boldBtn').addEventListener('click', function () {
+        wrapSelection(fBody, '**', '**', 'bold text');
+      });
+
+      document.getElementById('titleBtn').addEventListener('click', function () {
+        const start = fBody.selectionStart;
+        const end = fBody.selectionEnd;
+        const selected = fBody.value.slice(start, end).trim();
+        insertAtCursor(fBody, selected ? '# ' + selected : '# ');
+        scheduleDraftSave();
+      });
+
+      document.getElementById('headingBtn').addEventListener('click', function () {
+        const start = fBody.selectionStart;
+        const end = fBody.selectionEnd;
+        const selected = fBody.value.slice(start, end).trim();
+        insertAtCursor(fBody, selected ? '## ' + selected : '## ');
+        scheduleDraftSave();
+      });
+
+      function insertAtCursor(textarea, text) {
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const before = textarea.value.slice(0, start);
+        const after = textarea.value.slice(end);
+
+        // Make sure the insert sits on its own blank-line-separated block.
+        const needsLeadingBreak = before.length > 0 && !/\\n\\s*\\n$/.test(before) ;
+        const leading = before.length === 0 ? '' : (needsLeadingBreak ? (before.endsWith('\\n') ? '\\n' : '\\n\\n') : '');
+        const trailing = after.length === 0 ? '' : (after.startsWith('\\n') ? '\\n' : '\\n\\n');
+
+        const insert = leading + text + trailing;
+        textarea.value = before + insert + after;
+
+        const cursorPos = (before + insert).length;
+        textarea.focus();
+        textarea.setSelectionRange(cursorPos, cursorPos);
+      }
+
+      document.getElementById('insertQuoteBtn').addEventListener('click', function () {
+        const qText = document.getElementById('qText').value.trim();
+        const qCite = document.getElementById('qCite').value.trim();
+        if (!qText || !qCite) {
+          alert('Fill in both the quote text and attribution first.');
+          return;
+        }
+        const placeholder = '[[QUOTE:' + qText.replace(/\\]\\]/g, '') + '||' + qCite.replace(/\\]\\]/g, '') + ']]';
+        insertAtCursor(fBody, placeholder);
+        document.getElementById('qText').value = '';
+        document.getElementById('qCite').value = '';
+        closePanels();
+      });
+
+      document.getElementById('insertAdBtn').addEventListener('click', function () {
+        const adLabel = document.getElementById('adLabel').value.trim() || 'Paid Promotion — Contact Clock1599 to Advertise';
+        const fileInput = document.getElementById('adImage');
+        const file = fileInput.files && fileInput.files[0];
+
+        if (!file) {
+          alert('Choose an image file first.');
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function () {
+          __adCounter += 1;
+          const adId = 'ad' + __adCounter;
+          window.__nbrtAds[adId] = reader.result;
+
+          const placeholder = '[[AD:' + adLabel.replace(/\\]\\]/g, '') + '||' + adId + ']]';
+          insertAtCursor(fBody, placeholder);
+
+          fileInput.value = '';
+          closePanels();
+        };
+        reader.onerror = function () {
+          alert('Could not read that image file. Try a different one.');
+        };
+        reader.readAsDataURL(file);
+      });
+
+      document.getElementById('insertTipBtn').addEventListener('click', function () {
+        const tipText = document.getElementById('tipText').value.trim();
+        if (!tipText) {
+          alert('Write the tip text first.');
+          return;
+        }
+        const placeholder = '[[TIP:' + tipText.replace(/\\]\\]/g, '') + ']]';
+        insertAtCursor(fBody, placeholder);
+        document.getElementById('tipText').value = '';
+        closePanels();
+      });
+
+      // ---------- Export logic ----------
+
+      function escapeHtml(str) {
+        return str
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
+
+      function renderInlineLinks(escapedText) {
+        // escapedText has already been through escapeHtml, so raw [ ] ( ) are
+        // safe to match as-is (escapeHtml doesn't touch them).
+        return escapedText.replace(/\\[([^\\[\\]]+)\\]\\(([^()\\s]+)\\)/g, function (match, label, url) {
+          const safe = /^(https?:\\/\\/|\\.{0,2}\\/|[a-zA-Z0-9_-]+\\.html)/.test(url);
+          if (!safe) return match; // leave untouched if it doesn't look like a normal link
+          return '<a href="' + url + '" style="color: var(--blue);">' + label + '</a>';
+        });
+      }
+
+      function renderBold(escapedText) {
+        // escapedText has already been through escapeHtml, so raw ** is safe
+        // to match as-is. Non-greedy so multiple **bold** spans in one
+        // paragraph each resolve independently.
+        return escapedText.replace(/\\*\\*([^*]+)\\*\\*/g, '<strong>$1</strong>');
+      }
+
+      function paragraphsHtml(raw) {
+        const blocks = raw.split(/\\n\\s*\\n/).map(b => b.trim()).filter(Boolean);
+        return blocks
+          .map(function (b) {
+            const quoteMatch = b.match(/^\\[\\[QUOTE:([\\s\\S]*)\\|\\|([\\s\\S]*)\\]\\]$/);
+            if (quoteMatch) {
+              const qText = quoteMatch[1].trim();
+              const qCite = quoteMatch[2].trim();
+              return '      <blockquote class="pull-quote">\\n        '
+                + renderBold(escapeHtml(qText))
+                + '\\n        <cite>— ' + escapeHtml(qCite) + '</cite>\\n      </blockquote>';
+            }
+
+            const adMatch = b.match(/^\\[\\[AD:([\\s\\S]*)\\|\\|([\\s\\S]*)\\]\\]$/);
+            if (adMatch) {
+              const adLabel = adMatch[1].trim();
+              const adId = adMatch[2].trim();
+              const adData = window.__nbrtAds && window.__nbrtAds[adId];
+              if (!adData) {
+                return '      <!-- Ad image missing for id ' + escapeHtml(adId) + ' -->';
+              }
+              return '      <div class="ad-banner">\\n        <div class="ad-label">'
+                + escapeHtml(adLabel) + '</div>\\n        <img src="' + adData + '" alt="">\\n      </div>';
+            }
+
+            const tipMatch = b.match(/^\\[\\[TIP:([\\s\\S]*)\\]\\]$/);
+            if (tipMatch) {
+              const tipText = tipMatch[1].trim();
+              return '      <div class="callout">\\n        <p>'
+                + renderBold(renderInlineLinks(escapeHtml(tipText))) + '</p>\\n      </div>';
+            }
+
+            const titleMatch = b.match(/^#\\s+(.+)$/);
+            if (titleMatch) {
+              const titleText = titleMatch[1].trim();
+              return '      <h2 class="block-title">' + renderBold(escapeHtml(titleText)) + '</h2>';
+            }
+
+            const headingMatch = b.match(/^##\\s+(.+)$/);
+            if (headingMatch) {
+              const headingText = headingMatch[1].trim();
+              return '      <h3 class="sub-title">' + renderBold(escapeHtml(headingText)) + '</h3>';
+            }
+
+            return '      <p>' + renderBold(renderInlineLinks(escapeHtml(b).replace(/\\n/g, '<br>'))) + '</p>';
+          })
+          .join('\\n');
+      }
+
+      // Reuse the same logo data already embedded in this page's own header,
+      // so the exported article's logo always matches without duplicating
+      // the (large) base64 string a second time in this file.
+      const NBRT_LOGO_SRC = document.querySelector('.site-header .brand img').src;
+
+      function buildArticleHtml() {
+        const title = document.getElementById('fTitle').value.trim() || 'Untitled';
+        const date = document.getElementById('fDate').value.trim() || '';
+        const byline = document.getElementById('fByline').value.trim() || 'Clock1599';
+        const body = document.getElementById('fBody').value;
+        const prevLabel = document.getElementById('fPrevLabel').value.trim();
+        const prevHref = document.getElementById('fPrevHref').value.trim();
+
+        const kicker = 'NBRT Newsletter' + (date ? ' &middot; ' + escapeHtml(date) : '');
+
+        const prevLink = (prevHref && prevLabel)
+          ? '      <a href="' + escapeHtml(prevHref) + '">' + escapeHtml(prevLabel) + '</a>'
+          : '      <span></span>';
+
+        return \`<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>\${escapeHtml(title)} — NBRT Newsletter</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --red: #9F0000;
+  --blue: #00009F;
+  --gold: #B5A642;
+  --bg: #0A0A0A;
+  --bg-raised: #131110;
+  --text: #E8E4DC;
+  --text-dim: #6B6660;
+  --line: #232020;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a { color: inherit; text-decoration: none; }
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 2rem;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(6px);
+  z-index: 50;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: 260px;
+}
+
+.brand img {
+  height: 52px;
+  width: 52px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  color: var(--gold);
+  line-height: 1.2;
+}
+
+@media (min-width: 900px) {
+  .brand-text { font-size: 1.15rem; }
+}
+
+nav.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  position: relative;
+}
+
+nav.main-nav a {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0.5em 0.8em;
+  border-radius: 2px;
+  transition: color 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
+}
+
+nav.main-nav a:hover {
+  color: var(--text);
+  background: var(--bg-raised);
+}
+
+nav.main-nav a.active {
+  color: var(--blue);
+}
+
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown > button {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0.5em 0.8em;
+  border-radius: 2px;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-weight: inherit;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.nav-dropdown > button:hover,
+.nav-dropdown.open > button {
+  color: var(--text);
+  background: var(--bg-raised);
+}
+
+.nav-dropdown > button.active {
+  color: var(--blue);
+}
+
+.nav-dropdown > button .caret {
+  font-size: 0.6rem;
+  transition: transform 0.15s ease;
+}
+
+.nav-dropdown.open > button .caret {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  left: 0;
+  min-width: 180px;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.4rem;
+  display: none;
+  flex-direction: column;
+  gap: 0.1rem;
+  z-index: 60;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.nav-dropdown.open .nav-dropdown-menu {
+  display: flex;
+}
+
+.nav-dropdown-menu a {
+  padding: 0.55em 0.7em;
+  border-radius: 4px;
+  font-size: 0.72rem;
+}
+
+.nav-dropdown-menu a:hover {
+  background: var(--line);
+  color: var(--text);
+}
+
+.nav-dropdown-menu a.active {
+  color: var(--blue);
+}
+
+@media (max-width: 760px) {
+  .site-header { flex-wrap: wrap; padding: 1rem 1.25rem; }
+  nav.main-nav { gap: 0.15rem; width: 100%; padding-top: 0.75rem; border-top: 1px solid var(--line); }
+  nav.main-nav a, .nav-dropdown > button { font-size: 0.68rem; padding: 0.45em 0.65em; }
+  .nav-dropdown-menu { position: static; box-shadow: none; margin-top: 0.2rem; margin-left: 0.5rem; border: none; background: transparent; padding: 0; }
+  .nav-dropdown.open .nav-dropdown-menu { display: flex; }
+}
+
+main.page {
+  flex: 1;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 5rem;
+}
+
+.page-kicker {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.page-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 4.2vw, 2.2rem);
+  line-height: 1.15;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.page-rule {
+  width: 56px;
+  height: 3px;
+  background: var(--blue);
+  margin: 1.25rem auto 2.25rem;
+}
+
+section.block {
+  margin-bottom: 3rem;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+strong { color: var(--text); font-weight: 600; }
+
+h2.block-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line);
+}
+
+h3.sub-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--blue);
+  margin: 1.5rem 0 0.75rem;
+}
+
+.byline {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  letter-spacing: 0.03em;
+  margin-bottom: 1.5rem;
+}
+
+.byline strong { color: var(--blue); }
+
+.callout {
+  border-left: 2px solid var(--red);
+  padding: 0.9rem 1.25rem;
+  background: var(--bg-raised);
+  border-radius: 0 4px 4px 0;
+  margin: 1.25rem 0;
+}
+
+.callout p:last-child { margin-bottom: 0; }
+
+.pull-quote {
+  border-left: 2px solid var(--blue);
+  padding-left: 1.25rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.pull-quote cite {
+  display: block;
+  margin-top: 0.4rem;
+  font-style: normal;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.ad-banner {
+  margin: 2rem 0;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.ad-banner img {
+  width: 100%;
+  display: block;
+}
+
+.ad-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+  padding: 0.75rem 1rem 0;
+}
+
+.article-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+}
+
+.article-nav a {
+  color: var(--blue);
+}
+
+.article-nav a:hover {
+  text-decoration: underline;
+}
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.site-footer .accent { color: var(--blue); }
+
+@media (max-width: 480px) {
+  main.page { padding: 2.5rem 1.25rem 4rem; }
+}
+
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="brand">
+      <img src="\${NBRT_LOGO_SRC}" alt="">
+      <span class="brand-text">The New Brass Rail Transit Authority</span>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <div class="nav-dropdown" id="regDropdown">
+        <button type="button" onclick="document.getElementById('regDropdown').classList.toggle('open')">Regulations <span class="caret">&#9662;</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="regulations.html">Overview</a>
+          <a href="Regulation_Signalling.html">Signalling</a>
+          <a href="Regulation_Track-Sizing.html">Track Sizing</a>
+          <a href="Regulation_Train-Sizing.html">Train Sizing</a>
+        </div>
+      </div>
+      <div class="nav-dropdown" id="guidesDropdown">
+        <button type="button" onclick="document.getElementById('guidesDropdown').classList.toggle('open')">Guides <span class="caret">&#9662;</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="Guides.html">Overview</a>
+          <a href="Guide_Schedules.html">Schedules</a>
+          <a href="Guide_Display-Boards.html">Display Boards</a>
+        </div>
+      </div>
+      <a href="newsletter.html" class="active">Newsletter</a>
+      <a href="credits.html">Credits</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="page-kicker">\${kicker}</div>
+    <h1 class="page-title" style="font-size: clamp(1.8rem, 5vw, 2.6rem);">\${escapeHtml(title)}</h1>
+    <div class="page-rule"></div>
+
+    <div class="byline">Written by <strong>\${escapeHtml(byline)}</strong></div>
+
+    <section class="block">
+\${paragraphsHtml(body)}
+    </section>
+
+    <div class="article-nav">
+\${prevLink}
+      <a href="newsletter.html">All articles</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    The New Brass Rail Transit Authority &middot; Maintained by <span class="accent">Clock1599</span>
+  </footer>
+</body>
+</html>
+\`;
+      }
+
+      const publishNowBtn = document.getElementById('publishNowBtn');
+      const publishScheduledBtn = document.getElementById('publishScheduledBtn');
+      const previewBtn = document.getElementById('previewBtn');
+      const formStatus = document.getElementById('formStatus');
+      const scheduledBanner = document.getElementById('scheduledBanner');
+      const scheduledBannerText = document.getElementById('scheduledBannerText');
+      const cancelScheduledBtn = document.getElementById('cancelScheduledBtn');
+
+      function setPublishButtonsBusy(busy) {
+        publishNowBtn.disabled = busy || !currentUser || !currentUser.isAdmin;
+        publishScheduledBtn.disabled = busy || !currentUser || !currentUser.isAdmin;
+      }
+
+      async function loadScheduledStatus() {
+        try {
+          const res = await fetch(AUTH_ORIGIN + '/scheduled', { credentials: 'include' });
+          const data = await res.json();
+          renderScheduledBanner(data.scheduled);
+        } catch (e) {
+          // Leave the banner hidden if the check fails; the buttons still work.
+        }
+      }
+
+      function renderScheduledBanner(scheduled) {
+        if (!scheduled) {
+          scheduledBanner.style.display = 'none';
+          return;
+        }
+        const when = new Date(scheduled.scheduledFor).toLocaleString(undefined, {
+          weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+        scheduledBannerText.textContent = '"' + scheduled.filename + '" is scheduled to publish ' + when + '.';
+        scheduledBanner.style.display = 'flex';
+      }
+
+      cancelScheduledBtn.addEventListener('click', async function () {
+        try {
+          await fetch(AUTH_ORIGIN + '/cancel-scheduled', { method: 'POST', credentials: 'include' });
+        } catch (e) {
+          alert('Could not reach the server. Try again.');
+          return;
+        }
+        scheduledBanner.style.display = 'none';
+      });
+
+      async function doPublish(mode) {
+        if (!currentUser || !currentUser.isAdmin) {
+          formStatus.textContent = 'Only Clock1599 can publish the final file.';
+          formStatus.classList.remove('ok');
+          return;
+        }
+
+        const filename = document.getElementById('fFilename').value.trim() || 'newsletter-untitled.html';
+        const html = buildArticleHtml();
+
+        setPublishButtonsBusy(true);
+        formStatus.textContent = mode === 'now' ? 'Publishing\\u2026' : 'Scheduling\\u2026';
+        formStatus.classList.remove('ok');
+
+        try {
+          const res = await fetch(AUTH_ORIGIN + '/publish', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ mode, filename, html }),
+          });
+          const data = await res.json();
+
+          if (!res.ok || data.error) {
+            formStatus.textContent = 'Publish failed: ' + (data.message || data.error || 'unknown error');
+            formStatus.classList.remove('ok');
+            return;
+          }
+
+          if (mode === 'now') {
+            formStatus.textContent = '"' + filename + '" is live. Remember to add it to the article list on newsletter.html.';
+            formStatus.classList.add('ok');
+          } else {
+            formStatus.textContent = '"' + filename + '" is scheduled for next Friday at 20:15 CEST/CET.';
+            formStatus.classList.add('ok');
+            renderScheduledBanner(data.scheduled);
+          }
+        } catch (e) {
+          formStatus.textContent = 'Could not reach the publishing server. Check your connection and try again.';
+          formStatus.classList.remove('ok');
+        } finally {
+          setPublishButtonsBusy(false);
+        }
+      }
+
+      publishNowBtn.addEventListener('click', function () {
+        if (!confirm('Publish this article to the live site right now?')) return;
+        doPublish('now');
+      });
+
+      publishScheduledBtn.addEventListener('click', function () {
+        if (!confirm('Schedule this article to publish automatically next Friday at 20:15 CEST/CET?')) return;
+        doPublish('scheduled');
+      });
+
+      previewBtn.addEventListener('click', function () {
+        const html = buildArticleHtml();
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+        formStatus.textContent = 'Opened a preview in a new tab.';
+        formStatus.classList.remove('ok');
+      });
+    })();
+
 `
   ]
 };
