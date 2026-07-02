@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap');
 
 :root {
-  --red: #9F0000;
-  --blue: #00009F;
-  --gold: #B5A642;
+  --red: #FF0000;
+  --blue: #0000FF;
+  --gold: #FFFF00;
   --bg: #0A0A0A;
   --bg-raised: #131110;
-  --text: #E8E4DC;
-  --text-dim: #6B6660;
-  --line: #232020;
+  --text: #FFFFFF;
+  --text-dim: #9F9F9F;
+  --line: #9F9F9F;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
