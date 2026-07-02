@@ -3625,22 +3625,21 @@ window.PAGES["guide-editor.html"] = {
 
     <div id="lockArea">
       <div class="page-kicker">Restricted</div>
-      <h1 class="page-title">Guides Editor</h1>
+      <h1 class="page-title">Newsletter Editor</h1>
       <div class="page-rule"></div>
-      <p class="page-intro">Sign in with GitHub to continue. New accounts need approval from Clock1599 before they can edit.</p>
+      <p class="page-intro">Only Builders are allowed to edit Articles and Guides - Log in with Github to continue</p>
+
       <div class="auth-status-box">
-        <button class="gh-btn" id="openControlCenterBtn" type="button">
-          <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-          Sign in with GitHub
-        </button>
-        <p class="auth-spinner-note">This takes you to the Control Center to sign in, then brings you back here.</p>
+        <button type="button" class="gh-btn" id="openControlCenterBtn">Open Control Center to Sign In</button>
+        <div class="auth-spinner-note" id="authSpinnerNote"></div>
       </div>
     </div>
 
-    <div id="editorArea">
-      <div class="page-kicker" id="editorKicker">Guides</div>
-      <h1 class="page-title">Guides Editor</h1>
+    <div id="editorArea" style="display:none;">
+      <div class="page-kicker" id="editorKicker">Approved Contributor</div>
+      <h1 class="page-title">Newsletter Editor</h1>
       <div class="page-rule"></div>
+      <p class="page-intro">Fill this in &mdash; it autosaves as a shared draft, so anyone approved can pick up where you left off. Publish when ready.</p>
 
       <div class="session-bar">
         <div class="session-who">
@@ -3649,8 +3648,8 @@ window.PAGES["guide-editor.html"] = {
           <span class="admin-tag" id="sessionAdminTag" style="display:none;">Admin</span>
         </div>
         <div class="session-actions">
-          <button class="btn" id="openControlCenterFromEditorBtn" type="button">Control Center</button>
-          <button class="btn" id="logoutBtn" type="button">Sign Out</button>
+          <button type="button" class="btn" id="openControlCenterFromEditorBtn">Control Center</button>
+          <button type="button" class="btn" id="logoutBtn">Sign out</button>
         </div>
       </div>
 
