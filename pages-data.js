@@ -11,7 +11,7 @@ window.PAGES["index.html"] = {
 <main class="page" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; min-height: 70vh;">
     <div class="rule" style="width:64px; height:3px; background:var(--blue); margin:0 auto 1.5rem;"></div>
     <h1 class="title" style="font-family:'Space Mono', monospace; font-weight:700; font-size:clamp(2rem, 7vw, 4.6rem); line-height:1.1; letter-spacing:-0.01em; color:var(--gold); max-width: 900px;">THE NEW BRASS RAIL TRANSIT AUTHORITY</h1>
-    <div class="kicker" style="font-family:'Space Mono', monospace; font-size:0.8rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--blue); margin-top:1.25rem;">By Clock1599</div>
+    <div class="kicker" style="font-family:'Space Mono', monospace; font-size:0.8rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--blue); margin-top:1.25rem;">For Brassworks | By Clock1599</div>
 
     <p style="margin-top: 3rem; max-width: 560px; color: var(--text-dim); font-size: 0.95rem;">
       In lieu of Derp's absence, several railroads have come together to carry the BrassTransit name, giving us <strong style="color: var(--gold); font-weight: 700;">The New Brass Rail Transit Authority</strong>.
@@ -52,17 +52,24 @@ window.PAGES["credits.html"] = {
         <div class="org-name">South and West - The Great Southern &amp; Western Link Railroad (GS-WLR)</div>
         <div class="role-row"><strong><span class="role-name">Commissioners</span><span class="role-people">TehGizmoNator the cyclops</span></strong></div>
         <div class="role-row"><span class="role-name">Lead Officer</span><span class="role-people">BassTurtle4 of the turtle club</span></div>
-        <div class="role-row"><span class="role-name">Officers</span><span class="role-people">VirusTLNR, Awsomebee111, Wolfven1, Sefpopcorn, Blooddiamond922</span></div>
+        <div class="role-row"><span class="role-name">Officers</span><span class="role-people">VirusTLNR, Awsomebee111, Wolfven1, Sefpopcorn and Blooddiamond922</span></div>
       </div>
 
       <div class="org-card">
         <div class="org-name">East - The Eastern Railway</div>
-        <div class="role-row"><strong><span class="role-name">Commissioners</span><span class="role-people">Caslehex1234 &amp; Clock1599</span></strong></div>
+        <div class="role-row"><strong><span class="role-name">Commissioners</span><span class="role-people">Caslehex1234 and Clock1599</span></strong></div>
       </div>
 
       <div class="org-card">
         <div class="org-name">Southeast - The Southeastern Railway</div>
         <div class="role-row"><strong><span class="role-name">Commissioners</span><span class="role-people">VirusTLNR</span></strong></div>
+        <div class="role-row"><span class="role-name">Officers</span><span class="role-people">Venator</span></div>
+      </div>
+
+      <div class="org-card">
+        <div class="org-name">North and West (Trial services)</div>
+        <div class="role-row"><strong><span class="role-name">Officers (West)</span><span class="role-people">Awsomebee111</span></strong></div>
+        <div class="role-row"><span class="role-name">Officers (North)</span><span class="role-people">Devourer and Iris</span></div>
       </div>
 
       <div class="org-card">
