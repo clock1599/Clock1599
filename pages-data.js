@@ -11,7 +11,7 @@ window.PAGES["index.html"] = {
 <main class="page" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; min-height: 70vh;">
     <div class="rule" style="width:64px; height:3px; background:var(--blue); margin:0 auto 1.5rem;"></div>
     <h1 class="title" style="font-family:'Space Mono', monospace; font-weight:700; font-size:clamp(2rem, 7vw, 4.6rem); line-height:1.1; letter-spacing:-0.01em; color:var(--gold); max-width: 900px;">THE NEW BRASS RAIL TRANSIT AUTHORITY</h1>
-    <div class="kicker" style="font-family:'Space Mono', monospace; font-size:0.8rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--blue); margin-top:1.25rem;">For Brassworks | By Clock1599</div>
+    <div class="kicker" style="font-family:'Space Mono', monospace; font-size:0.8rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--blue); margin-top:1.25rem;">By Clock1599</div>
 
     <p style="margin-top: 3rem; max-width: 560px; color: var(--text-dim); font-size: 0.95rem;">
       In lieu of Derp's absence, several railroads have come together to carry the BrassTransit name, giving us <strong style="color: var(--gold); font-weight: 700;">The New Brass Rail Transit Authority</strong>.
@@ -52,24 +52,17 @@ window.PAGES["credits.html"] = {
         <div class="org-name">South and West - The Great Southern &amp; Western Link Railroad (GS-WLR)</div>
         <div class="role-row"><strong><span class="role-name">Commissioners</span><span class="role-people">TehGizmoNator the cyclops</span></strong></div>
         <div class="role-row"><span class="role-name">Lead Officer</span><span class="role-people">BassTurtle4 of the turtle club</span></div>
-        <div class="role-row"><span class="role-name">Officers</span><span class="role-people">VirusTLNR, Awsomebee111, Wolfven1, Sefpopcorn and Blooddiamond922</span></div>
+        <div class="role-row"><span class="role-name">Officers</span><span class="role-people">VirusTLNR, Awsomebee111, Wolfven1, Sefpopcorn, Blooddiamond922</span></div>
       </div>
 
       <div class="org-card">
         <div class="org-name">East - The Eastern Railway</div>
-        <div class="role-row"><strong><span class="role-name">Commissioners</span><span class="role-people">Caslehex1234 and Clock1599</span></strong></div>
+        <div class="role-row"><strong><span class="role-name">Commissioners</span><span class="role-people">Caslehex1234 &amp; Clock1599</span></strong></div>
       </div>
 
       <div class="org-card">
         <div class="org-name">Southeast - The Southeastern Railway</div>
         <div class="role-row"><strong><span class="role-name">Commissioners</span><span class="role-people">VirusTLNR</span></strong></div>
-        <div class="role-row"><span class="role-name">Officers</span><span class="role-people">Venator</span></div>
-      </div>
-
-      <div class="org-card">
-        <div class="org-name">North and West (Trial services)</div>
-        <div class="role-row"><strong><span class="role-name">Officers (West)</span><span class="role-people">Awsomebee111</span></strong></div>
-        <div class="role-row"><span class="role-name">Officers (North)</span><span class="role-people">Devourer and Iris</span></div>
       </div>
 
       <div class="org-card">
@@ -3496,13 +3489,12 @@ window.PAGES["Guides.html"] = {
     <div class="page-rule"></div>
 
     <p class="page-intro">
-      Guides are coming soon as a part of <strong>VirusTLNR</strong>'s project made possible by <strong>Clock1599</strong>'s coding.
-      For more info contact <strong>Clock1599</strong>.
+      Regulations will be improved in the following weeks. If you're not sure about a restriction, contact <strong>TehGizmoNator</strong> or <strong>Clock1599</strong>.
     </p>
 
     <section class="block">
-      <h2 class="block-title">How this works</h2>
-      <p>Here you can find <strong>Builder made</strong> guides for things you may encounter during your time on the railway.</p>
+      <h2 class="block-title">Gauge</h2>
+      <p>Serverwide tracks should be <strong>Standard Gauge</strong>, but Wide and Narrow Gauge are still permitted for smaller, coordinated projects.</p>
     </section>
 
     <section class="block">
@@ -3514,16 +3506,70 @@ window.PAGES["Guides.html"] = {
     </section>
 
     <section class="block">
-      <h2 class="block-title">All Guides</h2>
+      <h2 class="block-title">All Regulations</h2>
       <ul class="plain-list">
-        <li><a href="Guide_Schedules.html" style="color: var(--blue);">Schedules</a></li>
-        <li><a href="Guide_Display-Boards.html" style="color: var(--blue);">Display Boards</a></li>
+        <li><a href="Regulation_Signalling.html" style="color: var(--blue);">Signalling</a></li>
+        <li><a href="Regulation_Track-Sizing.html" style="color: var(--blue);">Track Sizing</a></li>
+        <li><a href="Regulation_Train-Sizing.html" style="color: var(--blue);">Train Sizing</a></li>
+        <li>Regarding Spawn</li>
       </ul>
     </section>
-  </main>
+
+    <section class="block">
+      <h2 class="block-title">Regarding Spawn</h2>
+      <p>No freight trains should stop at Spawn.</p>
+      <p class="dim">This section is soon to be expanded.</p>
+    </section>
+  
+    <div class="editor-entry-wrap">
+      <a href="guide-editor.html" class="editor-fab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+        Edit Guides
+      </a>
+    </div>
+</main>
 `,
   css: `
+<style>
+.editor-entry-wrap {
+  width: 100%;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
 
+.editor-fab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  padding: 0.85em 1.2em;
+  border-radius: 6px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.editor-fab:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.editor-fab svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .editor-fab { font-size: 0.66rem; padding: 0.75em 1em; }
+}
+</style>
 `,
   scripts: []
 };
@@ -3536,20 +3582,9 @@ window.PAGES["Guide_Schedules.html"] = {
     <h1 class="page-title">Schedules</h1>
     <div class="page-rule"></div>
 
-    <div class="byline">
-      Written by <strong>VirusTLNR</strong>
-    </div>
-
-    <section class="block">
-      <h2 class="block-title">Schedule Basics</h2>
-      <h3 class="sub-title">A Schedule can do many things such as:</h3>
-      <ul class="plain-list">
-        <li>Make a train travel to a station [Travel to Station]</li>
-        <li>Make a train prioritise platforms in multiple platform stations [Prioritised Destination]</li>
-        <li>Use a station as a Waypoint [Waypoint through Station]</li>
-        <li>And many more (this Guide now only goes through the most important ones)</li>
-      </ul>
-    </section>
+    <p class="page-intro">
+      This guide is coming soon. Check back later for details.
+    </p>
 </main>
 
 `,
@@ -3577,4 +3612,847 @@ window.PAGES["Guide_Display-Boards.html"] = {
 
 `,
   scripts: []
+};
+
+window.PAGES["guide-editor.html"] = {
+  title: "Guides Editor \u2014 The New Brass Rail Transit Authority",
+  html: `
+<main class="page">
+
+    <div id="lockArea">
+      <div class="page-kicker">Restricted</div>
+      <h1 class="page-title">Guides Editor</h1>
+      <div class="page-rule"></div>
+      <p class="page-intro">Sign in with GitHub to continue. New accounts need approval from Clock1599 before they can edit.</p>
+      <div class="auth-status-box">
+        <button class="gh-btn" id="openControlCenterBtn" type="button">
+          <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          Sign in with GitHub
+        </button>
+        <p class="auth-spinner-note">This takes you to the Control Center to sign in, then brings you back here.</p>
+      </div>
+    </div>
+
+    <div id="editorArea">
+      <div class="page-kicker" id="editorKicker">Guides</div>
+      <h1 class="page-title">Guides Editor</h1>
+      <div class="page-rule"></div>
+
+      <div class="session-bar">
+        <div class="session-who">
+          <img id="sessionAvatar" src="" alt="">
+          <span>Signed in as <strong id="sessionUsername"></strong></span>
+          <span class="admin-tag" id="sessionAdminTag" style="display:none;">Admin</span>
+        </div>
+        <div class="session-actions">
+          <button class="btn" id="openControlCenterFromEditorBtn" type="button">Control Center</button>
+          <button class="btn" id="logoutBtn" type="button">Sign Out</button>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="pageSelect">Which page</label>
+        <select id="pageSelect">
+          <option value="Guides.html">Guides.html &mdash; Overview</option>
+          <option value="Guide_Schedules.html">Guide_Schedules.html &mdash; Schedules</option>
+          <option value="Guide_Display-Boards.html">Guide_Display-Boards.html &mdash; Display Boards</option>
+          <option value="__new__">+ New guide page&hellip;</option>
+        </select>
+        <p class="field-hint" id="pageLoadNote"></p>
+      </div>
+
+      <div class="field-group" id="newPageFields" style="display:none;">
+        <label class="field-label" for="fNewSlug">New page name</label>
+        <input type="text" id="fNewSlug" placeholder="e.g. Signal Boxes">
+        <p class="field-hint">
+          Becomes a file named <code id="fNewFilenamePreview">Guide_....html</code>. New pages aren't
+          added to the header dropdown automatically &mdash; link to it from the Guides overview page
+          once it's published.
+        </p>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="fKicker">Kicker</label>
+        <input type="text" id="fKicker" value="Guides">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="fTitle">Page Title</label>
+        <input type="text" id="fTitle" placeholder="e.g. Signal Boxes">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="fIntro">Intro paragraph</label>
+        <textarea id="fIntro" style="min-height:100px;" placeholder="One or two sentences introducing the page."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="fBody">Body (HTML)</label>
+        <p class="field-hint">
+          Written the same way as the rest of the site &mdash; wrap sections in
+          <code>&lt;section class="block"&gt;&lt;h2 class="block-title"&gt;...&lt;/h2&gt;&lt;p&gt;...&lt;/p&gt;&lt;/section&gt;</code>.
+        </p>
+        <textarea id="fBody" style="min-height:320px; font-family:'Space Mono',monospace; font-size:0.85rem;"></textarea>
+      </div>
+
+      <p class="draft-sync-note" id="draftSyncNote"></p>
+
+      <div class="insert-toolbar">
+        <button class="btn" id="previewBtn" type="button">Preview in new tab</button>
+        <button class="btn primary" id="publishNowBtn" type="button">Publish Now</button>
+      </div>
+
+      <p class="field-hint" id="formStatus"></p>
+    </div>
+
+  </main>
+`,
+  css: `
+<style>
+/* ---------- Lock screen ---------- */
+
+.btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.btn.primary {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.btn.primary:hover {
+  background: var(--blue);
+  color: var(--text);
+}
+
+.btn:disabled,
+.btn:disabled:hover {
+  cursor: not-allowed;
+  opacity: 0.4;
+  border-color: var(--line);
+  color: var(--text-dim);
+  background: var(--bg-raised);
+}
+
+/* ---------- GitHub auth states ---------- */
+
+.gh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  color: var(--bg);
+  background: var(--text);
+  border: 1px solid var(--text);
+  padding: 0.75rem 1.4rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.gh-btn:hover { opacity: 0.85; }
+
+.gh-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+.auth-status-box {
+  max-width: 420px;
+  margin: 2rem auto 0;
+  text-align: center;
+}
+
+.auth-spinner-note {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-top: 1rem;
+}
+
+/* Session bar shown once logged in */
+
+.session-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+  border-radius: 6px;
+  padding: 0.75rem 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.session-bar .session-who {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.session-bar .session-who img {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+}
+
+.session-bar .session-who strong {
+  color: var(--text);
+}
+
+.session-bar .session-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.admin-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 0.15em 0.5em;
+  border-radius: 3px;
+}
+
+/* Scheduled-publish cancel button reuses .pr-btn styling */
+
+.pr-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.4em 0.8em;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+  color: var(--text-dim);
+}
+
+.pr-btn.approve {
+  border-color: #4CAF50;
+  color: #4CAF50;
+}
+.pr-btn.approve:hover { background: #4CAF50; color: var(--text); }
+
+.pr-btn.deny {
+  border-color: var(--red);
+  color: var(--red);
+}
+.pr-btn.deny:hover { background: var(--red); color: var(--text); }
+
+.draft-sync-note {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-top: 0.5rem;
+}
+
+.draft-sync-note.saving { color: var(--gold); }
+.draft-sync-note.saved { color: #4CAF50; }
+
+/* ---------- Editor form ---------- */
+
+#editorArea { display: none; }
+
+.field-group {
+  margin-bottom: 1.5rem;
+}
+
+.field-label {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+
+.field-hint {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-top: 0.4rem;
+  line-height: 1.5;
+}
+
+.field-group input[type="text"],
+.field-group textarea {
+  width: 100%;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.95rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 0.7rem 0.9rem;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.field-group input[type="text"]:focus,
+.field-group textarea:focus {
+  border-color: var(--blue);
+}
+
+.field-group textarea {
+  min-height: 220px;
+  line-height: 1.6;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.insert-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.insert-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  padding: 0.45em 0.8em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.insert-btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.format-btn {
+  padding: 0.45em 0.7em;
+  min-width: 2em;
+  text-align: center;
+  text-transform: none;
+  font-size: 0.75rem;
+}
+
+.toolbar-divider {
+  width: 1px;
+  background: var(--line);
+  margin: 0.2em 0.3em;
+}
+
+.insert-panel {
+  display: none;
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.insert-panel.open { display: block; }
+
+.insert-panel .field-group { margin-bottom: 0.85rem; }
+.insert-panel .field-group:last-child { margin-bottom: 0; }
+
+.insert-panel-actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.85rem;
+}
+
+.insert-btn.small {
+  padding: 0.4em 0.7em;
+  font-size: 0.65rem;
+}
+
+.insert-btn.primary {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.insert-btn.primary:hover {
+  background: var(--blue);
+  color: var(--text);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 560px) {
+  .field-row { grid-template-columns: 1fr; }
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.scheduled-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border: 1px solid var(--gold);
+  background: var(--bg-raised);
+  border-radius: 6px;
+  padding: 0.7rem 1rem;
+  margin-top: 0.85rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--gold);
+}
+
+.form-status {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-top: 1rem;
+}
+
+.form-status.ok { color: #4CAF50; }
+
+h2.block-title {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line);
+}
+
+
+
+.field-group select {
+  width: 100%;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.95rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 0.7rem 0.9rem;
+  border-radius: 6px;
+}
+
+.field-group select:focus { border-color: var(--blue); }
+
+.field-group code {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85em;
+  background: var(--bg-raised);
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+}
+
+</style>
+`,
+  scripts: [
+    `
+(function () {
+  const AUTH_ORIGIN = 'https://auth.clock1599-official.workers.dev';
+  // Best-effort read of the currently-published version of a page, so
+  // "edit the old ones" has something real to load. Adjust owner/repo/branch
+  // here if they ever differ from the site's actual GitHub Pages source.
+  const RAW_BASE = 'https://raw.githubusercontent.com/Clock1599/Clock1599/main/';
+
+  const lockArea = document.getElementById('lockArea');
+  const editorArea = document.getElementById('editorArea');
+  const pageSelect = document.getElementById('pageSelect');
+  const newPageFields = document.getElementById('newPageFields');
+  const fNewSlug = document.getElementById('fNewSlug');
+  const fNewFilenamePreview = document.getElementById('fNewFilenamePreview');
+  const fKicker = document.getElementById('fKicker');
+  const fTitle = document.getElementById('fTitle');
+  const fIntro = document.getElementById('fIntro');
+  const fBody = document.getElementById('fBody');
+  const pageLoadNote = document.getElementById('pageLoadNote');
+  const draftSyncNote = document.getElementById('draftSyncNote');
+  const formStatus = document.getElementById('formStatus');
+  const previewBtn = document.getElementById('previewBtn');
+  const publishNowBtn = document.getElementById('publishNowBtn');
+  const sessionAvatar = document.getElementById('sessionAvatar');
+  const sessionUsername = document.getElementById('sessionUsername');
+  const sessionAdminTag = document.getElementById('sessionAdminTag');
+
+  // Same logo the header uses, read straight off the DOM so it always
+  // matches without duplicating the (large) base64 string in this file.
+  const NBRT_LOGO_SRC = document.querySelector('.site-header .brand img').src;
+
+  let currentUser = null;
+  let loadToken = 0; // guards against a slow fetch clobbering a newer page selection
+
+  const SEED_CONTENT = {
+        "Guides.html": {
+                "kicker": "Start here",
+                "title": "Railway Regulations",
+                "intro": "Regulations will be improved in the following weeks. If you're not sure about a restriction, contact <strong>TehGizmoNator</strong> or <strong>Clock1599</strong>.",
+                "body": "<section class=\\"block\\">\\n      <h2 class=\\"block-title\\">Gauge</h2>\\n      <p>Serverwide tracks should be <strong>Standard Gauge</strong>, but Wide and Narrow Gauge are still permitted for smaller, coordinated projects.</p>\\n    </section>\\n\\n    <section class=\\"block\\">\\n      <h2 class=\\"block-title\\">Have Manners</h2>\\n      <p>Please do not steal or leave trains lying around \\u2014 leaving your train on a track is the railway equivalent of leaving your toys in the middle of the floor. A messy track means no one else can enjoy trains.</p>\\n      <div class=\\"callout\\">\\n        <p><strong>If your train blocks a mainline, it will be confiscated and disassembled.</strong></p>\\n      </div>\\n    </section>\\n\\n    <section class=\\"block\\">\\n      <h2 class=\\"block-title\\">All Regulations</h2>\\n      <ul class=\\"plain-list\\">\\n        <li><a href=\\"Regulation_Signalling.html\\" style=\\"color: var(--blue);\\">Signalling</a></li>\\n        <li><a href=\\"Regulation_Track-Sizing.html\\" style=\\"color: var(--blue);\\">Track Sizing</a></li>\\n        <li><a href=\\"Regulation_Train-Sizing.html\\" style=\\"color: var(--blue);\\">Train Sizing</a></li>\\n        <li>Regarding Spawn</li>\\n      </ul>\\n    </section>\\n\\n    <section class=\\"block\\">\\n      <h2 class=\\"block-title\\">Regarding Spawn</h2>\\n      <p>No freight trains should stop at Spawn.</p>\\n      <p class=\\"dim\\">This section is soon to be expanded.</p>\\n    </section>\\n  </main>"
+        },
+        "Guide_Schedules.html": {
+                "kicker": "Guides",
+                "title": "Schedules",
+                "intro": "This guide is coming soon. Check back later for details.",
+                "body": "</main>"
+        },
+        "Guide_Display-Boards.html": {
+                "kicker": "Guides",
+                "title": "Display Boards",
+                "intro": "This guide is coming soon. Check back later for details.",
+                "body": "</main>"
+        }
+};
+
+  function escapeHtml(str) {
+    return (str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function slugToFilename(slug) {
+    const clean = (slug || '').trim().replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    return 'Guide_' + (clean || 'Untitled') + '.html';
+  }
+
+  function isNewPageMode() {
+    return pageSelect.value === '__new__';
+  }
+
+  function currentFilename() {
+    return isNewPageMode() ? slugToFilename(fNewSlug.value) : pageSelect.value;
+  }
+
+  function draftKey(filename) {
+    return 'nbrt-guide-draft:' + filename;
+  }
+
+  function goToControlCenter() {
+    window.location.hash = 'control-center.html';
+  }
+  document.getElementById('openControlCenterBtn').addEventListener('click', goToControlCenter);
+  document.getElementById('openControlCenterFromEditorBtn').addEventListener('click', goToControlCenter);
+
+  document.getElementById('logoutBtn').addEventListener('click', async function () {
+    try {
+      await fetch(AUTH_ORIGIN + '/logout', { method: 'POST', credentials: 'include' });
+    } catch (e) {}
+    checkSession();
+  });
+
+  function showLocked() {
+    lockArea.style.display = 'block';
+    editorArea.style.display = 'none';
+  }
+
+  function showEditor(user) {
+    lockArea.style.display = 'none';
+    editorArea.style.display = 'block';
+    sessionAvatar.src = user.avatarUrl || '';
+    sessionUsername.textContent = user.username;
+    sessionAdminTag.style.display = user.isAdmin ? 'inline-block' : 'none';
+    document.getElementById('editorKicker').textContent = user.isAdmin
+      ? 'Guides \\u00b7 signed in as admin'
+      : 'Guides \\u00b7 signed in';
+    publishNowBtn.disabled = !user.isAdmin;
+    publishNowBtn.title = user.isAdmin ? '' : 'Only Clock1599 can publish.';
+  }
+
+  async function checkSession() {
+    try {
+      const res = await fetch(AUTH_ORIGIN + '/me', { credentials: 'include' });
+      const data = await res.json();
+      if (!data.loggedIn || !(data.isEditor || data.isAdmin)) {
+        currentUser = null;
+        showLocked();
+        return;
+      }
+      currentUser = {
+        username: data.username,
+        avatarUrl: data.avatarUrl,
+        isAdmin: !!data.isAdmin,
+      };
+      showEditor(currentUser);
+      loadPage(pageSelect.value);
+    } catch (e) {
+      currentUser = null;
+      showLocked();
+    }
+  }
+
+  // ---------- Page loading ----------
+
+  function applySeed(seed, note) {
+    fKicker.value = seed.kicker || 'Guides';
+    fTitle.value = seed.title || '';
+    fIntro.value = seed.intro || '';
+    fBody.value = seed.body || '';
+    pageLoadNote.textContent = note || '';
+  }
+
+  async function loadPage(filename) {
+    const myToken = ++loadToken;
+
+    if (filename === '__new__') {
+      newPageFields.style.display = 'block';
+      applySeed({ kicker: 'Guides', title: '', intro: '', body: '' }, 'Fill in a name below to start a new page.');
+      updateNewFilenamePreview();
+      return;
+    }
+    newPageFields.style.display = 'none';
+
+    // 1) Prefer a local autosaved draft, if there is one.
+    const draftRaw = localStorage.getItem(draftKey(filename));
+    if (draftRaw) {
+      try {
+        const draft = JSON.parse(draftRaw);
+        applySeed(draft, 'Loaded your saved draft for this page (not yet published).');
+        return;
+      } catch (e) {}
+    }
+
+    // 2) Otherwise try to read what's actually live on the site right now.
+    pageLoadNote.textContent = 'Checking for a published version\\u2026';
+    try {
+      const res = await fetch(RAW_BASE + filename, { cache: 'no-store' });
+      if (myToken !== loadToken) return; // a different page was selected meanwhile
+      if (res.ok) {
+        const html = await res.text();
+        const parsed = parsePublishedHtml(html);
+        if (parsed) {
+          applySeed(parsed, 'Loaded the version currently live on the site.');
+          return;
+        }
+      }
+    } catch (e) {
+      // network/CORS hiccup -- fall through to the seed below
+    }
+    if (myToken !== loadToken) return;
+
+    // 3) Fall back to the bundled starting content for the 3 built-in pages.
+    if (SEED_CONTENT[filename]) {
+      applySeed(SEED_CONTENT[filename], 'Loaded starting content (this page has not been published as a standalone file yet).');
+    } else {
+      applySeed({ kicker: 'Guides', title: '', intro: '', body: '' }, 'Nothing found yet for this page.');
+    }
+  }
+
+  function parsePublishedHtml(html) {
+    const kickerM = html.match(/<div class="page-kicker">([\\s\\S]*?)<\\/div>/);
+    const titleM = html.match(/<h1 class="page-title"[^>]*>([\\s\\S]*?)<\\/h1>/);
+    const introM = html.match(/<p class="page-intro">([\\s\\S]*?)<\\/p>/);
+    const mainM = html.match(/<main class="page">([\\s\\S]*?)<div class="article-nav">/);
+    if (!titleM) return null;
+    let body = '';
+    if (mainM) {
+      body = mainM[1];
+      if (introM) body = body.replace(introM[0], '');
+      body = body.replace(/<div class="page-kicker">[\\s\\S]*?<\\/div>/, '');
+      body = body.replace(/<h1 class="page-title"[^>]*>[\\s\\S]*?<\\/h1>/, '');
+      body = body.replace(/<div class="page-rule"><\\/div>/, '');
+      body = body.trim();
+    }
+    return {
+      kicker: kickerM ? kickerM[1].trim() : 'Guides',
+      title: titleM[1].trim(),
+      intro: introM ? introM[1].trim() : '',
+      body: body,
+    };
+  }
+
+  function updateNewFilenamePreview() {
+    fNewFilenamePreview.textContent = slugToFilename(fNewSlug.value);
+  }
+
+  pageSelect.addEventListener('change', function () {
+    loadPage(pageSelect.value);
+  });
+  fNewSlug.addEventListener('input', updateNewFilenamePreview);
+
+  // ---------- Autosave (local, per page -- there's no shared server draft for guides) ----------
+
+  let saveTimer = null;
+  function scheduleAutosave() {
+    draftSyncNote.textContent = 'Saving\\u2026';
+    draftSyncNote.classList.add('saving');
+    draftSyncNote.classList.remove('saved');
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(function () {
+      const filename = currentFilename();
+      const draft = {
+        kicker: fKicker.value,
+        title: fTitle.value,
+        intro: fIntro.value,
+        body: fBody.value,
+      };
+      try {
+        localStorage.setItem(draftKey(filename), JSON.stringify(draft));
+        draftSyncNote.textContent = 'Draft saved on this device.';
+        draftSyncNote.classList.remove('saving');
+        draftSyncNote.classList.add('saved');
+      } catch (e) {
+        draftSyncNote.textContent = 'Could not save draft locally.';
+        draftSyncNote.classList.remove('saving', 'saved');
+      }
+    }, 600);
+  }
+  [fKicker, fTitle, fIntro, fBody, fNewSlug].forEach(function (el) {
+    el.addEventListener('input', scheduleAutosave);
+  });
+
+  // ---------- Export / publish ----------
+
+  const HEAD_CHUNK = "<!DOCTYPE html>\\n<html lang=\\"en\\">\\n<head>\\n<meta charset=\\"UTF-8\\">\\n<meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0\\">\\n<title>\${escapeHtml(title)} \\u2014 NBRT Newsletter</title>\\n<style>\\n@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap');\\n\\n:root {\\n  --red: #9F0000;\\n  --blue: #00009F;\\n  --gold: #B5A642;\\n  --bg: #0A0A0A;\\n  --bg-raised: #131110;\\n  --text: #E8E4DC;\\n  --text-dim: #6B6660;\\n  --line: #232020;\\n}\\n\\n* { margin: 0; padding: 0; box-sizing: border-box; }\\n\\nhtml, body {\\n  min-height: 100%;\\n  background: var(--bg);\\n  color: var(--text);\\n  font-family: 'Inter', system-ui, sans-serif;\\n  overflow-x: hidden;\\n}\\n\\nbody {\\n  display: flex;\\n  flex-direction: column;\\n  min-height: 100vh;\\n}\\n\\na { color: inherit; text-decoration: none; }\\n\\n:focus-visible {\\n  outline: 2px solid var(--blue);\\n  outline-offset: 3px;\\n}\\n\\n.site-header {\\n  display: flex;\\n  align-items: center;\\n  justify-content: space-between;\\n  gap: 1rem;\\n  padding: 1.1rem 2rem;\\n  border-bottom: 1px solid var(--line);\\n  position: sticky;\\n  top: 0;\\n  background: rgba(10, 10, 10, 0.92);\\n  backdrop-filter: blur(6px);\\n  z-index: 50;\\n}\\n\\n.brand {\\n  display: flex;\\n  align-items: center;\\n  gap: 0.6rem;\\n  max-width: 260px;\\n}\\n\\n.brand img {\\n  height: 52px;\\n  width: 52px;\\n  object-fit: contain;\\n  flex-shrink: 0;\\n}\\n\\n.brand-text {\\n  font-family: 'Space Mono', monospace;\\n  font-weight: 700;\\n  font-size: 1rem;\\n  letter-spacing: 0.01em;\\n  color: var(--gold);\\n  line-height: 1.2;\\n}\\n\\n@media (min-width: 900px) {\\n  .brand-text { font-size: 1.15rem; }\\n}\\n\\nnav.main-nav {\\n  display: flex;\\n  flex-wrap: wrap;\\n  gap: 0.3rem;\\n  position: relative;\\n}\\n\\nnav.main-nav a {\\n  font-family: 'Space Mono', monospace;\\n  font-size: 0.72rem;\\n  letter-spacing: 0.08em;\\n  text-transform: uppercase;\\n  color: var(--text-dim);\\n  padding: 0.5em 0.8em;\\n  border-radius: 2px;\\n  transition: color 0.15s ease, background 0.15s ease;\\n  white-space: nowrap;\\n}\\n\\nnav.main-nav a:hover {\\n  color: var(--text);\\n  background: var(--bg-raised);\\n}\\n\\nnav.main-nav a.active {\\n  color: var(--blue);\\n}\\n\\n.nav-dropdown {\\n  position: relative;\\n}\\n\\n.nav-dropdown > button {\\n  font-family: 'Space Mono', monospace;\\n  font-size: 0.72rem;\\n  letter-spacing: 0.08em;\\n  text-transform: uppercase;\\n  color: var(--text-dim);\\n  padding: 0.5em 0.8em;\\n  border-radius: 2px;\\n  white-space: nowrap;\\n  background: none;\\n  border: none;\\n  cursor: pointer;\\n  display: inline-flex;\\n  align-items: center;\\n  gap: 0.35em;\\n  font-weight: inherit;\\n  transition: color 0.15s ease, background 0.15s ease;\\n}\\n\\n.nav-dropdown > button:hover,\\n.nav-dropdown.open > button {\\n  color: var(--text);\\n  background: var(--bg-raised);\\n}\\n\\n.nav-dropdown > button.active {\\n  color: var(--blue);\\n}\\n\\n.nav-dropdown > button .caret {\\n  font-size: 0.6rem;\\n  transition: transform 0.15s ease;\\n}\\n\\n.nav-dropdown.open > button .caret {\\n  transform: rotate(180deg);\\n}\\n\\n.nav-dropdown-menu {\\n  position: absolute;\\n  top: calc(100% + 0.4rem);\\n  left: 0;\\n  min-width: 180px;\\n  background: var(--bg-raised);\\n  border: 1px solid var(--line);\\n  border-radius: 6px;\\n  padding: 0.4rem;\\n  display: none;\\n  flex-direction: column;\\n  gap: 0.1rem;\\n  z-index: 60;\\n  box-shadow: 0 8px 24px rgba(0,0,0,0.5);\\n}\\n\\n.nav-dropdown.open .nav-dropdown-menu {\\n  display: flex;\\n}\\n\\n.nav-dropdown-menu a {\\n  padding: 0.55em 0.7em;\\n  border-radius: 4px;\\n  font-size: 0.72rem;\\n}\\n\\n.nav-dropdown-menu a:hover {\\n  background: var(--line);\\n  color: var(--text);\\n}\\n\\n.nav-dropdown-menu a.active {\\n  color: var(--blue);\\n}\\n\\n@media (max-width: 760px) {\\n  .site-header { flex-wrap: wrap; padding: 1rem 1.25rem; }\\n  nav.main-nav { gap: 0.15rem; width: 100%; padding-top: 0.75rem; border-top: 1px solid var(--line); }\\n  nav.main-nav a, .nav-dropdown > button { font-size: 0.68rem; padding: 0.45em 0.65em; }\\n  .nav-dropdown-menu { position: static; box-shadow: none; margin-top: 0.2rem; margin-left: 0.5rem; border: none; background: transparent; padding: 0; }\\n  .nav-dropdown.open .nav-dropdown-menu { display: flex; }\\n}\\n\\nmain.page {\\n  flex: 1;\\n  width: 100%;\\n  max-width: 880px;\\n  margin: 0 auto;\\n  padding: 3.5rem 2rem 5rem;\\n}\\n\\n.page-kicker {\\n  font-family: 'Space Mono', monospace;\\n  font-size: 0.75rem;\\n  letter-spacing: 0.25em;\\n  text-transform: uppercase;\\n  color: var(--blue);\\n  margin-bottom: 0.75rem;\\n  text-align: center;\\n}\\n\\n.page-title {\\n  font-family: 'Space Mono', monospace;\\n  font-weight: 700;\\n  font-size: clamp(1.6rem, 4.2vw, 2.2rem);\\n  line-height: 1.15;\\n  color: var(--gold);\\n  margin-bottom: 0.5rem;\\n  text-align: center;\\n}\\n\\n.page-rule {\\n  width: 56px;\\n  height: 3px;\\n  background: var(--blue);\\n  margin: 1.25rem auto 2.25rem;\\n}\\n\\nsection.block {\\n  margin-bottom: 3rem;\\n}\\n\\np {\\n  font-size: 1rem;\\n  line-height: 1.75;\\n  color: var(--text);\\n  margin-bottom: 1rem;\\n}\\n\\nstrong { color: var(--text); font-weight: 600; }\\n\\nh2.block-title {\\n  font-family: 'Space Mono', monospace;\\n  font-weight: 700;\\n  font-size: 1.5rem;\\n  color: var(--text);\\n  margin-bottom: 1rem;\\n  padding-bottom: 0.6rem;\\n  border-bottom: 1px solid var(--line);\\n}\\n\\nh3.sub-title {\\n  font-family: 'Space Mono', monospace;\\n  font-weight: 700;\\n  font-size: 1.05rem;\\n  color: var(--blue);\\n  margin: 1.5rem 0 0.75rem;\\n}\\n\\n.byline {\\n  font-family: 'Space Mono', monospace;\\n  font-size: 0.78rem;\\n  color: var(--text-dim);\\n  letter-spacing: 0.03em;\\n  margin-bottom: 1.5rem;\\n}\\n\\n.byline strong { color: var(--blue); }\\n\\n.callout {\\n  border-left: 2px solid var(--red);\\n  padding: 0.9rem 1.25rem;\\n  background: var(--bg-raised);\\n  border-radius: 0 4px 4px 0;\\n  margin: 1.25rem 0;\\n}\\n\\n.callout p:last-child { margin-bottom: 0; }\\n\\n.pull-quote {\\n  border-left: 2px solid var(--blue);\\n  padding-left: 1.25rem;\\n  margin: 1.5rem 0;\\n  font-style: italic;\\n  color: var(--text);\\n  font-size: 1.05rem;\\n  line-height: 1.7;\\n}\\n\\n.pull-quote cite {\\n  display: block;\\n  margin-top: 0.4rem;\\n  font-style: normal;\\n  font-family: 'Space Mono', monospace;\\n  font-size: 0.75rem;\\n  color: var(--text-dim);\\n}\\n\\n.ad-banner {\\n  margin: 2rem 0;\\n  border-radius: 6px;\\n  overflow: hidden;\\n  border: 1px solid var(--line);\\n}\\n\\n.ad-banner img {\\n  width: 100%;\\n  display: block;\\n}\\n\\n.ad-label {\\n  font-family: 'Space Mono', monospace;\\n  font-size: 0.65rem;\\n  letter-spacing: 0.15em;\\n  text-transform: uppercase;\\n  color: var(--text-dim);\\n  margin-bottom: 0.5rem;\\n  padding: 0.75rem 1rem 0;\\n}\\n\\n.article-nav {\\n  display: flex;\\n  justify-content: space-between;\\n  margin-top: 3rem;\\n  padding-top: 1.5rem;\\n  border-top: 1px solid var(--line);\\n  font-family: 'Space Mono', monospace;\\n  font-size: 0.8rem;\\n}\\n\\n.article-nav a {\\n  color: var(--blue);\\n}\\n\\n.article-nav a:hover {\\n  text-decoration: underline;\\n}\\n\\n.site-footer {\\n  border-top: 1px solid var(--line);\\n  padding: 1.5rem 2rem;\\n  text-align: center;\\n  font-family: 'Space Mono', monospace;\\n  font-size: 0.7rem;\\n  letter-spacing: 0.08em;\\n  text-transform: uppercase;\\n  color: var(--text-dim);\\n}\\n\\n.site-footer .accent { color: var(--blue); }\\n\\n@media (max-width: 480px) {\\n  main.page { padding: 2.5rem 1.25rem 4rem; }\\n}\\n\\n</style>\\n</head>\\n<body>\\n\\n  <header class=\\"site-header\\">\\n    <div class=\\"brand\\">\\n      <img src=\\"\${NBRT_LOGO_SRC}\\" alt=\\"\\">\\n      <span class=\\"brand-text\\">The New Brass Rail Transit Authority</span>\\n    </div>\\n    ";
+
+  function activeIf(file) {
+    return file === currentFilename() ? ' class="active"' : '';
+  }
+
+  function buildGuideHtml() {
+    const kicker = fKicker.value.trim() || 'Guides';
+    const title = fTitle.value.trim() || 'Untitled';
+    const intro = fIntro.value; // left as authored -- may contain inline <strong> etc.
+    const body = fBody.value;   // raw HTML, authored the same way as the rest of the site
+
+    return \`<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>\${escapeHtml(title)} \\u2014 Guides \\u2014 The New Brass Rail Transit Authority</title>
+\${HEAD_CHUNK}    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <div class="nav-dropdown" id="regDropdown">
+        <button type="button" onclick="document.getElementById('regDropdown').classList.toggle('open')">Regulations <span class="caret">&#9662;</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="regulations.html">Overview</a>
+          <a href="Regulation_Signalling.html">Signalling</a>
+          <a href="Regulation_Track-Sizing.html">Track Sizing</a>
+          <a href="Regulation_Train-Sizing.html">Train Sizing</a>
+        </div>
+      </div>
+      <div class="nav-dropdown open" id="guidesDropdown">
+        <button type="button" class="active" onclick="document.getElementById('guidesDropdown').classList.toggle('open')">Guides <span class="caret">&#9662;</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="Guides.html"\${activeIf('Guides.html')}>Overview</a>
+          <a href="Guide_Schedules.html"\${activeIf('Guide_Schedules.html')}>Schedules</a>
+          <a href="Guide_Display-Boards.html"\${activeIf('Guide_Display-Boards.html')}>Display Boards</a>
+        </div>
+      </div>
+      <a href="newsletter.html">Newsletter</a>
+      <a href="credits.html">Credits</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="page-kicker">\${escapeHtml(kicker)}</div>
+    <h1 class="page-title">\${escapeHtml(title)}</h1>
+    <div class="page-rule"></div>
+
+    <p class="page-intro">\${intro}</p>
+
+\${body}
+
+    <div class="article-nav">
+      <a href="Guides.html">&larr; Guides overview</a>
+      <a href="index.html">Home</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    The New Brass Rail Transit Authority &middot; Maintained by <span class="accent">Clock1599</span>
+  </footer>
+</body>
+</html>
+\`;
+  }
+
+  previewBtn.addEventListener('click', function () {
+    const html = buildGuideHtml();
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+    formStatus.textContent = 'Opened a preview in a new tab.';
+    formStatus.classList.remove('ok');
+  });
+
+  publishNowBtn.addEventListener('click', async function () {
+    if (!currentUser || !currentUser.isAdmin) {
+      formStatus.textContent = 'Only Clock1599 can publish.';
+      formStatus.classList.remove('ok');
+      return;
+    }
+    const filename = currentFilename();
+    if (isNewPageMode() && !fNewSlug.value.trim()) {
+      formStatus.textContent = 'Give the new page a name first.';
+      formStatus.classList.remove('ok');
+      return;
+    }
+    if (!fTitle.value.trim()) {
+      formStatus.textContent = 'Give the page a title first.';
+      formStatus.classList.remove('ok');
+      return;
+    }
+
+    const html = buildGuideHtml();
+    publishNowBtn.disabled = true;
+    formStatus.textContent = 'Publishing\\u2026';
+    formStatus.classList.remove('ok');
+
+    try {
+      const res = await fetch(AUTH_ORIGIN + '/publish', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mode: 'now', filename: filename, html: html }),
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) {
+        formStatus.textContent = 'Publish failed: ' + (data.message || data.error || 'unknown error');
+        formStatus.classList.remove('ok');
+        return;
+      }
+      localStorage.removeItem(draftKey(filename));
+      formStatus.textContent = '"' + filename + '" is live. If it links to other new pages, publish those too.';
+      formStatus.classList.add('ok');
+    } catch (e) {
+      formStatus.textContent = 'Publish failed: network error.';
+      formStatus.classList.remove('ok');
+    } finally {
+      publishNowBtn.disabled = !currentUser || !currentUser.isAdmin;
+    }
+  });
+
+  checkSession();
+})();
+
+`
+  ]
 };
