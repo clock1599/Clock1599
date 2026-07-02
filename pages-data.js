@@ -825,6 +825,10 @@ window.PAGES["control-center.html"] = {
       </div>
 
       <div class="dash-sidebar">
+        <div class="sidebar-section-title">Editors</div>
+        <a href="newsletter-editor.html" class="btn full-width" style="display:block; text-align:center; margin-bottom:0.5rem;">Newsletter Editor</a>
+        <a href="guide-editor.html" class="btn full-width" style="display:block; text-align:center; margin-bottom:1.25rem;">Guides Editor</a>
+
         <button type="button" class="btn primary full-width" id="applicationsBtn">
           Applications
           <span class="count-badge" id="applicationsCount" style="display:none;">0</span>
