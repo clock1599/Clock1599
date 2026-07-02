@@ -3548,17 +3548,6 @@ window.PAGES["Guide_Schedules.html"] = {
         <li>Make a train prioritise platforms in multiple platform stations [Prioritised Destination]</li>
         <li>Use a station as a Waypoint [Waypoint through Station]</li>
         <li>And many more (this Guide now only goes through the most important ones)</li>
-
-      <h3 class="sub-title">Rules Around Automatic Trains</h3>
-      <ul class="plain-list">
-        <li>If able to stop without endangering others, give way to automatic trains.</li>
-        <li>Drive with the expanded minimap — it helps you see what's ahead and plan accordingly.</li>
-      </ul>
-
-      <h3 class="sub-title">Rules Around Other Conductors</h3>
-      <ul class="plain-list">
-        <li>While on a mainline, your train has priority.</li>
-        <li>When merging two mainlines on a Y interchange, the outer rails have priority.</li>
       </ul>
     </section>
 </main>
