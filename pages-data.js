@@ -3536,9 +3536,31 @@ window.PAGES["Guide_Schedules.html"] = {
     <h1 class="page-title">Schedules</h1>
     <div class="page-rule"></div>
 
-    <p class="page-intro">
-      This guide is coming soon. Check back later for details.
-    </p>
+    <div class="byline">
+      Written by <strong>VirusTLNR</strong>
+    </div>
+
+    <section class="block">
+      <h2 class="block-title">Schedule Basics</h2>
+      <h3 class="sub-title">A Schedule can do many things such as:</h3>
+      <ul class="plain-list">
+        <li>Make a train travel to a station [Travel to Station]</li>
+        <li>Make a train prioritise platforms in multiple platform stations [Prioritised Destination]</li>
+        <li>Use a station as a Waypoint [Waypoint through Station]</li>
+        <li>And many more (this Guide now only goes through the most important ones)</li>
+
+      <h3 class="sub-title">Rules Around Automatic Trains</h3>
+      <ul class="plain-list">
+        <li>If able to stop without endangering others, give way to automatic trains.</li>
+        <li>Drive with the expanded minimap — it helps you see what's ahead and plan accordingly.</li>
+      </ul>
+
+      <h3 class="sub-title">Rules Around Other Conductors</h3>
+      <ul class="plain-list">
+        <li>While on a mainline, your train has priority.</li>
+        <li>When merging two mainlines on a Y interchange, the outer rails have priority.</li>
+      </ul>
+    </section>
 </main>
 
 `,
